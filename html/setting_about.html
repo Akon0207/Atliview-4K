@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>aTLi-4K</title>
+<meta name="keywords" content="aTLi-T100" />
+<meta name="description" content="aTLi-T100" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/main.css" />
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/device.min.js"></script>
+<script type="text/javascript" src="js/crypto-js.min.js"></script>
+<script type="text/javascript" src="js/enc-base64.min.js"></script>
+<script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/camera.js"></script>
+<script type="text/javascript" src="js/rolldate.min.js"></script>
+</head>
+<body class="setting-index">
+	<section class="setting-head" id="setting-head">
+		<!-- <a href="javascript:;" class="iconfont goback" onclick="javascript:window.history.back(-1);">&#xe6ea;</a> -->
+		<a href="setting.html" class="iconfont goback">&#xe6ea;</a>
+		<p lan="about">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+	</section>
+
+	<section class="setting-cron top-line" id="setting-cron">
+		
+		<div class="setting-cron-item bottom-line flex flex-middle fw on">
+			<div class="setting-cron-name fx1" lan="firVer">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			<div class="setting-aobut-right show-firmware" id="firmware"></div>
+		</div>
+
+<!-- 		<a href="update.html" class="setting-cron-item bottom-line flex flex-middle fw up">
+			<div class="setting-cron-name fx1">固件版本</div>
+			<div class="setting-aobut-right show-firmware" id="firmware-new"></div>
+		</a> -->
+		<div class="setting-cron-item bottom-line flex flex-middle sn on">
+			<div class="setting-cron-name fx1" lan="serNum">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			<div class="setting-aobut-right show-sn" id="sn"></div>
+		</div>
+		<div class="setting-cron-item bottom-line flex flex-middle">
+			<div class="setting-cron-name fx1">MAC</div>
+			<div class="setting-aobut-right" id="mac1"></div>
+		</div>
+<!-- 		<div class="setting-cron-item bottom-line flex flex-middle">
+			<div class="setting-cron-name fx1">MAC2</div>
+			<div class="setting-aobut-right" id="mac2"></div>
+		</div> -->
+		<div class="setting-cron-item bottom-line flex flex-middle">
+			<div class="setting-cron-name fx1" lan="upTime">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			<div class="setting-aobut-right" id="uptime"></div>
+		</div>
+        <div class="setting-cron-item bottom-line flex flex-middle">
+            <div class="setting-cron-name fx1" lan="camTime">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="setting-aobut-right" id="camTime"></div>
+        </div>
+        <!-- <div class="setting-cron-item bottom-line flex flex-middle">
+            <div class="setting-cron-name fx1" lan="enableLog"></div>
+            <input type="checkbox" id="enableLog" class="switch-box" style="margin-right: 4%">
+        </div> -->
+        <!-- <div class="setting-cron-item bottom-line flex flex-middle">
+            <div class="setting-cron-name fx1" lan="remoteCtl"></div>
+            <input type="checkbox" id="remoteCtl" class="switch-box" style="margin-right: 4%">
+        </div> -->
+	</section>
+	<!-- 升级界面 -->
+    <div class="forUpdate">
+        <div class="updateStep" id="uploading">
+            <div class="updateTitle" lan="uploadN">相机升级</div>
+            <div class="updateProgress">
+                <div class="update-progress-text">
+                    <div class="loading">
+                        <div id="loading1">
+                            <div class="demo1"></div>
+                            <div class="demo1"></div>
+                            <div class="demo1"></div>
+                            <div class="demo1"></div>
+                            <div class="demo1"></div>
+                            <div class="demo1"></div>
+                            <div class="demo1"></div>
+                            <div class="demo1"></div>
+                            <div class="demo1"></div>
+                            <div class="demo1"></div>
+                            <div class="demo1"></div>
+                        </div>
+                    </div>
+                    <div class="updateText" lan="updatePre">正在准备...</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="updateStep" id="downloading">
+            <div class="updateTitle" lan="uploadN">相机升级</div>
+            <div class="updateProgress">
+                <div class="update-progress-text">
+                    <div class="update-progress-ui">
+                        <span style="width: 0%;"></span>
+                    </div>
+                    <div class="updateText" lan="upgradeD">正在下载...</div>
+                </div>
+            </div>
+        </div>
+        <div class="updateStep" id="writing">
+            <div class="updateTitle" lan="uploadN">相机升级</div>
+            <div class="updateProgress">
+                <div class="update-progress-text">
+                    <div class="update-progress-ui">
+                        <span style="width: 0%;"></span>
+                    </div>
+                    <div class="updateText" lan="upgradeN">正在升级...</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="updateStep" id="rebooting">
+            <div class="updateTitle" lan="uploadN">相机升级</div>
+            <div class="updateProgress">
+                <div class="update-progress-text">
+                    <div class="update-progress-ui">
+                        <span style="width: 0%;"></span>
+                    </div>
+                    <div class="updateText" lan="rebootN">正在重启...</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="updateStep" id="updateDone">
+            <div class="updateTitle" lan="uploadN">相机升级</div>
+            <div class="updateProgress">
+                <div class="update-progress-text">
+                    <div class="update-progress-ui">
+                        <span style="width: 100%;"></span>
+                    </div>
+                    <div class="updateText" lan="Done">升级结束</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="updateStep" id="updateError">
+            <div class="updateTitle" lan="upErr">升级失败</div>
+            <div class="updateProgress">
+                <div class="update-progress-text">
+                    <!-- <div class="update-progress-ui">
+                        <span style="width: 100%;"></span>
+                    </div> -->
+                    <div class="updateText" id="errorReason"></div>
+                </div>
+            </div>
+        </div>
+        <div class="updatePrompt">
+            <div lan="updatePro"></div>
+        </div>
+        <div class="updateBack">
+            <a href="javascript:;" lan="back" id="upgradeBack">返回</a>
+            <a href="javascript:;" lan="retry" id="upgradeRetry">重试</a>
+        </div>
+    </div>
+	<div class="dialog-poppup update-steps">
+
+        <div class="update-step1" id="update-downloading" style="display: none;">
+            <div class="dialog-poppup-tit">正在下载</div>
+            <div class="update-progress">
+                <div class="update-progress-text">
+                    <span></span><b>请勿触碰电源键或切断电源！</b>
+                </div>
+                <div class="update-progress-ui">
+                    <span style="width: 0%;"></span>
+                </div>
+            </div>
+        </div>
+        <div class="update-step2" id="update-writing" style="display: none;">
+            <div class="dialog-poppup-tit">正在写入</div>
+            <div class="update-progress">
+                <div class="update-progress-text">
+                    <span></span><b>请勿触碰电源键或切断电源！</b>
+                </div>
+                <div class="update-progress-ui">
+                    <span style="width: 0%;"></span>
+                </div>
+            </div>
+        </div>
+        <div class="update-step3" id="update-reboot" style="display: none;">
+            <div class="dialog-poppup-tit">正在重启</div>
+            <div class="update-progress">
+                <div class="update-progress-text">
+                    <span></span><b>等待相机重启中...</b>
+                </div>
+                <div class="update-progress-ui">
+                    <span style="width: 0%;"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="update-step3" id="update-done" style="display: none;">
+            <div class="dialog-poppup-tit">升级成功</div>
+            <div class="update-progress">
+                <div class="update-progress-text">
+                    <span></span><b></b>
+                </div>
+                <div class="update-progress-ui">
+                    <span style="width: 100%;"></span>
+                </div>
+                <div class="update-complete-btn">
+                    <span>返回</span>
+                </div>
+            </div>
+        </div>
+        <div class="update-step4" id="update-error" style="display: none;">
+            <div class="dialog-poppup-tit">升级失败</div>
+            <div class="update-progress">
+                <!-- <div class="update-error-text">
+                    <span></span><b></b>
+                </div> -->
+                <div class="update-error-ui">
+                    <span class="err-reason">内存不足</span>
+                </div>
+                <div class="update-complete-btn">
+                    <span>返回</span>
+                </div>
+            </div>
+        </div>
+        <div class="update-step3" id="update-timeout" style="display: none;">
+            <div class="dialog-poppup-tit">正在升级</div>
+            <div class="update-progress">
+                <div class="update-progress-text">
+                    <span></span><b></b>
+                </div>
+                <!-- <div class="update-progress-ui">
+                    <span style="width: 100%;"></span>
+                </div> -->
+                <div class="update-complete-btn timeout">
+                    <span>返回</span>
+                </div>
+            </div>
+        </div>
+        <div class="update-step-ap" id="update-ap" style="display: none;">
+            <div class="dialog-poppup-tit">正在升级</div>
+            <div class="update-progress">
+            	<div class="update-progress-text">
+            		<!-- <p>正在升级中</p> -->
+            		<div class="loading">
+	                	<div id="loading1">
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+						</div>
+	                </div>
+                    <span>升级过程预计耗时2分钟。等待2分钟后，观察到绿灯不再闪烁，即可认为升级成功。</span>
+                    <!-- <b class="update-prompt" lan="upP1">指示灯绿色闪烁期间</b>
+                    <p class="update-prompt" lan="upP2">切勿操作开关按键和切断供电</p> -->
+                </div>
+                <div class="update-progress-text">
+                    <span></span><b  id="update-ap-msg">已用时 0 秒</b>
+                </div>
+                <div class="update-complete-btn timeout" id="updateBack" style="height:30px;display: none">
+                    <span>返回</span>
+                </div>
+                <!-- <div class="update-progress-ui">
+                    <span style="width: 100%;"></span>
+                </div> -->
+                <!-- <div class="update-ui">
+                	<div class="update-img"><img src="style/images/resetting.gif"></div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!-- alpha升级 -->
+	<div class="alpha-upgrade" style="display: none;">
+		<!-- <div><span class="alpha-title">Alpha测试</span></div> -->
+		<!-- <div class="direct-upgrade">
+			有更新，点击升级
+		</div> -->
+        <div>
+            <span lan="linkUpdate" style="font-size: 17px">通过链接升级</span>
+            <p><input type="text" class="upgrade-url"><input type="button" value="升级" class="upgrade-btn" placeholder=""></p>
+        </div>
+        <div class="tool-title" id="devToolTitle" lan="developeTools">开发者工具<span id="forRight" style="display: inline-block;">>></span><span id="forLeft" style="display: none;"><<</span></div>
+        <div class="developeTools">
+            <div class="tool-item">
+                <span class="test-button" id="downloadLogs" lan="downloadLogs"></span>
+            </div>
+            <div class="tool-item">
+                <span class="test-button" id="cronReboot">定时重启：</span><input type="text" name="" placeholder="HH:MM"><span class="test-button" id="rebootNow">立即重启</span>
+            </div>
+            <div class="tool-item">
+                <span class="test-button long">关闭App升级通道</span><input type="checkbox" class="switch-box" id="SDUpgradeDialog">
+            </div>
+            <div class="tool-item">
+                <span class="test-button">对焦辅助</span><input type="checkbox" class="switch-box" id="enableFocus">
+            </div>
+            <div class="tool-item">
+                <div class="test-button" id="doSetRemote">设置远程</div>
+                <div class="tool-inner" id="setRemote">
+                    <p>IP <input type="text"></p>
+                    <p>端口 <input type="text"></p>
+                    <p>ID <input type="text"></p>
+                </div>
+            </div>
+            <div class="tool-item">
+                <div id="dotestNewWifi" class="test-button">新连接WIFI</div>
+                <div class="tool-inner" id="testNewWifi">
+                    <input type="text"><input type="text">
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <div id="dotestPut" class="test-button">测试PUT(k,v)</div>
+                <div class="tool-inner" id="testPut">
+                    <input type="text"><input type="text">
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <span id="dotestGet" class="test-button">测试GET(k):</span><input type="text">
+            </div>
+            
+            <div class="tool-item">
+                <div id="dotestUpdate" class="test-button">测试UPDATE</div>
+                <div class="tool-inner" id="testUpdate">
+                    <input type="text"><input type="text"><input type="text">
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <span id="dotestDel" class="test-button">测试删除设备:</span><input type="text">
+            </div>
+            
+            <div class="tool-item">
+                <span id="dotestPage" class="test-button">测试跳回APP:</span><input type="text">
+            </div>
+            
+            <div class="tool-item">
+                <div id="dotestWifi" class="test-button">测试连接WIFI</div>
+                <div class="tool-inner" id="testWifi">
+                    <input type="text"><input type="text">
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <span id="dotestUpFirmware" class="test-button">测试上传文件:</span>
+            </div>
+            
+            <div class="tool-item">
+                <span id="dotestVideo" class="test-button">测试播放器:</span><input type="text">
+            </div>
+            
+        </div>
+        <br>
+        <div class="tool-title" id="videoCron">录像定时任务<span id="cronforRight" style="display: inline-block;">>></span><span id="cronforLeft" style="display: none;"><<</span></div>
+        <div id="loopTime" style="display: none;">
+            <div class="setting-cron-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="bottom-line" lan="period">时段</th>
+                            <th class="bottom-line" lan="startT">开始时间</th>
+                            <th class="bottom-line" lan="endT">结束时间</th>
+                            <!--<th class="bottom-line">预设场景</th>-->
+                            <!-- <th class="bottom-line" lan="shtInt">拍摄间隔</th> -->
+                            <!--<th class="bottom-line">曝光补偿</th>-->
+                        </tr>
+                    </thead>
+                    <tbody id="periodList">
+                    </tbody>
+                </table>
+            </div>
+            <div class="add-cron-time">
+                <a href="javascript:;" id="addPeriod" lan="addPer">添加时段</a>
+            </div>
+            <div class="videoButton">
+                开始任务
+            </div>
+        </div>
+		<!-- <div class="alpha-hide">
+			点击隐藏
+		</div> -->
+	</div>
+    <div id="forPeriodSet" style="display: none;">
+        <section class="setting-head">
+            <a href="javascript:;" class="iconfont cancel">&#xe63b;</a>
+            <p lan="addPer">添加时段</p>
+            <a href="javascript:;" class="iconfont confirm">&#xe60b;</a>
+        </section>
+
+        <section class="setting-cron top-line">
+            <div class="setting-cron-item bottom-line flex flex-middle">
+                <div class="setting-cron-name fx1" lan="startT">开始时间</div>
+                <div class="setting-cron-select">
+                    <input id="bydayStartTime" type="text" readonly class="setting-cron-time" />
+                </div>
+            </div>
+            <div class="setting-cron-item bottom-line flex flex-middle">
+                <div class="setting-cron-name fx1" lan="endT">结束时间</div>
+                <div class="setting-cron-select">
+                    <input id="bydayEndTime" type="text" readonly class="setting-cron-time"/>
+                </div>
+            </div>
+            <!-- <div class="setting-cron-item bottom-line flex flex-middle">
+                <div class="setting-cron-name fx1" lan="shtInt">拍摄间隔</div>
+                <div class="setting-cron-select">
+                    <a href="javascript:;" class="trigger" id="bydayIntervalTrigger" second="10">10<span lan="second"></span></a>
+                </div>
+            </div> -->
+        </section>
+        <div class="cron-btns">
+            <a href="javascript:;" class="cron-btns-del" lan="del">删除</a>
+            <!-- <a href="javascript:;" class="cron-btns-confirm peroid" lan="confirm">确认</a> -->
+        </div>
+    </div>
+	<div class="dialog-poppup" id="testAlert">
+		<div class="dialog-poppup-content">测试反馈文字</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="testConfirm">我知道了</a>
+		</div>
+	</div>
+    <div class="dialog-poppup" id="logsPrompt">
+        <div class="dialog-poppup-tit" lan="downloadLogs"></div>
+        <div class="dialog-poppup-content" lan="logsPromptContent"></div>
+        <div class="dialog-btns flex">
+            <a href="javascript:;" id="logsCancel" lan="cancel"></a>
+            <a href="javascript:;" id="logsConfirm" lan="confirm"></a>
+        </div>
+    </div>
+    <div class="dialog-poppup" id="logsShow">
+        <div class="dialog-poppup-content"></div>
+    </div>
+    <div class="dialog-poppup" id="sureReboot">
+        <div class="dialog-poppup-content">确定重启？</div>
+        <div class="dialog-btns flex">
+            <a href="javascript:;" id="rebootCancel">取消</a>
+            <a href="javascript:;" id="rebootConfirm">确定</a>
+        </div>
+    </div>
+
+	<!-- 更新日志界面 -->
+	<div class="dialog-poppup" id="updateLog" style="display: none">
+		<div class="dialog-poppup-tit">更新日志</div>
+		<div class="dialog-poppup-content">
+			<p>当前版本：<span class="fw-now"></span></p>
+			<p>最新版本：<span class="fw-new"></span></p>
+		</div>
+		<div class="dialog-btns flex">
+			<!-- <a href="javascript:;" id="updateCancel">以后升级</a> -->
+			<a href="javascript:;" id="updateConfirm">确定</a>
+		</div>
+	</div>
+	<!-- 恢复出厂界面 -->
+	<div class="reset-btn" lan="facRes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	<div class="dialog-poppup" id="update-prompt">
+			<div class="dialog-poppup-content">
+				<p>请确保：</p>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;1. 相机已连接wifi，可以通过网络下载文件；</p>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;2. 已插入TF卡，剩余空间大于50M；</p>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;3. 当前没有正在进行的拍摄任务；</p>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;4. 确保已安装电池，不论有没有外接电源。</p>
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="updateCancel2">取消</a>
+				<a href="javascript:;" id="updateConfirm2">开始升级</a>
+			</div>
+		</div>
+	<div class="dialog-cover"></div>
+<!--     <div class="dialog-poppup" id="logTip" >
+        <div class="dialog-poppup-tit" lan="enableLog"></div>
+        <div class="dialog-poppup-content" lan="logContent" style="text-align: left;"></div>
+        <div class="dialog-btns flex">
+            <a href="javascript:;" id="logCancel" lan="cancel"></a>
+            <a href="javascript:;" id="logEnable" lan="enable"></a>
+        </div>
+    </div> -->
+<!--     <div class="dialog-poppup" id="remoteTip" >
+        <div class="dialog-poppup-tit" lan="remoteCtl"></div>
+        <div class="dialog-poppup-content" lan="remoteContent" style="text-align: left;"></div>
+        <div class="dialog-btns flex">
+            <a href="javascript:;" id="remoteCancel" lan="cancel"></a>
+            <a href="javascript:;" id="remoteEnable" lan="enable"></a>
+        </div>
+    </div>
+ -->    <div class="forReset">
+        <div class="forTitle" lan="facRes"></div>
+        <div class="forRuning">
+            <div class="imgDiv"><img src="images/netprompt.gif"></div>
+            <div class="reSetText" lan="resNow"></div>
+            <div class="resSuc" lan="resSuc"></div>
+        </div>
+        <div class="resPrm" lan="resPrm"></div>
+        <div class="forBack"><a href="javascript:;" lan="returnList"></a></div>
+    </div>
+	<div class="dialog-poppup reset-steps" style="display: none;">
+		<div class="reset-step1" style="display: none">
+			<div class="dialog-poppup-main">
+				<p class="warning" lan="frWar">恢复出厂设置会清空所有设置，是否继续？</p>
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="cancelReset" lan="cancel">取消</a>
+				<a href="javascript:;" id="confirmReset" lan="reset">确认</a>
+			</div>
+		</div>
+		<div class="reset-step2" id="resetting" style="display: none;">
+            <div class="dialog-poppup-tit" lan="resNow">正在进行恢复出厂</div>
+            <div class="reset-progress">
+                
+                <div class="reset-progress-ui">
+                    <div></div>
+                </div>
+                <div class="reset-progress-text">
+                    <span></span><b lan="resPrm">请勿触碰电源键或切断电源</b>
+                </div>
+            </div>
+        </div>
+        <div class="reset-step3" id="resetting" style="display: none;">
+            <div class="dialog-poppup-tit" lan="rebNow">正在重启</div>
+            <div class="reset-progress">
+                <!-- <div class="reset-progress-text">
+                    <span></span><b>重置完成，正在重启中</b>
+                </div> -->
+                <div class="reset-progress-ui">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div class="reset-step4" id="resetting" style="display: none;">
+            <div class="dialog-poppup-tit" lan="resSuc">恢复出厂设置成功</div>
+            <div class="reset-progress">
+                <div class="reset-progress-text">
+                    <span></span><b lan="sucPrm">请返回相机列表重新连接相机</b>
+                </div>
+                <div class="reset-complete-btn">
+                    <span id="reset-complete-btn" lan="return">返回</span>
+                </div>
+            </div>
+        </div>
+        <div class="reset-step5" id="resetting" style="display: none;">
+            <div class="dialog-poppup-tit" lan="resFai">恢复出厂失败</div>
+            <div class="reset-progress">
+                <div class="reset-progress-text" lan="retFaiR">
+                    <span>失败原因：</span><b>重启失败！</b>
+                </div>
+                <div class="reset-complete-btn">
+                    <span id="reset-fail-btn" lan="back">返回</span>
+                </div>
+            </div>
+        </div>
+	</div>
+    <div class="periodPrompt" id="periodPrompt"></div>
+    <div class="statusPrompt" id="statusPrompt">当前正在拍摄，请停止拍摄后提交任务</div>
+	<script type="text/javascript" src="js/language.js"></script>
+<script type="text/javascript">
+$(function(){
+	if(language && language=="en"){
+		$(".iconfont.goback").attr("href","setting.html?language=en")
+        if(!app_type) $(".resPrm").css("text-align","center");
+        $(".upgrade-url").attr("placeholder","Enter upgrade url");
+	}else{
+		$(".iconfont.goback").attr("href","setting.html?language=zh")
+        $(".resPrm").css("text-align","center");
+        $(".upgrade-url").attr("placeholder","输入升级链接");
+	}
+	var apSecond = 0;
+    var connect = false;
+    var count = 0;
+    var upgradeTimeout=null;
+    var upgradeStartTime=null;
+    var upgardeBackTime=null;
+    var sessionType = null;
+    var videoCronNum = null;
+    var status = null;
+    var skip_bat_chk = null;
+    var downloadFlag=getParameterByName("downloadFlag");
+    var latest_fw_url=getParameterByName("latest_fw_url");
+    isAP();
+	inUpdatePage=true;
+    // var urlSplit,newVersion;
+    if(language=="en"){$(".upgrade-btn").val("Upgrade")}
+
+    if(downloadFlag==1){//首页点击按钮进入升级
+        updating();
+    }
+	function setuptime(t){
+		if(language && language=="en"){
+			$("#uptime").text(secondtoHIS(t,"en"));
+		}else{$("#uptime").text(secondtoHIS(t));}
+		
+		$("#uptime").attr("second", t);
+	}
+    getJSON("/status",function(data){
+        sessionType = data.sessionType;
+        status = data.recordinfo.status;
+        console.log("status:========="+status)
+    });
+    getJSON("/setting",function(data){
+        if("videoCronSwitch" in data){
+            videoCronNum = data.videoCronSwitch;
+            console.log(data.videoCronSwitch);
+        }
+        if("skip_bat_chk" in data){
+            skip_bat_chk = data.skip_bat_chk;
+        }
+        if(videoCronNum == 0 || !videoCronNum){
+            $(".videoButton").text("提交任务");
+        }else{
+            $(".videoButton").text("停止任务");
+        }
+    });
+
+    getJSON("/videoCron",function(data){
+        $("#periodList").empty();
+        console.log("empty the periodList+++++++++++++++++++")
+        if(data.length>0){
+            for(var i=0;i<data.length;i++){
+                var tr = document.createElement("tr");
+                tr.id = "seq"+(i+1);
+                $("#periodList").append(tr);
+                updateSeq(data[i].seq,data[i].startAt,data[i].endAt);
+            }
+
+        }
+    })
+    function genHMS(src){
+        var timezone=-(new Date().getTimezoneOffset()/60);
+        var strs=src.split(":");
+        var hh=parseInt(strs[0])-timezone;
+        //var hh=parseInt(strs[0]);
+        if(hh>=24) hh-=24;
+        if(hh<0) hh+=24;
+        if(hh<10) hh="0"+hh;
+        return hh+strs[1]+strs[2];
+    }
+	//3次点击事件
+	function nclickEvent(n,dom,fn) {
+        dom.removeEventListener('dblclick',null);
+        var n = parseInt(n) < 1 ? 1:parseInt(n),
+            count = 0,
+            lastTime = 0;//用于记录上次结束的时间
+        var handler = function (event) {
+            var currentTime = new Date().getTime();//获取本次点击的时间
+            count = (currentTime-lastTime) < 400 ? count +1 : 0;//如果本次点击的时间和上次结束时间相比大于400毫秒就把count置0
+            lastTime = new Date().getTime();
+            if(count>=n-1){
+                fn(event,n);
+                count = 0;
+            }
+        };
+        dom.addEventListener('click',handler);
+    }
+    var fw = document.getElementsByClassName("fw")[0];
+	nclickEvent(3,fw,function(){
+		$(".alpha-upgrade").show();
+		// console.log("click 3 times!")
+	});
+
+	$(".alpha-hide").on("click",function(){$(".alpha-upgrade").hide();});
+	function rebooting() {
+		
+		putJSON("/webctl",{"reboot":"reset"},function(e,status,xhr) {
+			// $(".reset-step3").show().siblings().hide();
+			setTimeout(function(){
+				// $(".reset-step4").show().siblings().hide();
+                $(".imgDiv,.reSetText,.resPrm").hide();
+                $(".resSuc,.forBack").show();
+			},20000)
+		},function(jqXHR, errorText,errorType) {
+			console.log("error:"+jqXHR.status+"-"+errorType);
+			$(".reset-step5").show().siblings().hide();
+			if(language && language=="en"){
+				$(".reset-step5 .reset-progress .reset-progress-text b").text("Reboot failed！");
+			}else{
+				$(".reset-step5 .reset-progress .reset-progress-text b").text("重启失败！");
+			}
+			
+		},"text");
+		// $(".reset-step4").show().siblings().hide();
+	}
+	getJSON("/setting", function(e, status){
+		if("sysinfo" in e){
+			if(e.sysinfo.sn) $("#sn").text(e.sysinfo.sn);
+			if(e.sysinfo.mac1) $("#mac1").text(e.sysinfo.mac1);
+			// if(e.sysinfo.mac2) $("#mac2").text(e.sysinfo.mac2);
+			if(e.sysinfo.firmware) {
+				var v = e.sysinfo.firmware
+				$(".show-firmware").text(v);
+				$(".fw-now").text(v);
+				// getJSON("/status", function(data, status) {
+				// 	var shootState = data.recordinfo.status;
+				// 	var lastestfirmware = localControl.getValue("LatestFirmware", v);
+				// 	console.log(v+"||"+lastestfirmware);
+					// if(isNewVersion(v,lastestfirmware) && shootState == "idle"){
+					// 	$(".newversion").text(lastestfirmware);
+					// 	$(".upgrade-txt").show();
+					// }
+				// });
+			}
+			if(e.sysinfo.uptime) {
+				setuptime(e.sysinfo.uptime);
+				setInterval(function() {
+					t=parseInt($("#uptime").attr("second"));
+					if(t>=0) {
+						setuptime(t+1);
+					}
+				}, 1000);
+			}
+			if(("canUpgrade" in e) && e.canUpgrade!=""){
+				$(".direct-upgrade").show();
+				$(".fw-new").text(e.canUpgrade);
+			}else{
+				$(".direct-upgrade").show().text("未发现更新").addClass("shooting-now");
+
+			}
+            //日志
+            // if("enableLog" in e && e.enableLog == 1){
+            //     $("#enableLog").prop("checked",true);
+            // }else{
+            //     $("#enableLog").prop("checked",false);
+            // }
+            //远程协助
+            if("rdmAssis" in e && e.rdmAssis == 1){
+                $("#remoteCtl").prop("checked",true);
+            }else{
+                $("#remoteCtl").prop("checked",false);
+            }
+			if(e.timezone_mode == "auto"){
+                var newDateMs = new Date().getTime();
+                setcamTime(newDateMs);
+            }else{
+                var pcTimezone = -new Date().getTimezoneOffset()/60;
+                var newDateMs = new Date().getTime();
+                var camDateMs = new Date(newDateMs+parseInt(e.timezone)*3600000-pcTimezone*3600000);
+                setcamTime(camDateMs);
+            }
+            
+
+            
+		}
+	}, function (jqXHR, exception) {
+		console.log((jqXHR.status+exception));
+	});
+    //日志功能
+    // $("#enableLog").on("click",function(){
+    //     if($(this).prop("checked")){
+    //         $("#logTip,.dialog-cover").show();
+    //         return false;
+    //     }else{
+    //         postJSON("/setting",{enableLog:0})
+    //     }
+    // });
+    // $("#logCancel").on("click",function(){
+    //     $("#logTip,.dialog-cover").hide();
+    // });
+    // $("#logEnable").on("click",function(){
+    //     postJSON("/setting",{enableLog:1});
+    //     $("#logTip,.dialog-cover").hide();
+    //     $("#enableLog").prop("checked",true);
+    // })
+    //设置相机时间
+    function setcamTime(msTime){
+        var camTime = new Date(msTime);
+        var setTime = transFullTime(camTime,language);
+        $("#camTime").html(setTime);
+        setTimeout(function(){
+            setcamTime(msTime+1000);
+        },1000)
+    }
+
+    //远程协助
+    $("#remoteCtl").on("click",function(){
+        if($(this).prop("checked")){
+            $("#remoteTip,.dialog-cover").show();
+            return false;
+        }else{
+            postJSON("/setting",{rdmAssis:0})
+        }
+    })
+    $("#remoteCancel").on("click",function(){
+        $("#remoteTip,.dialog-cover").hide();
+    })
+    $("#remoteEnable").on("click",function(){
+        postJSON("/setting",{rdmAssis:1});
+        $("#remoteTip,.dialog-cover").hide();
+        $("#remoteCtl").prop("checked",true);
+    })
+	//获取远程参数
+	getJSON("/radm", function(e, status){
+		// $("#doSetRemote").nextAll("input:eq(0)").val(e.server);
+		// $("#doSetRemote").nextAll("input:eq(1)").val(e.port);
+		// $("#doSetRemote").nextAll("input:eq(2)").val(e.id);
+        $("#setRemote input").eq(0).val(e.server);
+        $("#setRemote input").eq(1).val(e.port);
+        $("#setRemote input").eq(2).val(e.id);
+	})
+    //定时重启
+    getJSON("/webctl?query=rebootTime",function(e,status){
+        if("rebootTime" in e){
+            $("#rebootTime").val(e.rebootTime)
+        }else{
+            $("#rebootTime").val("")
+        }
+    })
+    $("#cronReboot").on("click",function(){
+        if($("#rebootTime").val()==""){
+            $("#testAlert .dialog-poppup-content").text("关闭定时重启");
+            $("#testAlert").show();
+            putJSON("/webctl",{rebootTime:"off"})
+        }else{
+            $("#testAlert .dialog-poppup-content").text($("#rebootTime").val()+"之后重启");
+            $("#testAlert").show();
+            putJSON("/webctl",{rebootTime:$("#rebootTime").val()})
+        }
+    })
+    $("#rebootNow").on("click",function(){
+        $("#sureReboot,.dialog-cover").show();
+    })
+    $("#rebootConfirm").on("click",function(){
+        $("#sureReboot,.dialog-cover").hide();
+        putJSON("/webctl",{"reboot":"reset"});
+        if(app_type && localControl.getValue("appVer", 0)>=2) {
+            localControl.notify("UpgradeDone");
+            localControl.startPage("CameraManager");
+        }else {
+            localControl.notify("UpgradeDone");
+            localControl.startPage("DeviceListPage");
+        }
+    });
+    $("#rebootCancel").on("click",function(){
+        $("#sureReboot,.dialog-cover").hide();
+    })
+    //
+	$(".direct-upgrade").on("click",function () {//直接升级
+		$("#updateLog").show();
+		$(".dialog-cover").show();
+		// })
+	});
+	$(".reset-btn").on("click",function() {
+		$(".dialog-cover, .reset-steps").show();
+		$(".reset-step1").show().siblings().hide();
+	});
+
+	$("#confirmReset").on("click",function(){
+		var ssid,apPasswd,apKey;
+		getJSON("/setting",function(data,status,xhr){
+			if("ap" in data) ssid = data.ap.apSSID;
+		},function(jqXHR, errorText,errorType) {
+			console.log("error:"+jqXHR.status+"-"+errorType);
+			$(".reset-step5").show().siblings().hide();
+			if(language && language=="en"){
+				$(".reset-step5 .reset-progress .reset-progress-text b").text("EON not responsive!");
+			}else{
+				$(".reset-step5 .reset-progress .reset-progress-text b").text("相机没有回应！");
+			}
+		});
+		putJSON("/webctl",{"reset":1},function(data,status,xhr) {
+			// $(".reset-step2").show().siblings().hide();
+            $(".reset-steps,.dialog-cover").hide();
+            $(".forReset").show();
+			apPasswd = data.ap_psk;
+			apKey = data.access_key;
+			console.log("ssid:"+ssid+"\napPasswd:"+apPasswd+"\napkey:"+apKey);
+			localControl.updatePwd(ssid,apPasswd,apKey);
+			setTimeout(rebooting,2000);
+			
+		},function(jqXHR, errorText,errorType) {
+			console.log("error:"+jqXHR.status+"-"+errorType);
+            $(".forReset").hide();
+            $(".reset-steps,.dialog-cover").show();
+			$(".reset-step5").show().siblings().hide();
+			if(language && language=="en"){
+				$(".reset-step5 .reset-progress .reset-progress-text b").text("EON not responsive!");
+			}else{
+				$(".reset-step5 .reset-progress .reset-progress-text b").text("相机没有回应！");
+			}
+		})
+	});
+
+	/*
+	$("#confirmReset").on("click",function(){
+		$(".reset-step2").show().siblings().hide();
+		setTimeout(function(){
+			$(".reset-step3").show().siblings().hide();
+		},2000);
+		setTimeout(function(){
+			$(".reset-step4").show().siblings().hide();
+		},20000);
+	});
+	*/
+    $(".forBack").on("click",function(){
+        $(".forReset").hide();
+        if(app_type && localControl.getValue("appVer", 0)>=2) {
+            localControl.startPage("CameraManager");
+            location.href = "index.html"; 
+            setTimeout(function(){
+                localControl.notify("LostConn");
+            },300);
+        }
+        else localControl.startPage("DeviceListPage");
+    })
+	$("#cancelReset").on("click",function() {
+		$(".dialog-cover, .reset-steps").hide();
+	});
+	$("#reset-complete-btn").on("click",function(){
+		$(".dialog-cover, .reset-steps").hide();
+		if(app_type && localControl.getValue("appVer", 0)>=2) {
+			localControl.startPage("CameraManager");
+			location.href = "index.html"; 
+			setTimeout(function(){
+				localControl.notify("LostConn");
+			},300);
+		}
+		else localControl.startPage("DeviceListPage");
+	});
+	$("#reset-fail-btn").on("click",function(){
+		$(".dialog-cover, .reset-steps").hide();
+	});
+	function downloading(v){
+		// $(".dialog-cover").show();
+		// $(".update-steps").show();
+		// $("#update-downloading").show();//.siblings().hide();
+        $("#downloading").show().siblings().hide();
+        $(".updatePrompt").show();
+		if(v>=0 && v<=100){
+			// $("#update-downloading .update-progress-ui span").css({"width": v+"%",});
+            $("#downloading .update-progress-ui span").css({"width": v+"%",});
+			// $("#update-downloading .update-progress-text span").text(v+"%");
+		}
+	}
+    function verifying(){
+        $("#uploading").show().siblings().hide();
+        if(language=="en"){$("#uploading .updateText").text("Verifying...")}
+        else{$("#uploading .updateText").text("正在校验...")}
+        $(".updatePrompt").show();
+    }
+    function fixing(){
+        $("#uploading").show().siblings().hide();
+        if(language=="en"){$("#uploading .updateText").text("Error detected.Restoring...")}
+        else{$("#uploading .updateText").text("发现错误，正在修复...")}
+        $(".updatePrompt").show();
+    }
+	function writing(v){
+		// $(".dialog-cover").show();
+		// $(".update-steps").show();
+		// $("#update-writing").show().siblings().hide();
+        $("#writing").show().siblings().hide();
+        $(".updatePrompt").show();
+		if(v>=0 && v<=100){
+			// $("#update-writing .update-progress-ui span").css({"width": v+"%",});
+            $("#writing .update-progress-ui span").css({"width": v+"%",});
+			// $("#update-writing .update-progress-text span").text(v+"%");
+		}
+	}
+	function done(){
+		// $(".dialog-cover").show();
+		// $(".update-steps").show();
+		// $("#update-done").show().siblings().hide();
+        $("#updateDone").show().siblings().hide();
+        $(".updateBack").show();
+        $("#upgradeBack").show().siblings().hide();
+        $("#upgradeBack").attr("type","done");
+        setUpdateEnd();
+	}
+    $("#upgradeBack").on("click",function(){
+        if($("#upgradeBack").attr("type")=="done"){
+            // if(connect){
+            //     location.href = "index.html";
+            // }else{
+                if(!app_type && connect){
+                    location.href = "index.html";
+                    return
+                }
+                if(app_type && localControl.getValue("appVer", 0)>=2) {
+                    localControl.notify("UpgradeDone");
+                    localControl.startPage("CameraManager");
+                    localControl.notify("LostConn");
+                }else {
+                    localControl.notify("UpgradeDone");
+                    localControl.startPage("DeviceListPage");
+                    localControl.notify("LostConn");
+                    window.history.back(-1);
+                }
+                
+            // }
+        }else if($("#upgradeBack").attr("type")=="error"){
+            window.history.back(-1);
+        }
+    })
+	function error(msg){
+		// $(".dialog-cover").show();
+		// $(".update-steps").show();
+		// $("#update-error").show().siblings().hide();
+		// $(".err-reason").text(msg);
+        $("#updateError").show().siblings().hide();
+        $(".updateBack").show();
+        $("#upgradeBack").show().siblings().hide();
+        $("#upgradeBack").attr("type","error");
+        $("#errorReason").text(msg);
+        setUpdateEnd();
+	}
+    function error3(msg){
+        if(language && language=="en"){
+            if(msg=="need battery") error("Unable to upgrade due to battery not installed!")
+            if(msg=="need sdcard") error("Micro SD card not detected! ")
+            if(msg=="sdcard no enough space") error("Not enough storage space (50MB free space minimum)")
+            if(msg=="low bat capacity") error("Unable to upgrade due to low battery!")
+            if(msg=="INVALID PACKAGE") error("INVALID PACKAGE")
+            if(msg=="DOWNLOAD FAILED") error("DOWNLOAD FAILED")
+        }else{
+            if(msg=="need battery") error("未安装电池，无法升级")
+            if(msg=="need sdcard") error("未检测到存储卡")
+            if(msg=="sdcard no enough space") error("存储空间不足，至少需要50M空间！")
+            if(msg=="low bat capacity") error("电量过低，无法升级")
+            if(msg=="INVALID PACKAGE") error("无效升级包")
+            if(msg=="DOWNLOAD FAILED") error("下载固件失败")
+        }
+    }
+    
+	function reboot(){
+        // $("#update-reboot .update-progress-ui span").css("width",(inAP==1?String(parseInt(count/35*100)):String(parseInt(count/45*100)))+"%");
+        $("#rebooting .update-progress-ui span").css("width",(inAP==1?String(parseInt(count/35*100)):String(parseInt(count/45*100)))+"%");
+        if(count>=(inAP==1?35:45)){return done()}else{
+            upgradeTimeout=setTimeout(reboot, 1000);
+        }
+        count++;
+		// $(".dialog-cover").show();
+		// $(".update-steps").show();
+		// $("#update-reboot").show().siblings().hide();
+        $("#rebooting").show().siblings().hide();
+        $(".updatePrompt").show();
+		getJSON("/setting", function(e, status){
+			// if(e.sysinfo.firmware==$("#newversion").text()) done();
+			// else error("版本不一致");
+            // $("#update-reboot .update-progress-ui span").css("width","100%");
+			// setTimeout(function(){done();},1000);
+            if((e.sysinfo.firmware+".pkg")==newVersion && count>8){
+                // $("#update-reboot .update-progress-ui span").css("width","100%");
+                $("#rebooting .update-progress-ui span").css("width","100%");
+                connect = true;
+                clearTimeout(upgradeTimeout);
+                return done();
+            }
+		} , function (XHR, e) {
+			console.log((XHR.status+e));
+            connect = false;
+		})
+        
+	}
+    $("#update-done .update-complete-btn").on("click",function(){
+        if(connect){
+            location.href = "index.html";
+        }else{
+            if(app_type && localControl.getValue("appVer", 0)>=2) {
+                localControl.notify("UpgradeDone");
+                localControl.startPage("CameraManager");
+            }else {
+                localControl.notify("UpgradeDone");
+                localControl.startPage("DeviceListPage");
+            }
+        }
+    })
+	function timeout(){
+		$(".dialog-cover").show();
+		$(".update-steps").show();
+		$("#update-timeout").show().siblings().hide();
+		setUpdateEnd();
+	}
+    var apSecondTimeout=null;
+    var duration=null;
+	function apUpdate(){
+        apSecondTimeout = setTimeout(apUpdate, 1000);
+        if(duration){
+            apSecond += duration;
+            duration = null;
+        }
+		if(apSecond>120) {
+			$("#updateBack").show();
+		}
+		if(apSecond==300){
+			if(app_type && localControl.getValue("appVer", 0)>=2) {
+				localControl.notify("UpgradeDone");
+				localControl.startPage("CameraManager");
+			}else {
+				localControl.notify("UpgradeDone");
+				localControl.startPage("DeviceListPage");
+			}
+			location.href = "index.html";
+			return
+		}
+		
+		$(".dialog-cover").show();
+		$(".update-steps").show();
+		// if(language && language=="en"){
+		// 	$("#update-ap-msg").text("Elapsed time "+apSecond+" seconds(wait 120 seconds)");
+		// }else{
+		// 	$("#update-ap-msg").text("已用时 "+apSecond+" 秒，预计用时2分钟");
+		// }
+		$("#update-ap-msg").text("已用时 "+apSecond+" 秒");
+		// $("#update-ap-msg").text("已用时 "+apSecond+" 秒，预计用时2分钟");
+		$("#update-ap").show().siblings().hide();
+		apSecond++;
+	}
+    var stopTime,startTime,updateFlag = false;
+    
+	function setUpdateEnd(){
+		console.log("setUpdateEnd");
+		localControl.updateStartTime("updateEnd");
+		localControl.notify("networkMonitorOn");
+		// setTimeout(function(){
+		// 	localControl.notify("LostConn");
+		// },300);
+	}
+	function setUpdateStartTime(){
+		console.log("setUpdateStartTime");
+		var d=new Date();
+		var t=transTime(d, "en");
+		localControl.updateStartTime(t);
+		localControl.notify("networkMonitorOff");
+	}
+	function update(){
+		getJSON("/upgrade", function(e, status){
+			if(e.status=="done") {return done();}
+			else if(e.status=="error") {return error3(e.errorMsg);}
+			else if(e.status=="rebooting") {return reboot();}
+			else if(e.status=="downloading") {downloading(e.percentage);}
+            else if(e.status=="checking") {downloading(0)}
+			else if(e.status=="writing") {
+				writing(e.percentage);
+
+			}else if(e.status=="verifying"){verifying();
+            }else if(e.status=="fixing"){fixing();
+            }else if("currentVersion" in e){
+                if(new Date().getTime()-upgradeStartTime>10000){
+                    return done();
+                }
+            }
+			// $("#newversion").text(e.version);
+			upgradeTimeout=setTimeout(update, 400);
+		},function (XHR, e) {
+			console.log((XHR.status+e));
+			upgradeTimeout=setTimeout(update, 2000);
+		})
+	}
+    var stopFlag = true;
+    document.addEventListener("visibilitychange",function(e){
+        if(document.hidden){//网页被挂起
+            if(updateFlag){
+                stopTime = new Date().getTime();
+                // console.log("网页被挂起："+stopTime);
+                // clearTimeout(apSecondTimeout);
+            }
+        }else{//网页被呼出
+            if(updateFlag){
+                upgardeBackTime = new Date().getTime();
+                duration = upgardeBackTime-upgradeStartTime;
+                if(!app_type) return;
+                if(parseInt(upgardeBackTime-upgradeStartTime)>=120*1000){
+                    clearTimeout(upgradeTimeout);
+                    return done();
+                }else{
+                    getJSON("/upgrade",function(){
+                        clearTimeout(upgradeTimeout);
+                        update();
+                        stopFlag = false;
+                    },function(xhr,e){
+                        if(stopFlag){
+                            clearTimeout(upgradeTimeout);
+                            $("#writing").show().siblings().hide();
+                            var rest = 120000 - duration;
+                            $("#writing .update-progress-ui span").css("width",String(parseInt(duration/1000/120*100))+"%");
+                            $("#writing .update-progress-ui span").animate({
+                                width:"100%"
+                            },rest,function(){
+                                done();
+                            });
+                        }
+                    })
+                }
+                // startTime = new Date().getTime();
+                // duration = parseInt((startTime-stopTime)/1000);
+                // console.log("网页被呼出："+startTime+"\nduration:"+duration);
+                // apUpdate();
+            }
+        }
+    })
+	//点击返回按钮返回上一页
+	$(".update-complete-btn.timeout").on("click",function () {
+		if(app_type && localControl.getValue("appVer", 0)>=2) {
+			localControl.notify("UpgradeDone");
+			localControl.startPage("CameraManager");
+		}else {
+			localControl.notify("UpgradeDone");
+			localControl.startPage("DeviceListPage");
+		}
+		location.href = "index.html";
+	});
+	$("#update-error .update-complete-btn").on("click",function(){
+		$("#update-error,.dialog-cover").hide();
+	})
+	$("#updateCancel").on("click",function(){
+		$("#updateLog").hide();
+		$(".dialog-cover").hide();
+	})
+	$("#updateConfirm").on("click",function(){
+		$("#updateLog").hide();
+		$("#update-prompt,.dialog-cover").show();
+		$("#update-prompt").attr("type","direct");
+		
+	})
+	// $(".upgrade-btn").on("click",function(event){//链接升级
+	// 	if($(".upgrade-url").val() == ""){
+	// 		return error("请输入升级链接");
+	// 	}else{
+	// 		$("#update-prompt,.dialog-cover").show();
+	// 		$("#update-prompt").attr("type","url");
+	// 	}
+	// });
+    // $("#updateConfirm2").on("click",function(){
+
+
+	$(".upgrade-btn").on("click",updating);//点击升级按钮升级
+    function updating(){
+        $("#update-prompt,.dialog-cover").hide();
+        $(".forUpdate").show().siblings().hide();
+        setUpdateStartTime();
+        getJSON("/status",function(e,status){
+            if(e.wlan.status == "unconnected"){error(language=="en"?"No internet! Please connect WLAN and try again.":"未检测到网络，请先连接Wlan再尝试！"); return false}
+            if(e.sdcard == "UNPLUG") {error(language=="en"?"Micro SD card not detected!  Please insert the card, then retry!":"未检测到存储卡，请插入存储卡后重试！"); return false}
+            if(e.available < 1024*50) {error(language=="en"?"Not enough storage space (50MB free space minimum)":"存储空间不足，至少需要50M空间！"); return false} 
+            if(e.recordinfo.status!="idle") {error(language=="en"?"Unable to upgrade due to shooting in progress and/or an active shooting schedule!Please terminate all and then retry!":"有拍摄任务或定时任务，无法升级；停止任务后即可升级");return false} 
+            if(skip_bat_chk!=1){
+                if(e.battery.status == "no_battery") {error(language=="en"?"Unable to upgrade due to battery not installed! Please install battery and then retry.":"未安装电池，无法升级；请安装电池后重试");return false}
+                if(e.battery.status=="discharging" && e.battery.capacity<20) {error(language=="en"?"Unable to upgrade due to low battery! Please connect external power source and then retry.":"电量过低，无法升级；请连接充电电源后重试 ");return false}
+            }
+            
+            // if($("#update-prompt").attr("type")=="url"){
+                // urlSplit =  $.trim($(".upgrade-url").val()).split("/");
+                // if(!urlSplit[3]) {return error("无效链接！")}
+                // else{newVersion = urlSplit[3];console.log("the new version is "+newVersion)}
+                var url = $.trim($(".upgrade-url").val());
+                if(downloadFlag == 1){
+                    url = latest_fw_url;
+                }
+                postJSON("/upgrade",{urlUpgrade:url},function(){
+                    upgradeStartTime = new Date().getTime();
+                    downloading(0);
+                    setTimeout(update,400);
+                    // apUpdate();
+                    updateFlag = true;//安卓升级数秒bug的flag
+                },function(XHR,errorType,errorText){
+                    error("相机没有回应！");
+                    console.log(XHR.status+"-"+XHR.statusText);
+                },"text")
+            // }
+   //          else{
+            //  postJSON("/upgrade", {upgrade:1}, function(e, status){
+            //      downloading(0);
+            //      setTimeout(update, 400);    
+            //      // apUpdate();
+            //  }, function (jqXHR, exception) {
+            //      error("相机没有回应！");
+            //      console.log((jqXHR.status+exception));
+            //  }, "text");
+            // }
+        })
+    }
+	$("#updateCancel2").on("click",function(){
+		$("#update-prompt,.dialog-cover").hide();
+	});
+	//获取更新日志
+	getJSON("images/upgrd.cn.log", function(e, status){
+		var arr=e.split("\n");
+		for(var i=0;i<arr.length;i++){
+			var p="<p>"+arr[i]+"</p>";
+			$(".dialog-poppup-content").append(p);
+            if(p.includes(")")){
+                $(".log-content p:last").css("text-indent","2em");
+            }
+		}
+	}, function (jqXHR, exception) {
+		console.log((jqXHR.status+exception));
+	}, "text");
+
+	//关闭开启对焦辅助
+	if(enableFocus == 1){$("#enableFocus").prop("checked",true)}
+	else{$("#enableFocus").prop("checked",false)}
+	$("#enableFocus").on("click", function(){
+		var v=0;
+		if($(this).prop("checked")) v=1;
+		localControl.putValue("enableFocus",v);
+		console.log("enableFocus:"+v);
+	});
+	//关闭开启app升级通道
+	var SDUpgradeDialog = localControl.getValue("SDUpgradeDialog",0);
+	if(SDUpgradeDialog == 0){$("#SDUpgradeDialog").prop("checked",false)}
+	else{$("#SDUpgradeDialog").prop("checked",true)}
+	$("#SDUpgradeDialog").on("click", function(){
+		var v=0;
+		if($(this).prop("checked")) v=1;
+		localControl.putValue("SDUpgradeDialog",v);
+	});
+
+	/* 测试用start*/
+        $("#dotestNewWifi").on("click", function(){
+                var v1=$("#testNewWifi input").eq(0).val();
+                var v2=$("#testNewWifi input").eq(1).val();
+		var srcs = CryptoJS.enc.Utf8.parse(v2);                                                                       
+		var key = CryptoJS.enc.Utf8.parse(getAccessKey());  
+		var password = CryptoJS.RC4.encrypt(srcs, key);
+		console.log(v1+" "+v2+" "+getAccessKey()+" "+password);
+		password=password.ciphertext.toString(CryptoJS.enc.Base64);
+		console.log(password);
+                postJSON("/connect_to_wifi" , {ssid:v1, password:password}, function (data) {
+                        if(data.result==0) alert("连接失败:"+data.reason);
+                        else alert("连接成功");
+                }, function (e, status) {
+                        console.log("HTTP失败 " + e.status);
+                });
+        });
+	$("#send").on("click", function(){
+		if($("#schedule").val()) startRecording($("#schedule").val());
+	});
+	$("#doSetRemote").on("click", function(){ // 远程控制
+		var ip=$("#setRemote input").eq(0).val();
+		var port=$("#setRemote input").eq(1).val();
+		var id=$("#setRemote input").eq(2).val();
+		postJSON("/radm" , {server:ip,port:port,id:id}, function (data) {
+			$("#testAlert .dialog-poppup-content").text("设置远程控制成功！ID:"+id);
+			$("#testAlert").show();
+		}, function(e, s){
+			console.log("HTTP失败 " + e.status);
+		}, "text")
+	})
+	$("#dotestPut").on("click", function(){
+		var k=$("#testPut input").eq(0).val();
+		var v=$("#testPut input").eq(1).val();
+		if(k) {
+			localControl.putValue(k, v);
+			$("#testAlert .dialog-poppup-content").text("已设置"+k+":"+v+",请用GET测试是否成功");
+			$("#testAlert").show();
+			// alert("已设置"+k+":"+v+",请用GET测试是否成功");
+		}
+	});
+	$("#testConfirm").on("click",function(){
+		$("#testAlert").hide();
+        if($("#testConfirm").attr("type")=="rebootNow"){
+            if(app_type && localControl.getValue("appVer", 0)>=2) {
+                localControl.notify("UpgradeDone");
+                localControl.startPage("CameraManager");
+            }else {
+                localControl.notify("UpgradeDone");
+                localControl.startPage("DeviceListPage");
+            }
+        }
+	});
+	$("#dotestGet").on("click", function(){
+		var k=$(this).nextAll("input:eq(0)").val();
+		if(k) {
+			// alert("GET("+k+")返回："+localControl.getValue(k, null));
+			$("#testAlert .dialog-poppup-content").text("GET("+k+")返回："+localControl.getValue(k, null));
+			$("#testAlert").show();
+		}
+	});
+	$("#dotestUpdate").on("click", function(){
+		var v1=$("#testUpdate input").eq(0).val();
+		var v2=$("#testUpdate input").eq(1).val();
+		var v3=$("#testUpdate input").eq(2).val();
+		if(v1 && v2 && v3) {
+			localControl.updatePwd(v1, v2, v3);
+			// alert("已设置SSID:"+v1+",PASSWORD:"+v2+",KEY:"+v3+",请用GET测试是否成功");
+			$("#testAlert .dialog-poppup-content").text("已设置SSID:"+v1+",PASSWORD:"+v2+",KEY:"+v3+",请用GET测试是否成功");
+			$("#testAlert").show();
+		}
+	});
+	$("#dotestDel").on("click", function(){
+		var v=$(this).nextAll("input:eq(0)").val();
+		if(v) {
+			localControl.deleteDevice(v);
+			// alert("已设置删除设备:"+v+",请用检查是否成功");
+			$("#testAlert .dialog-poppup-content").text("已设置删除设备:"+v+",请用检查是否成功");
+			$("#testAlert").show();
+
+		}
+	});
+	$("#dotestPage").on("click", function(){
+		var v=$(this).nextAll("input:eq(0)").val();
+		if(v) {
+			// alert("即将跳转设备页面:"+v+",请检查是否跳转成功");
+			$("#testAlert .dialog-poppup-content").text("即将跳转设备页面:"+v+",请检查是否跳转成功");
+			$("#testAlert").show();
+			localControl.startPage(v);
+		}
+	});
+	$("#dotestWifi").on("click", function(){
+		var k=$("#testWifi input").eq(0).val();
+		var v=$("#testWifi input").eq(1).val();
+		if(k && v) {
+			//alert("手机即将连接wifi:"+k+"， 密码:"+v+"，请检查是否成功");
+			localControl.connectWifi(k, v);
+		}
+	});
+	$("#dotestUpFirmware").on("click", function(){
+		localControl.upFirmware();
+	});
+	$("#dotestVideo").on("click", function(){
+		var v=$(this).nextAll("input:eq(0)").val();
+		if(v) location.href = v+".html";
+	});
+
+    $("#devToolTitle").on("click",function(){
+        $(".developeTools").toggle();
+        $("#forRight,#forLeft").toggle();
+    });
+    $("#videoCron").on("click",function(){
+        $("#loopTime").toggle();
+        $("#cronforRight,#cronforLeft").toggle();
+    })
+
+	/* 测试用end */
+    $("#downloadLogs").on("click",function(){
+        $("#logsPrompt,.dialog-cover").show();
+    });
+    $("#logsCancel").on("click",function(){
+        $("#logsPrompt,.dialog-cover").hide();
+    });
+    $("#logsConfirm").on("click",function(){
+        $("#logsPrompt,.dialog-cover").hide();
+        postJSON("/tgz",{tgz:"logs"},function(){
+            getLogStatus();
+        },function(){
+            $("#logsShow .dialog-poppup-content").html(language=="en"?"No logs file yet":"暂无日志文件");
+            $("#logsShow").show();
+            setTimeout(function(){
+                $("#logsShow").hide();
+            },2000);
+        },"text")
+    });
+    var errCount = 0
+    function getLogStatus(){
+        getJSON("/tgz",function(data){
+            if(data.status=="doing"){
+                $("#logsShow .dialog-poppup-content").html(language=="en"?"Compressing...":"正在压缩文件...");
+                $("#logsShow").show();
+                setTimeout(getLogStatus,1000);
+            }else if(data.status=="done"){
+                $("#logsShow .dialog-poppup-content").html(language=="en"?"Done":"压缩完毕");
+                downloadLogs();
+            }
+        },function(xhr,errorText,errorType){
+            errCount++;
+            if(errCount<5){
+                setTimeout(getLogStatus,1000);
+            }else{
+                $("#logsShow .dialog-poppup-content").html(language=="en"?"Get status Error":"压缩失败");
+                $("#logsShow").show();
+                setTimeout(function(){
+                    $("#logsShow").hide();
+                },2000)
+            }
+            
+        })
+        
+    }
+    function downloadLogs() {
+        $("#logsShow").hide();
+        var link = document.createElement('a');
+        link.setAttribute("download", "");
+        link.href = "/media/logs.tgz"+(getAccessToken()?'?access_token='+getAccessToken():'');
+        link.click();
+        setTimeout(function(){postJSON("/tgz", {rm:"logs.tgz"})}, 1000);
+    }
+
+
+    var now = new Date();  //获取当前时间
+//      now = now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+' '+now.getHours()+':'+(now.getMinutes()+1)+':'+'0';
+//      now = new Date(now);
+        now = new Date(now.getTime()+60000-now.getTime()%60000);
+        maxDate = new Date(now.getFullYear() + 50, now.getMonth(), now.getDate());  //最大时间设置为两年后
+    $("#bydayEndTime,#bydayStartTime").val(transTimeHIS(now, "en"));
+    function genRolldate(objStr, format){
+        var title;
+        if(objStr.indexOf("tart") > 0){
+            title=language=='en'?'Start Time':'开始时间';
+        }else {
+            title=language=='en'?'End Time':'结束时间';
+        }
+
+       new Rolldate({
+        el: '#'+objStr,
+        format: format,
+        beginYear: now.getFullYear(),
+        endYear: now.getFullYear()+50,
+        lang:language=='en'?{title:title,cancel:'Cancel',confirm:'Confirm',year:'&nbsp;',month:'&nbsp;',day:'&nbsp;',hour:'&nbsp;',min:'&nbsp;',sec:'&nbsp;'}:{title:title,year:'年',month:'月',day:'日',hour:'时',min:'分',sec:'秒'},
+        init: function() {
+            if(objStr.indexOf("byday") >= 0){
+                document.getElementById(objStr).bindDate = 
+                new Date(now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate()+' '+$("#"+objStr).val());
+            }
+            else {
+                var d=new Date($("#"+objStr).val().replace(/-/g, "/"));
+                console.log("last:"+$("#"+objStr).val()+" "+d);
+                console.log("now:"+now);
+                if(d.getTime() < now.getTime()) d = now;   //旧时间比当前时间小，用当前时间代替
+                document.getElementById(objStr).bindDate = d;
+            }
+        }
+       })
+    }
+    genRolldate("bydayStartTime", "hh:mm:ss");
+    genRolldate("bydayEndTime", "hh:mm:ss");
+    $("#addPeriod").on("click",function(){
+        $(".iconfont.confirm").siblings("p").text(language=="en"?"Add a time slot":"添加时段")
+        $(".reset-btn,.alpha-upgrade,#setting-head,#setting-cron").toggle();
+        $("#forPeriodSet").toggle();
+        $(".cron-btns-del").hide();
+    });
+    $(".iconfont.cancel").on("click",function(){
+        $(".reset-btn,.alpha-upgrade,#setting-head,#setting-cron").toggle();
+        $("#forPeriodSet").toggle();
+    })
+    function HMScmp(hms1, hms2)
+    {
+        var now=new Date();
+        var t1=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+(now.getDate())+" "+hms1));
+        var t2=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+(now.getDate())+" "+hms2));
+        if(t1>t2) return 1;
+        else if(t1<t2) return -1;
+        else return 0;
+    }
+    // function genHMS(time){
+    //     var timeSplit = time.split(":");
+    //     return timeSplit[0]+timeSplit[1]+timeSplit[2];
+    // }
+    //保存时段
+    $(".iconfont.confirm").on("click",function(){
+        console.log($("#bydayStartTime").val()+" "+$("#bydayEndTime").val());
+        if(HMScmp($("#bydayStartTime").val(), $("#bydayEndTime").val())>=0) {
+            if(language && language=="en"){
+                $("#periodPrompt").html("Start time must be earlier than the End time.");
+            }else{
+                $("#periodPrompt").html("结束时间不能早于开始时间");
+            }
+            
+            $("#periodPrompt").show();
+            setTimeout(function(){
+                $("#periodPrompt").hide();
+            },2000)
+            // alert("结束时间不能早于开始时间");
+            return;
+        }
+        if($(".iconfont.confirm").siblings("p").text()=="添加时段" || $(".iconfont.confirm").siblings("p").text()=="Add a time slot"){ //添加一个时段
+            var index=$("#periodList").children().size()+1;
+            var lastPeriodEndTime=$("#seq"+(index-1)+" td:eq(2)").text();
+            if(HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<=0){
+                if(language && language=="en"){
+                    $("#periodPrompt").html("The beginning time cannot be earlier than <br>the end time of the last Time Slot "+lastPeriodEndTime);
+                }else{
+                    $("#periodPrompt").html("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
+                }
+                
+                $("#periodPrompt").show();
+                setTimeout(function(){
+                    $("#periodPrompt").hide();
+                },2000)
+                // alert("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
+                return;
+            }
+            $("#periodList").append("<tr id='seq"+index+"'/>");
+            updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val());
+        } else { //修改时段
+            var index=parseInt($(".iconfont.confirm").siblings("p").attr("seq"));
+            var lastPeriodEndTime=$("#seq"+(index-1)+" td:eq(2)").text();
+            var nextPeriodStartTime=$("#seq"+(index+1)+" td:eq(1)").text();
+            if(lastPeriodEndTime && HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<=0){
+                if(language && language=="en"){
+                    $("#periodPrompt").html("The Start time cannot be earlier than <br>The End Time of the last Time Slot "+lastPeriodEndTime);
+                }else{
+                    $("#periodPrompt").html("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
+                }
+                $("#periodPrompt").show();
+                // alert("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
+                return;
+            }
+            if(nextPeriodStartTime && HMScmp($("#bydayEndTime").val(), nextPeriodStartTime)>=0){
+                if(language && language=="en"){
+                    $("#periodPrompt").html("The End Time must be earlier than <br>The Start Time of the next Time Slot "+nextPeriodStartTime);
+                }else{
+                    $("#periodPrompt").html("结束时间不能晚于下个时段的开始时间"+nextPeriodStartTime);
+                }
+                
+                $("#periodPrompt").show();
+                // alert("结束时间不能晚于下个时段的开始时间"+nextPeriodStartTime);
+                return;
+            }
+            updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val());
+            
+        }
+        $(".reset-btn,.alpha-upgrade,#setting-head,#setting-cron").toggle();
+        $("#forPeriodSet").toggle();
+        // mode="common";
+    })
+    //页面更新某个时段信息
+    function updateSeq(index, startAt, endAt){
+        var seqtr="#seq"+index;
+        if(language && language=="en"){
+            $(seqtr).html("<td class=\"bottom-line\"><a href=\"javascript:;\" class=\"cron-time-enter\" seq=\""+index+"\">Time Slot"+index+"</a></td>"
+            +"<td>"+startAt+"</td>"
+            +"<td>"+endAt+"</td>"
+            );
+        }else{
+            $(seqtr).html("<td class=\"bottom-line\"><a href=\"javascript:;\" class=\"cron-time-enter\" seq=\""+index+"\">时间段"+index+"</a></td>"
+            +"<td>"+startAt+"</td>"
+            +"<td>"+endAt+"</td>"
+            );
+        }
+        
+        $(".cron-time-enter").each(function(e){ //修改时间段窗口
+            
+            $(this).on("click",function(){
+                console.log("this seq = "+$(this).attr("seq"))
+                $(".cron-btns-del").show();
+                $(".reset-btn,.alpha-upgrade,#setting-head,#setting-cron").hide();
+                $("#forPeriodSet").show();
+                var index=$(this).attr("seq");
+                if(language && language=="en"){
+                    $(".iconfont.confirm").siblings("p").text("Modify Time Slot"+index).attr("seq", index);
+                }else{
+                    $(".iconfont.confirm").siblings("p").text("修改时段"+index).attr("seq", index);
+                }
+                
+                // mode="period";
+                //载入选中的时间段信息
+                var td=$(this).parent().next();
+                $("#bydayStartTime").val(td.text());
+                td=td.next();
+                $("#bydayEndTime").val(td.text());
+                td=td.next();
+            })
+        })
+
+    }
+    //删除时间段
+    $(".cron-btns-del").on("click",function(){
+        $(".reset-btn,.alpha-upgrade,#setting-head,#setting-cron").toggle();
+        $("#forPeriodSet").toggle();
+        // mode="common";
+        index=$("#forPeriodSet p").attr("seq");
+        $("#periodList tr").eq(index-1).remove();
+        //列表重新排序
+        var length=$("#periodList tr").length;
+        for(var i=1;i<=length;i++){
+            $("#periodList tr").eq(i-1).attr("id","seq"+i);
+            if(language && language=="en"){
+                $("#periodList .cron-time-enter").eq(i-1).attr("seq",i).text("Time Slot"+i);
+            }else{
+                $("#periodList .cron-time-enter").eq(i-1).attr("seq",i).text("时段"+i);
+            }
+            
+        }   
+    });
+
+    //录像定时任务开启停止
+    $(".videoButton").on("click",function(){
+        if(videoCronNum==1){
+            postJSON("/setting",{videoCronSwitch:0},function(){
+                $(".videoButton").text("提交任务");
+                videoCronNum=0;
+            },function(){
+                console.log("post setting error");
+            },"text")
+            
+            return;
+        }
+        if(status!="idle" && (videoCronNum==0 || !videoCronNum)){
+            console.log(status+"===="+videoCronNum)
+            $(".statusPrompt").text("当前正在拍摄，请停止拍摄后提交任务");
+            $(".statusPrompt").show();
+            setTimeout(function(){
+                $(".statusPrompt").hide();
+            },2000);
+            return;
+        }
+        
+        var periodList = $("#periodList tr");
+        var cronList = new Array();
+        var cronStr = "";
+        if(periodList.length==0){return}
+        for(var i=0; i<periodList.length; i++){
+            var td1 = $("#seq"+(i+1)+" td:eq(1)").text();
+            var td2 = $("#seq"+(i+1)+" td:eq(2)").text();
+            // console.log("td1:"+td1+"\n"+"td2:"+td2);
+            cronList[i] = {
+                seq: i+1,
+                startAt: td1,
+                endAt: td2
+            }
+            // var td1list = td1.split(":");
+            // var td2list = td2.split(":");
+            if(i<periodList.length-1){
+                cronStr+="S"+genHMS(td1)+"E"+genHMS(td2)+","
+            }else{
+                cronStr+="S"+genHMS(td1)+"E"+genHMS(td2)
+            }
+        }
+        // if(sessionType!="video"){
+        //     postJSON("/switch_session", { type: "video" }, function(e, status){
+        //         console.log("switch_session video ok");
+        //         postJSON("/videoCron",cronList);
+        //         postJSON("/videoCron",{videoCronText:cronStr},function(){
+        //             // if(language && language=="en"){
+        //             //     location.href="index.html?language=en";
+        //             // }else{
+        //             //     location.href="index.html?language=zh";
+        //             // }
+        //         },function(){
+        //             console.log("post videoCron error videoCronText");
+        //         },"text");
+        //     }, function () {
+        //         console.log("switch_session video error");
+        //     }, "text");
+        //     return;
+        // }
+        postJSON("/videoCron",cronList);
+        postJSON("/videoCron",{videoCronText:cronStr},function(){
+            
+            $(".statusPrompt").text("定时任务开启").show();
+            setTimeout(function(){
+                $(".statusPrompt").hide();
+                if(language && language=="en"){
+                    location.href="index.html?language=en";
+                }else{
+                    location.href="index.html?language=zh";
+                }
+            },2000)
+        },function(){
+            console.log("switch_session video error");
+        },"text");
+        
+    })
+})
+</script>
+</body>
+</html>
