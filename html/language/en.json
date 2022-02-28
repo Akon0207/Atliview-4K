@@ -326,5 +326,7 @@
 	"loadingText":"Submitted. Testing...",
 	"syncLog":"Synchronization Log",
 	"logBtn":"View Log",
-	"testBtn":"Test"
+	"testBtn":"Test",
+	"expMode":"Expo Mode"
+	
 }

@@ -326,5 +326,6 @@
 	"loadingText":"提交成功，正在测试...",
 	"syncLog":"同步日志",
 	"logBtn":"检查日志",
-	"testBtn":"测试"
+	"testBtn":"测试",
+	"expMode":"曝光模式"
 }
