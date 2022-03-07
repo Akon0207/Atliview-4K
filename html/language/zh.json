@@ -327,5 +327,6 @@
 	"syncLog":"同步日志",
 	"logBtn":"检查日志",
 	"testBtn":"测试",
-	"expMode":"曝光模式"
+	"expMode":"曝光模式",
+	"resolution":"分辨率"
 }

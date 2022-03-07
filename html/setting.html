@@ -40,6 +40,12 @@
 		</div>
 		<div class="setting-item">
 	        <a href="javascript:;" class="flex flex-middle">
+	            <div class="setting-item-name fx1 outPut" lan="resolution">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	            <div class="setting-item-info" id="resolution">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	        </a>
+		</div>
+		<div class="setting-item">
+	        <a href="javascript:;" class="flex flex-middle">
 	            <div class="setting-item-name fx1 grid" lan="grid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 	            <input type="checkbox"  class="switch-box" id="grid"></input>
 	        </a>
@@ -175,11 +181,17 @@
 			<li>
 				<i  lan="pictureMode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
 			</li>
-			<!-- <li>
-				<i  lan="mp4JpgTime">输出mp4+jpg+timeslice</i>
-			</li> -->
 		</ul>
-<!-- 		<div class="outPutDiscript" lan="outPutDiscript">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div> -->
+	</div>
+	<div class="resolutionMode">
+		<ul>
+			<li class="on">
+				<i> 4 K </i>
+			</li>
+			<li>
+				<i>1080P</i>
+			</li>
+		</ul>
 	</div>
 
 	<div class="dialog-poppup" id="outPutPro">
@@ -248,6 +260,7 @@ $(function(){
 	var timeObj = {0:0,5:1,10:2}
 	var shootStatus = null;
 	var sessionType = null;
+	var resolutionArray = new Array("4K","1080P");
 	if(language && language=="en"){
 		$("#wlanSSID").parents("a").attr("href","setting_wlan.html?language=en");
 		$("#cronEnable").parents("a").attr("href","setting_cron.html?language=en");
@@ -460,6 +473,12 @@ $(function(){
 			$(".dormantMode li").eq(dormantIndexArray[e.autoDormant]).addClass("on").siblings().removeClass("on");
 			$("#autoDormant").text(dormantArray[dormantIndexArray[e.autoDormant]]);
 		}
+		//分辨率
+		if("resolution" in e){
+			var index = resolutionArray.indexOf(e.resolution);
+			$(".resolutionMode li").eq(index).addClass("on").siblings().removeClass("on");
+			$("#resolution").text($(".resolutionMode li").eq(index).find("i").text());
+		}
 		/*网格线*/
 		if("grid" in e){
 			if(e.grid == 0){
@@ -611,6 +630,27 @@ $(function(){
 	$("#outPutProNo").on("click",function(){
 		$("#outPutPro,.dialog-cover").hide();
 	})
+	// 分辨率
+	$("#resolution").on("click",function(){
+		if(shootStatus=="cronRunning" || shootStatus=="recording" || shootStatus == "pausing"){
+			$(".shoot-prompt").show();
+			setTimeout(function(){
+				$(".shoot-prompt").hide();
+			},2000);
+			return false;
+		}
+		$(".resolutionMode,.dialog-cover").show();
+		$(".dialog-cover").addClass("tp");
+	})
+	
+	$(".resolutionMode li").each(function(index){
+		$(this).on("click",function(){
+			$(".resolutionMode,.dialog-cover").hide();
+			$(this).addClass("on").siblings().removeClass("on");
+			$("#resolution").text($(this).find("i").text());
+			postJSON("/setting",{resolution:resolutionArray[index]});
+		})
+	})
 	/*自动休眠*/
 	$("#autoDormant").on("click",function(){
 		// e.stopPropagation();
@@ -685,7 +725,7 @@ $(function(){
 	});
 	$("body").on("click", ".dialog-cover", function(e){
 		e.stopPropagation();
-		$(".dormantMode,.dialog-cover,.outPutMode,.cutOffMode,.continueMode,#outPutPro").hide();
+		$(".dormantMode,.dialog-cover,.outPutMode,.cutOffMode,.continueMode,#outPutPro,.resolutionMode").hide();
 		$(".dialog-cover").removeClass("tp");
 		console.log("this is ..............dialog-cover click");
 	});

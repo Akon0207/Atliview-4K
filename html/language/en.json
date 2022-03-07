@@ -327,6 +327,7 @@
 	"syncLog":"Synchronization Log",
 	"logBtn":"View Log",
 	"testBtn":"Test",
-	"expMode":"Expo Mode"
+	"expMode":"Expo Mode",
+	"resolution":"resolution"
 	
 }
