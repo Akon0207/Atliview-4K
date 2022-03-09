@@ -180,10 +180,10 @@
 						<i class="iconfont" mode-name="ir-fantasy">&#xe67d;</i>
 						<p lan="infrared">&nbsp;&nbsp;&nbsp;&nbsp;</p>
 					</li>
-					<li id="manual">
+					<!-- <li id="manual">
 						<i class="iconfont" mode-name="manual">&#xe61c;</i>
 						<p lan="manual">&nbsp;&nbsp;&nbsp;&nbsp;</p>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 			<div class="customMode">
@@ -484,8 +484,8 @@
 			</div>
 		</div> -->
 		<!-- 自定义预设场景 start -->
-		<div class="customModePro" lan="customModePro">最多允许创建10个场景模式</div>
-		<div class="customModeBtn"><span id="addNewMode" lan="addNewMode">新建场景模式</span><span id="coverMode" lan="coverMode">覆盖保存</span><div class="iconfont forRight on">&#xe66c;</div><div class="iconfont forLeft">&#xe66b;</div></div>
+		<!-- <div class="customModePro" lan="customModePro">最多允许创建10个场景模式</div> -->
+		<!-- <div class="customModeBtn"><span id="addNewMode" lan="addNewMode">新建场景模式</span><span id="coverMode" lan="coverMode">覆盖保存</span><div class="iconfont forRight on">&#xe66c;</div><div class="iconfont forLeft">&#xe66b;</div></div> -->
 		<div class="dialog-poppup" id="saveCustomMode">
 			<div class="dialog-poppup-tit" lan="addNewModeTitle" id="addNewModeTitle">根据当前设置新建场景模式</div>
 			<div class="dialog-poppup-tit" lan="repairMode" id="repairModeTitle">修改名称和图标</div>
@@ -619,85 +619,88 @@
 			</div>
 			-->
 			<div class="setting-bar">
-				<!-- 快门时间 -->
-				<div class="parameter-exprosure">
-					<div class="swiper-container">
+
+				<!-- 曝光控制 -->
+				<div class="parameter-expmode">
+					<!-- 感光度 -->		
+					<div class="parameter-slider parameter-gian">
+						<div class="flex">
+							<div class="slider-minus iconfont">&#xe67e;</div>
+							<input id="s0" data-slider-id='gianSlider' type="text" data-slider-min="100" data-slider-max="6200" data-slider-step="100" data-slider-value="1600" data-slider-default="1600" />
+							<div class="slider-plus iconfont">&#xe67f;</div>
+							<!-- <div class="slider-manual on" lan="manual">手动</div>
+							<div class="slider-auto" lan="auto">自动</div> -->
+						</div>
+					</div>	
+					<!-- 感光度 -->
+
+					<!-- 快门时间 -->
+					<div class="parameter-exprosure">
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+								<!-- <div class="swiper-slide" lan="auto">自动</div> -->
+								<div class="swiper-slide">1/20K<span lan="second">秒</span></div>
+								
+								<div class="swiper-slide">1/10K<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/5K<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/2.5K<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/1000<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/500<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/250<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/125<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/60<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/50<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/30<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/25<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/15<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/8<span lan="second">秒</span></div>
+								<div class="swiper-slide">1/4<span lan="second">秒</span></div>
+								<div class="swiper-slide on">1/2<span lan="second">秒</span></div>
+								<div class="swiper-slide">1<span lan="second">秒</span></div>
+								<div class="swiper-slide">2<span lan="second">秒</span></div>
+								<div class="swiper-slide">3<span lan="second">秒</span></div>
+								<div class="swiper-slide">4<span lan="second">秒</span></div>
+								<div class="swiper-slide">5<span lan="second">秒</span></div>
+								<div class="swiper-slide">6<span lan="second">秒</span></div>
+								<div class="swiper-slide">7<span lan="second">秒</span></div>
+								<div class="swiper-slide">8<span lan="second">秒</span></div>
+								<div class="swiper-slide">9<span lan="second">秒</span></div>
+								<div class="swiper-slide">10<span lan="second">秒</span></div>
+								<div class="swiper-slide">11<span lan="second">秒</span></div>
+								<div class="swiper-slide">12<span lan="second">秒</span></div>
+								<div class="swiper-slide">13<span lan="second">秒</span></div>
+								<div class="swiper-slide">14<span lan="second">秒</span></div>
+								<div class="swiper-slide">15<span lan="second">秒</span></div>
+								<div class="swiper-slide">16<span lan="second">秒</span></div>
+								<div class="swiper-slide">17<span lan="second">秒</span></div>
+								<div class="swiper-slide">18<span lan="second">秒</span></div>
+								<div class="swiper-slide">19<span lan="second">秒</span></div>
+								<div class="swiper-slide">20<span lan="second">秒</span></div>
+								<div class="swiper-slide">21<span lan="second">秒</span></div>
+								<div class="swiper-slide">22<span lan="second">秒</span></div>
+								<div class="swiper-slide">23<span lan="second">秒</span></div>
+								<div class="swiper-slide">24<span lan="second">秒</span></div>
+								<div class="swiper-slide">25<span lan="second">秒</span></div>
+								<div class="swiper-slide">26<span lan="second">秒</span></div>
+								<div class="swiper-slide">27<span lan="second">秒</span></div>
+								<div class="swiper-slide">28<span lan="second">秒</span></div>
+								<div class="swiper-slide">29<span lan="second">秒</span></div>
+								<div class="swiper-slide">30<span lan="second">秒</span></div>
+							</div>
+						</div>
+					</div>	
+					<!-- 快门时间 -->
+
+					<div class="swiper-container" id="expModeSelect">
 						<div class="swiper-wrapper">
-							<!-- <div class="swiper-slide" lan="auto">自动</div> -->
-							<div class="swiper-slide">1/20K<span lan="second">秒</span></div>
-							
-							<div class="swiper-slide">1/10K<span lan="second">秒</span></div>
-							<div class="swiper-slide">1/5K<span lan="second">秒</span></div>
-							<div class="swiper-slide">1/2.5K<span lan="second">秒</span></div>
-							<div class="swiper-slide">1/1000<span lan="second">秒</span></div>
-							<div class="swiper-slide">1/500<span lan="second">秒</span></div>
-							<div class="swiper-slide">1/250<span lan="second">秒</span></div>
-							<div class="swiper-slide">1/125<span lan="second">秒</span></div>
-							<div class="swiper-slide">1/60<span lan="second">秒</span></div>
-							<div class="swiper-slide">1/30<span lan="second">秒</span></div>
-							<div class="swiper-slide">1/15<span lan="second">秒</span></div>
-							<div class="swiper-slide">1/8<span lan="second">秒</span></div>
-							<div class="swiper-slide">1/4<span lan="second">秒</span></div>
-							<div class="swiper-slide on">1/2<span lan="second">秒</span></div>
-							<div class="swiper-slide">1<span lan="second">秒</span></div>
-							<div class="swiper-slide">2<span lan="second">秒</span></div>
-							<div class="swiper-slide">3<span lan="second">秒</span></div>
-							<div class="swiper-slide">4<span lan="second">秒</span></div>
-							<div class="swiper-slide">5<span lan="second">秒</span></div>
-							<div class="swiper-slide">6<span lan="second">秒</span></div>
-							<div class="swiper-slide">7<span lan="second">秒</span></div>
-							<div class="swiper-slide">8<span lan="second">秒</span></div>
-							<div class="swiper-slide">9<span lan="second">秒</span></div>
-							<div class="swiper-slide">10<span lan="second">秒</span></div>
-							<div class="swiper-slide">11<span lan="second">秒</span></div>
-							<div class="swiper-slide">12<span lan="second">秒</span></div>
-							<div class="swiper-slide">13<span lan="second">秒</span></div>
-							<div class="swiper-slide">14<span lan="second">秒</span></div>
-							<div class="swiper-slide">15<span lan="second">秒</span></div>
-							<div class="swiper-slide">16<span lan="second">秒</span></div>
-							<div class="swiper-slide">17<span lan="second">秒</span></div>
-							<div class="swiper-slide">18<span lan="second">秒</span></div>
-							<div class="swiper-slide">19<span lan="second">秒</span></div>
-							<div class="swiper-slide">20<span lan="second">秒</span></div>
-							<div class="swiper-slide">21<span lan="second">秒</span></div>
-							<div class="swiper-slide">22<span lan="second">秒</span></div>
-							<div class="swiper-slide">23<span lan="second">秒</span></div>
-							<div class="swiper-slide">24<span lan="second">秒</span></div>
-							<div class="swiper-slide">25<span lan="second">秒</span></div>
-							<div class="swiper-slide">26<span lan="second">秒</span></div>
-							<div class="swiper-slide">27<span lan="second">秒</span></div>
-							<div class="swiper-slide">28<span lan="second">秒</span></div>
-							<div class="swiper-slide">29<span lan="second">秒</span></div>
-							<div class="swiper-slide">30<span lan="second">秒</span></div>
+							<div class="swiper-slide on" lan="programAuto">程序自动</div>
+							<div class="swiper-slide" lan="shutterPrio">快门优先</div>
+							<div class="swiper-slide" lan="isoPrio">IOS优先</div>
+							<div class="swiper-slide" lan="manual">手动</div>
 						</div>
 					</div>
-				</div>	
-				<!-- 快门时间 -->
-
-				<!-- 感光度 -->		
-				<div class="parameter-slider parameter-gian">
-					<div class="flex">
-						<div class="slider-minus iconfont">&#xe67e;</div>
-						<input id="s0" data-slider-id='gianSlider' type="text" data-slider-min="100" data-slider-max="16000" data-slider-step="100" data-slider-value="1600" data-slider-default="1600" />
-						<div class="slider-plus iconfont">&#xe67f;</div>
-						<!--
-						<div class="slider-manual on" lan="manual">手动</div>
-						<div class="slider-auto" lan="auto">自动</div>
-						-->
-					</div>
-				</div>	
-				<!-- 感光度 -->
-
-				<!-- 曝光补偿 -->
-				<div class="parameter-exposurebiasSlider">
-					<div class="exposurebias-inner">
-						<div class="slider-minus iconfont">&#xe67e;</div>
-						<div class="slider-plus iconfont">&#xe67f;</div>
-					</div>
-					<div class="exposurebias-div">EV<span id="exposurebias-span">0</span></div>
-					<input type="hidden" value="0" id="exposurebias-input">
 				</div>
-				<!--曝光补偿-->
+				<!-- 曝光控制 -->
 
 				<!-- 白平衡 -->
 				<div class="parameter-whiteBalance">
@@ -723,7 +726,7 @@
 					</div>
 				</div>		
 				<!-- 白平衡 -->	
-				
+
 				<!-- 效果 -->
 				<div class="parameter-effect">
 					<!-- 亮度 -->
@@ -797,6 +800,25 @@
 					</div>
 				</div>
 				<!-- 效果 -->
+				
+
+				
+
+				<!-- 曝光补偿 -->
+				<div class="parameter-exposurebiasSlider">
+					<div class="exposurebias-inner">
+						<div class="slider-minus iconfont">&#xe67e;</div>
+						<div class="slider-plus iconfont">&#xe67f;</div>
+					</div>
+					<div class="exposurebias-div">EV<span id="exposurebias-span">0</span></div>
+					<input type="hidden" value="0" id="exposurebias-input">
+				</div>
+				<!--曝光补偿-->
+
+				
+				
+				
+				
 				<!-- 高级 -->
 				<!-- <div class="parameter-infrared">
 					<div class="advance-outer">
@@ -823,18 +845,19 @@
 			<div class="setting-current">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide on" setting-type='exposure'>
+						<!-- <div class="swiper-slide on" setting-type='exposure'>
 							<p lan="shutter">快门时间</p>
 							<span id="exprosure">1/2<span lan="second">秒</span></span>
 						</div>
 						<div class="swiper-slide" setting-type='gain'>
 							<p lan="ISO">感光度</p>
 							<span data-current-name="s0" id="gian">800</span>
+						</div> -->
+						<div class="swiper-slide on">
+							<p lan="expMode">曝光模式</p>
+							<span id="expMode" lan="programAuto"></span>
 						</div>
-						<div class="swiper-slide" setting-type="exposureBias" style="display: none">
-							<p lan="expCom">曝光补偿</p>
-							<span id="exposureBias" data-current-name="s7">0</span>
-						</div>
+						
 						<div class="swiper-slide" setting-type='whitebalance'>
 							<p lan="whiteBal">白平衡</p>
 							<span id="whiteBalance" data-current-name="s5" lan="auto">自动</span>
@@ -842,7 +865,11 @@
 						<div class="swiper-slide" setting-type="effect">
 							<!-- <p lan="effect">效果</p> -->
 							<p lan="effect">图像</p>
-							<span id="effect">&nbsp</span>
+							<span id="effect">&nbsp;</span>
+						</div>
+						<div class="swiper-slide" setting-type="exposureBias" style="display: none">
+							<p lan="expCom">曝光补偿</p>
+							<span id="exposureBias" data-current-name="s7">0</span>
 						</div>
 						<!-- <div class="swiper-slide" setting-type="infrared" style="display:none;">
 							<p lan="infrared">红外</p>
@@ -1169,7 +1196,7 @@ $(function(){
 		$(".iconfont.menu").attr("href","setting.html?language=zh")
 	}
 	// var exposureArray=new Array(1,38,77,153,306,765,1531,3062,6123,12756,25513,51026,95673,191346,382692,765384,1048512);
-	//var exposureArray = new Array("1/20000","1/10000","1/5000","1/2500","1/1000","1/500","1/250","1/125","1/60","1/30","1/15","1/8","1/4","1/2","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30");
+	// var exposureArray = new Array("1/20000","1/10000","1/5000","1/2500","1/1000","1/500","1/250","1/125","1/60","1/50","1/30","1/25","1/15","1/8","1/4","1/2","1/1","2/1","3/1","4/1","5/1","6/1","7/1","8/1","9/1","10/1","11/1","12/1","13/1","14/1","15/1","16/1","17/1","18/1","19/1","20/1","21/1","22/1","23/1","24/1","25/1","26/1","27/1","28/1","29/1","30/1");
 	var exposureArray = new Array("50","100","200","400","1000","2000","4000","8000","16667","20000","33333","40000","66667","125000","250000","500000","1000000","2000000","3000000","4000000","5000000","6000000","7000000","8000000","9000000","10000000","11000000","12000000","13000000","14000000","15000000","16000000","17000000","18000000","19000000","20000000","21000000","22000000","23000000","24000000","25000000","26000000","27000000","28000000","29000000","30000000");
 	var gainObj = {"16":"100","17":"100","18":"100","19":"100","20":"100",
 	"21":"200","22":"200","23":"200","24":"200","25":"200","26":"300","27":"300","28":"300","29":"300","30":"300",
@@ -3104,33 +3131,11 @@ $(function(){
 		$(".dialog-cover,#noCard").hide();
 	})
 
-	var modeSettings = {
-		"auto": {
-			autoExposure: 1,
-			autoGain: 1,
-			autoWhiteBalance: 1
-		},
-		"city-night": {
-			autoExposure: 1,
-			autoGain: 1,
-			autoWhiteBalance: 1
-		},
-		"manual": {
-			autoExposure: 0,
-			autoGain: 0
-		}
-	};
-
 	function setMode(mode) {
 		console.log("setMode: " + mode);
 		currentMode = mode;
-		var obj = {scene:mode}
-		if (mode in modeSettings) {
-			for(var attr in modeSettings[mode]){
-				obj[attr] = modeSettings[mode][attr];
-			}
-		}
-		controlPostJSON("/control", obj, updateControls);
+		// controlPostJSON("/control", {recordMode:mode}, updateControls);
+		controlPostJSON("/control", {scene:mode}, updateControls);
 	}
 
 	function setAutoGain(b) {
@@ -3149,15 +3154,16 @@ $(function(){
 
 	function setExposure(e) {
 		console.log("exposure " + e);
-		//if(e > 0){
-			//var expo = Math.round((1048576 - 1024)/12*e);
-			controlPostJSON("/control", { autoExposure: 0, exposure: exposureArray[e] }, updateControls);
-			autoExposure = 0
-		//}
-		//else {
-		//	controlPostJSON("/control", { autoExposure: e+1 }, updateControls);
-		//	autoExposure = 1;
-		//}
+		// if(e > 0){
+		// 	//var expo = Math.round((1048576 - 1024)/12*e);
+		// 	controlPostJSON("/control", { autoExposure: 0, exposure: exposureArray[e] }, updateControls);
+		// 	autoExposure = 0
+		// }
+		// else {
+		// 	controlPostJSON("/control", { autoExposure: e+1 }, updateControls);
+		// 	autoExposure = 1;
+		// }
+		controlPostJSON("/control", {exposure: exposureArray[e]}, updateControls);
 	}
 
 	function setWhiteBalance(e) {
@@ -3233,7 +3239,7 @@ $(function(){
 			$(".parameter-infrared").holdHide();
 			$(".infrared-slider").holdHide();
 			if(e==0){
-				$(".ctrl-icon").holdHide();
+				// $(".ctrl-icon").holdHide();
 				$(".customModeBtn").holdHide();
 				controlPostJSON("/control",{infrared:0},updateControls);
 			}else if(e==6){
@@ -3255,7 +3261,7 @@ $(function(){
 			}else if(e==7){
 				controlPostJSON("/control",{infrared:0},updateControls);
 				$(".setting-content").holdShow();
-				$(".ctrl-icon").holdHide();
+				// $(".ctrl-icon").holdHide();
 				setTimeout(function(){
 					$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px").holdShow();
 				},200);
@@ -3266,6 +3272,9 @@ $(function(){
 				exprosureSwiper.update();
 				var m = $(".parameter-exprosure .swiper-slide.on").index();
 				exprosureSwiper.slideTo(m);
+				expModeSwiper.update();
+				var m = $(".parameter-expmode>.swiper-container .swiper-slide.on").index();
+				expModeSwiper.slideTo(m);
 
 			}else{
 				controlPostJSON("/control",{infrared:0},updateControls);
@@ -3302,6 +3311,9 @@ $(function(){
 		exprosureSwiper.update();
 		var m = $(".parameter-exprosure .swiper-slide.on").index();
 		exprosureSwiper.slideTo(m);
+		expModeSwiper.update();
+		var expindex = $(".parameter-expmode>.swiper-container .swiper-slide.on").index();
+		exprosureSwiper.slideTo(expindex);
 		currentSwiper.update();
 		controlGetJSON("/control",updateControls);
     });
@@ -3464,14 +3476,14 @@ $(function(){
 	var wbPromptTimeout = null;
 	$(".setting-current .swiper-slide").each(function(e){
 		$(this).click(function(event){
-			if($("#modeList li").eq(6).hasClass("on") && e == 3){
-				clearTimeout(wbPromptTimeout);
-				$(".wbPrompt").show();
-				wbPromptTimeout = setTimeout(function(){
-					$(".wbPrompt").hide();
-				},2000);
-				return
-			}
+			// if($("#modeList li").eq(6).hasClass("on") && e == 3){
+			// 	clearTimeout(wbPromptTimeout);
+			// 	$(".wbPrompt").show();
+			// 	wbPromptTimeout = setTimeout(function(){
+			// 		$(".wbPrompt").hide();
+			// 	},2000);
+			// 	return
+			// }
 			if($(this).hasClass("on")){
 				$(".setting-bar>div").eq(e).toggle(); 
 			}else{
@@ -3481,17 +3493,17 @@ $(function(){
 				var t = setTimeout(function(){
 
 				})
-				if(e==3){
+				if(e==1){
 					whiteBalanceSwiper.update();
 					var m = $(".parameter-whiteBalance .swiper-slide.on").index();
 					whiteBalanceSwiper.slideTo(m);
 				}
 				if(e==0){
 					exprosureSwiper.update();
-					var m = $(".parameter-exprosure .swiper-slide.on").index();
+					var m = $(".parameter-expmode .swiper-slide.on").index();
 					exprosureSwiper.slideTo(m);
 				}
-				if(e==4){
+				if(e==2){
 					effectSwiper.update();
 					var m = $(".parameter-effect .swiper-slide.on").index();
 					effectSwiper.slideTo(m);
@@ -3519,16 +3531,16 @@ $(function(){
 	var exprosureSwiper = new Swiper('.parameter-exprosure .swiper-container',{
 		freeMode : true,
 		slidesPerView : 'auto',
-		spaceBetween: 5,
+		// spaceBetween: 5,
 		initialSlide: initialExprosure,
-		centeredSlides: true,
+		// centeredSlides: true,
 		on: {
 			resize: function(){
 				this.update();
 			},
-			slideChangeTransitionEnd: function(){
-	            console.log(this.activeIndex);
-	        } 
+			// slideChangeTransitionEnd: function(){
+	  //           console.log(this.activeIndex);
+	  //       } 
 		},
 	});
 	exprosureSwiper.update();
@@ -3540,7 +3552,7 @@ $(function(){
 		$(this).click(function(){
 			// var foreCast = exposureArray[e]/765384*4;
 			var foreCast = eval(exposureArray[e]);
-			if(e==14){//快门时长的限制，跟拍摄间隔相对应，互相限制
+			if(e==13){//快门时长的限制，跟拍摄间隔相对应，互相限制
 				if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<1){
 					if($(this).hasClass("greyColor")){
 						$(".exp-prompt").show();
@@ -3551,7 +3563,7 @@ $(function(){
 					}
 					$('#interval-second').val("01");
 				}
-			}else if(e>14){
+			}else if(e>13){
 				if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<2){
 					if($(this).hasClass("greyColor")){
 						$(".exp-prompt").show();
@@ -3609,6 +3621,10 @@ $(function(){
 	function updateValue(v, noCallback, delay){
 		var delayMS=0;
 		var type = $(".setting-current .swiper-slide.on").attr('setting-type');
+		if(!type){
+			type="gain";
+			v = parseInt(v)/100*256;
+		}
 		if(type=="effect") type=$(".parameter-effect .swiper-slide.on").attr('setting-type');
 		clearTimeout(sendControlTimer);
 		console.log("updateValue: " + type + '=' + v);
@@ -3689,8 +3705,59 @@ $(function(){
 		setAutoGain(true);
 		$("#gian").text("自动");
 	})
+	//初始化曝光控制滑动控件
+	var expModeSwiper = new Swiper(".parameter-expmode>.swiper-container",{
+		freeMode : true,
+		slidesPerView : "auto",
+		on: {
+			resize: function(){
+				this.update();
+			}
+		}
+	})
+	expModeSwiper.update();
+	var expindex = $(".parameter-expmode>.swiper-container .swiper-slide.on").index();
+	exprosureSwiper.slideTo(expindex);
 
+	var expModeArray = ["programAuto","shutterPrio","isoPrio","manual"]
+	$(".parameter-expmode>.swiper-container .swiper-slide").each(function(e){
+		$(this).on("click",function(){
+			$(this).addClass("on").siblings().removeClass("on");
+			postJSON("/control",{exposureMode:expModeArray[e]});
+			$("#expMode").text($(this).text());
+			switch(e){
+				case 0:
+					$(".parameter-exprosure,.parameter-gian").hide();
+					break
+				case 1:
+					$(".parameter-exprosure .swiper-slide").each(function(index){
+						if(index>16){
+							$(this).hide();
+						}
+					})
+					$(".parameter-exprosure").show().siblings(".parameter-gian").hide();
+					exprosureSwiper.update();
+					var m = $(".parameter-exprosure .swiper-slide.on").index();
+					exprosureSwiper.slideTo(m);
+					break
+				case 2:
+					$(".parameter-gian").show().siblings(".parameter-exprosure").hide();
+					break
+				case 3:
+					$(".parameter-exprosure .swiper-slide").each(function(index){
+						$(this).show();
+					})
+					$(".parameter-exprosure,.parameter-gian").show();
+					exprosureSwiper.update();
+					var m = $(".parameter-exprosure .swiper-slide.on").index();
+					exprosureSwiper.slideTo(m);
+			}
+			setTimeout(function(){
+				$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px").holdShow();
+			},200);
+		});
 
+	})
 	//初始化白平衡滑动控件
 	var whiteBalanceSwiper = new Swiper('.parameter-whiteBalance .swiper-container',{
 		freeMode : true,
@@ -4382,6 +4449,34 @@ $(function(){
 				setEffectNow();
 			}
 
+			var expArray = ["programAuto","shutterPrio","isoPrio","manual"];
+			if("exposureMode" in e){
+				var index = expArray.indexOf(e.exposureMode);
+				$("#expModeSelect .swiper-slide").eq(index).addClass("on").siblings().removeClass("on");
+				switch(index){
+					case 0:
+						$(".parameter-exprosure,.parameter-gian").hide();
+						break
+					case 1:
+						$(".parameter-exprosure .swiper-slide").each(function(index){
+							if(index>16){
+								$(this).hide();
+							}
+						})
+						$(".parameter-exprosure").show().siblings(".parameter-gian").hide();
+						exprosureSwiper.update();
+						break
+					case 2:
+						$(".parameter-gian").show().siblings(".parameter-exprosure").hide();
+						break
+					case 3:
+						$(".parameter-exprosure .swiper-slide").each(function(index){
+							$(this).show();
+						})
+						$(".parameter-exprosure,.parameter-gian").show();
+						exprosureSwiper.update();
+				}
+			}
 			/*设置红外infrared*/
 			
 			// if(e.infrared == 1){
@@ -4425,18 +4520,20 @@ $(function(){
 			}
 			// if(e.recordMode == "auto") {
 			if($(".mode-list li").eq(0).hasClass("on")){
-				$(".ctrl-icon").holdHide(); //隐藏上拉图标
+				// $(".ctrl-icon").holdHide(); //隐藏上拉图标
 				$(".customModeBtn").holdHide();//隐藏新建场景外拉图标
 				$(".shooting-tips").holdHide();
 				// return; //自动模式下不需要设置下列参数
 			}
 			if(e.scene){
-				if($(".setting-content").css("display")=="none"  && sessionType != "video" && e.scene == "manual") {
+				// if($(".setting-content").css("display")=="none"  && sessionType != "video" && e.scene != "auto") {
+				if($(".setting-content").css("display")=="none"  && sessionType != "video") {
 					$(".ctrl-icon").holdSlideDown(800); //显示上拉图标
 					// $(".customModeBtn").holdShow();//显示新建场景外拉图标
 				}
 			}else{
-				if($(".setting-content").css("display")=="none"  && sessionType != "video" && e.recordMode == "manual") {
+				// if($(".setting-content").css("display")=="none"  && sessionType != "video" && e.recordMode != "auto") {
+				if($(".setting-content").css("display")=="none"  && sessionType != "video") {
 					$(".ctrl-icon").holdSlideDown(800); //显示上拉图标
 					// $(".customModeBtn").holdShow();//显示新建场景外拉图标
 				}
@@ -4444,22 +4541,23 @@ $(function(){
 			
 			//flag = false; //点击空闲页面显示设置项
 			/*设置快门时间Exposure */
-			exposureIndex=-1;
-			if("autoExposure" in e){
-				exposureIndex=e.autoExposure-1;
-			}
-			if(!("autoExposure" in e) || (e.autoExposure != 1)){
-				$.each(exposureArray, function(i,value){
-					if(eval(value)>=eval(e.exposure)) {
-						exposureIndex=i;
-						return false;
-					}
-				});
-			}
-			if(exposureIndex>=0) {
+			// exposureIndex=-1;
+			// if("autoExposure" in e){
+			// 	exposureIndex=e.autoExposure-1;
+			// }
+			// if(!("autoExposure" in e) || (e.autoExposure != 1)){
+			// 	$.each(exposureArray, function(i,value){
+			// 		if(eval(value)>=eval(e.exposure)) {
+			// 			exposureIndex=i;
+			// 			return false;
+			// 		}
+			// 	});
+			// }
+			var exposureIndex = exposureArray.indexOf(e.exposure);
+			// if(exposureIndex>=0) {
 				$(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").addClass("on").siblings().removeClass("on");
-				$("#exprosure").text($(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text());	
-			}
+				// $("#exprosure").text($(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text());	
+			// }
 			if(e.autoExposure == 0){//快门为手动时显示快门时间在界面上
 				$("#shutter-now").text($(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text());
 				$("#shutter-now").parent().show();
@@ -4468,26 +4566,26 @@ $(function(){
 			// if(e.gain==255)e.gain+=1;
 			// v=(e.gain/16)*100;
 			// v=gainObj[e.gain];
-			v=e.gain;
+			v=e.gain/256*100;
 			$("#s0").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v});
 			$("#s0").slider('setValue', v);
 			// if(v>0) v="+"+v;
 			$("#s0").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v);
 			
-			if(e.autoGain==1){
-				$(".slider-auto").addClass("on").siblings(".slider-manual").removeClass("on");
-				$(".slider-auto").siblings(".slider-plus,.slider-minus").addClass("disabled");
-				$("#s0").slider("disable");
-				if(language && language=="en"){$("#gian").text("Auto");}else{$("#gian").text("自动");}
-				$("#gain-now").parent().hide();
-			}else {
-				$(".slider-auto").removeClass("on").siblings(".slider-manual").addClass("on");
-				$(".slider-auto").siblings(".slider-plus,.slider-minus").removeClass("disabled");
-				$("#s0").slider("enable");
-				$("#gian").text(v);
-				$("#gain-now").text(v);
-				$("#gain-now").parent().show();
-			}
+			// if(e.autoGain==1){
+			// 	$(".slider-auto").addClass("on").siblings(".slider-manual").removeClass("on");
+			// 	$(".slider-auto").siblings(".slider-plus,.slider-minus").addClass("disabled");
+			// 	$("#s0").slider("disable");
+			// 	if(language && language=="en"){$("#gian").text("Auto");}else{$("#gian").text("自动");}
+			// 	$("#gain-now").parent().hide();
+			// }else {
+			// 	$(".slider-auto").removeClass("on").siblings(".slider-manual").addClass("on");
+			// 	$(".slider-auto").siblings(".slider-plus,.slider-minus").removeClass("disabled");
+			// 	$("#s0").slider("enable");
+			// 	$("#gian").text(v);
+			// 	$("#gain-now").text(v);
+			// 	$("#gain-now").parent().show();
+			// }
 			/*当感光度和快门为自动时曝光补偿不可点击*/
 			if(e.autoGain==0&&e.autoExposure==0){
 				$(".swiper-slide[setting-type=exposureBias]").addClass("infrared-disabled");
@@ -5185,22 +5283,21 @@ $(function(){
 				$(".verticalPrompt").holdHide();
 				// if(!videoInterval){
 				// 	videoInterval = setInterval(function(){
-				// 		statusEventSourceOnerror();
-				// 		$('.main-pic,.imgAmplifier').attr('src', '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():''));
+						
 				// 	},10000);
 				// }
 				if(switchVideo){
 					switchVideo = false;
 					statusEventSourceOnerror();
 					$('.main-pic,.imgAmplifier').attr('src', '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():''));
-					$('.main-pic').load(function(){
+					$('.main-pic,.imgAmplifier').load(function(){
 						console.log("image load done");
 						clearTimeout(videoInterval);
 					})
-					$('.main-pic').error(function(){
+					$('.main-pic,.imgAmplifier').error(function(){
 						switchVideo = true;
 						videoInterval = setTimeout(function(){
-							$('.main-pic').attr('src', '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():''));
+							$('.main-pic,.imgAmplifier').attr('src', '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():''));
 						},3000)
 					})
 				}

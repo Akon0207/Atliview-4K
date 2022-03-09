@@ -164,6 +164,7 @@ $(function(){
     }
     if($(".shootModeList").css("display")=="block" || $(".all-modelist").css("display")=="block" || $(".moreMask").css("display")=="block" || $(".setting-content").css("display")=="block") return;
     if($(".parameter-gian .slider-manual").hasClass("on") && !$(".parameter-exprosure .swiper-slide").eq(0).hasClass("on")){return;}
+    if($("#modeList li").eq(7).hasClass("on")) return;
     if(orientationMode){
       $(".sun-container").css("height","115px");
       if(trackHeight1+trackHeight2>80){
