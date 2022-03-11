@@ -484,8 +484,8 @@
 			</div>
 		</div> -->
 		<!-- 自定义预设场景 start -->
-		<div class="customModePro" lan="customModePro">最多允许创建10个场景模式</div>
-		<div class="customModeBtn"><span id="addNewMode" lan="addNewMode">新建场景模式</span><span id="coverMode" lan="coverMode">覆盖保存</span><div class="iconfont forRight on">&#xe66c;</div><div class="iconfont forLeft">&#xe66b;</div></div>
+		<!-- <div class="customModePro" lan="customModePro">最多允许创建10个场景模式</div>
+		<div class="customModeBtn"><span id="addNewMode" lan="addNewMode">新建场景模式</span><span id="coverMode" lan="coverMode">覆盖保存</span><div class="iconfont forRight on">&#xe66c;</div><div class="iconfont forLeft">&#xe66b;</div></div> -->
 		<div class="dialog-poppup" id="saveCustomMode">
 			<div class="dialog-poppup-tit" lan="addNewModeTitle" id="addNewModeTitle">根据当前设置新建场景模式</div>
 			<div class="dialog-poppup-tit" lan="repairMode" id="repairModeTitle">修改名称和图标</div>
@@ -678,7 +678,7 @@
 				<div class="parameter-slider parameter-gian">
 					<div class="flex">
 						<div class="slider-minus iconfont">&#xe67e;</div>
-						<input id="s0" data-slider-id='gianSlider' type="text" data-slider-min="100" data-slider-max="16000" data-slider-step="100" data-slider-value="1600" data-slider-default="1600" />
+						<input id="s0" data-slider-id='gianSlider' type="text" data-slider-min="100" data-slider-max="6200" data-slider-step="100" data-slider-value="1600" data-slider-default="1600" />
 						<div class="slider-plus iconfont">&#xe67f;</div>
 						<!--
 						<div class="slider-manual on" lan="manual">手动</div>
@@ -3519,16 +3519,16 @@ $(function(){
 	var exprosureSwiper = new Swiper('.parameter-exprosure .swiper-container',{
 		freeMode : true,
 		slidesPerView : 'auto',
-		spaceBetween: 5,
+		// spaceBetween: 5,
 		initialSlide: initialExprosure,
-		centeredSlides: true,
+		// centeredSlides: true,
 		on: {
 			resize: function(){
 				this.update();
 			},
-			slideChangeTransitionEnd: function(){
-	            console.log(this.activeIndex);
-	        } 
+			// slideChangeTransitionEnd: function(){
+	  //           console.log(this.activeIndex);
+	  //       } 
 		},
 	});
 	exprosureSwiper.update();
@@ -4281,7 +4281,7 @@ $(function(){
 	function updateEffectNow(e, v) {
 		e.text(v);
 		if(v==0) e.parent().hide(); 
-		else e.parent().show();
+		else if($("#modeList li").eq(7).hasClass("on")){e.parent().show();} 
 		if(autoExposure==0 && autoGain==0){
 			$("#exposureBias-now").parent().hide();
 		}
@@ -4461,8 +4461,9 @@ $(function(){
 				$("#exprosure").text($(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text());	
 			}
 			if(e.autoExposure == 0){//快门为手动时显示快门时间在界面上
-				$("#shutter-now").text($(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text());
-				$("#shutter-now").parent().show();
+				// $("#shutter-now").text($(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text());
+				// $("#shutter-now").parent().show();
+				updateEffectNow($("#shutter-now"),$(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text())
 			}else{$("#shutter-now").parent().hide();}
 			/*设置感光度 autoGain gain*/
 			// if(e.gain==255)e.gain+=1;
@@ -4485,8 +4486,9 @@ $(function(){
 				$(".slider-auto").siblings(".slider-plus,.slider-minus").removeClass("disabled");
 				$("#s0").slider("enable");
 				$("#gian").text(v);
-				$("#gain-now").text(v);
-				$("#gain-now").parent().show();
+				// $("#gain-now").text(v);
+				// $("#gain-now").parent().show();
+				updateEffectNow($("#gain-now"),v);
 			}
 			/*当感光度和快门为自动时曝光补偿不可点击*/
 			if(e.autoGain==0&&e.autoExposure==0){
