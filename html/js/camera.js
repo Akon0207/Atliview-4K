@@ -11,8 +11,10 @@
   var exposureBiasValue=null;
   var moveFlag = null;
   var meteringLock = null;
+  var previewImg = null;
   var pointOneX,pointOneY,pointTwoX,pointTwoY,distanceX,distanceY,height1,height2;
   function drawFocusArea(area) {
+        // area = [{left:fx, top:fy, width: block_size*3, height: block_size*3, level:0.5}]
     var levelcolor = ["red", "red", "red", "red", "red", "yellow", "green", "lightgreen", "lightgreen", "lightgreen", "lightgreen"];
     var focusDivs = document.getElementsByClassName("focus-area");
     var previewImg = document.getElementById("preview");
@@ -92,55 +94,7 @@
         $(".sun-container").hide();
         $(".exposureBiasShow").hide();
       }
-	//console.log("previewImg.width:"+previewImg.width+" "+previewImg.height+" "+previewImg.naturalWidth+" "+previewImg.naturalHeight+" "+offsetTop+" "+offsetLeft+" "+previewImg.offsetTop+" "+previewImg.offsetLeft);
- //    for(var i=0; i<focusDivs.length; i++){
- //      if(i < area.length) {
- //        focusDivs[i].style.border = "1px solid " + levelcolor[Math.floor(area[i].level*10)];
- //        focusDivs[i].style.display = 'block';
- //      	if(window.matchMedia("(orientation: portrait)").matches){ //竖屏，改变坐标
- //      		$(".focus-area:eq("+i+")").css({
- //      			top:Math.floor(area[i].left*vscale) + offsetTop, 
- //      			left:Math.floor(previewImg.height - area[i].top*hscale - area[i].height*vscale) + offsetLeft,
- //      			width:Math.floor(area[i].height * vscale),
- //      			height:Math.floor(area[i].width * hscale)
- //      		});
- //      		//console.log(offsetTop+" "+offsetLeft+" "+(Math.floor(area[i].top*hscale) + offsetTop));
- //      	   maxLeft = (offsetLeft+imgHeight)-($(".focus-area:eq("+i+")").width()+$(".sun-container").width()+10);
- //      	}else { //横屏
- //      		$(".focus-area:eq("+i+")").css({
- //      			top:Math.floor(area[i].top*hscale) + offsetTop, 
- //      			left:Math.floor(offsetLeft+area[i].left)*vscale-offsetLeft*hscale,
- //      			width:Math.floor(area[i].width * hscale),
- //      			height:Math.floor(area[i].height * vscale)
- //      		});
- //      		//console.log(offsetTop+" "+offsetLeft+" "+Math.floor(offsetLeft+area[i].left)*vscale);
- //          maxLeft = (offsetLeft+imgWidth)-($(".focus-area:eq("+i+")").width()+$(".sun-container").width()+10);
- //      	}
- //        // $(".sun-container").show();
- //        if($(".focus-area:eq("+i+")").offset().left>maxLeft){
- //          $(".sun-container").offset({
- //            left:$(".focus-area:eq("+i+")").offset().left-35,
- //            top:$(".focus-area:eq("+i+")").offset().top+$(".focus-area:eq("+i+")").height()/2-$(".sun-container").height()/2
- //          })
- //        }else{
- //          $(".sun-container").offset({
- //            left:$(".focus-area:eq("+i+")").offset().left+$(".focus-area:eq("+i+")").width()+10,
- //            top:$(".focus-area:eq("+i+")").offset().top+$(".focus-area:eq("+i+")").height()/2-$(".sun-container").height()/2
- //          })
- //        }
-        
- //        var focusEnable = "enable,"+"x:"+area[i].left+",y:"+area[i].top+",w:"+area[i].width+",h:"+area[i].height;
- //        console.log(focusEnable);
- //        localControl.focus(focusEnable);
- //        console.log("display block======================");
-	// //console.log(focusDivs[i]);
- //      }
- //      else {
- //        focusDivs[i].style.display = 'none';
- //        console.log("display none======================");
- //        // $(".sun-container").hide();
- //      }
- //    }
+
 
   }
 function focusTimeout(){
@@ -152,6 +106,7 @@ function focusTimeout(){
 $(function(){
   console.log("preview click before");
   $('#preview').on("click", function(e) {
+    previewImg = document.getElementById("preview");
     var trackHeight1 = $(".track1").height();
     var trackHeight2 = $(".track2").height();
     localControl.focus("disabled");
@@ -190,18 +145,24 @@ $(function(){
     }
     if((meteringLock && meteringLock == 1)|| $(".locked").css("display")=="block"){
       getJSON("/metering",function(data){
-        if(data.height == 0 && data.width == 0 && data.top == 0 && data.left == 0){//位置长宽都为0则表示中心对焦
-          focusArea = ["center"];
-        }else{
-          focusArea = [ data ];
-        }
+        // if(data.height == 0 && data.width == 0 && data.top == 0 && data.left == 0){//位置长宽都为0则表示中心对焦
+        //   focusArea = ["center"];
+        // }else{
+        //   focusArea = [ data ];
+        // }
+        focusArea = [ {
+          left: data.upLeft.left/16*previewImg.naturalWidth+96,
+          top: data.upLeft.top/9*previewImg.naturalHeight+96,
+          width: block_size*3,
+          height: block_size*3
+        } ]
         clearTimeout(clearAreaTimer);
         drawFocusArea(focusArea);
         focusTimeout();
       })
       return;
     }
-    var previewImg = document.getElementById("preview");
+    
     var fx = Math.floor(e.offsetX*previewImg.naturalWidth/previewImg.width);
     var fy = Math.floor(e.offsetY*previewImg.naturalHeight/previewImg.height);
     var area = null;
@@ -230,9 +191,13 @@ $(function(){
   console.log(area);
       focusArea = [ area ];
     }
-
+    var sendData = {
+      upLeft:{top:(area.top-96)/previewImg.naturalHeight*9,left:(area.left-96)/previewImg.naturalHeight*16},
+      lowRight:{top:(area.top+96)/previewImg.naturalHeight*9,left:(area.left+96)/previewImg.naturalHeight*16}
+    }
     drawFocusArea(focusArea);
-    initFocusEventSource(area);
+    // initFocusEventSource(area);
+    initFocusEventSource(sendData);
 
     if(enableFocus==1) initFocusEventSource(area);
     else {
@@ -254,7 +219,13 @@ $(function(){
     })
   });
   $(".unlocked").on("click",function(){
-    postJSON("/metering",{top:focusArea[0].top,left:focusArea[0].left,width:focusArea[0].width,height:focusArea[0].height,lock:1},function(){
+    // postJSON("/metering",{top:focusArea[0].top,left:focusArea[0].left,width:focusArea[0].width,height:focusArea[0].height,lock:1},function(){
+      var postData = {
+        upLeft:{top:(focusArea[0].top-96)/previewImg.naturalHeight*9,left:(focusArea[0].left-96)/previewImg.naturalHeight*16},
+        lowRight:{top:(focusArea[0].top+96)/previewImg.naturalHeight*9,left:(focusArea[0].left+96)/previewImg.naturalHeight*16},
+        lock:1
+      }
+    postJSON("/metering",postData,function(){
       $(".locked").show().siblings(".unlocked").hide();
       clearTimeout(clearAreaTimer);
       focusTimeout();
@@ -284,7 +255,14 @@ $(function(){
       }else($("#exposureBias-now").parent().hide())
     })
     if(enableFocus!=1) return;
-    focusArea = JSON.parse(e.data);
+    // focusArea = JSON.parse(e.data);
+    var data = e.data.upLeft;
+    focusArea = [ {
+      left: data.left/16*previewImg.naturalWidth+96,
+      top: data.top/9*previewImg.naturalHeight+96,
+      width: block_size*3,
+      height: block_size*3
+    } ]
     drawFocusArea(focusArea);
     
     //console.log("previewImg: top=" + $("#preview").offsetTop + " left=" + $("#preview").offsetLeft + " width=" + $("#preview").width + " height=" + $("#preview").height + " naturalWidth=" + $("#preview").naturalWidth + " naturalHeight=" + $("#preview").naturalHeight); 
@@ -317,8 +295,12 @@ $(function(){
  //  }
 function initFocusEventSource(area){
   if(area){
-    var sendData = {left:area.left,top:area.top,width:area.width,height:area.height};
-    postJSON("/metering",sendData,onFocusAreaChanged);
+    // var sendData = {left:area.left,top:area.top,width:area.width,height:area.height};
+    // var sendData = {
+    //   upLeft:{top:area.top-96,left:area.left-96},
+    //   lowRight:{top:area.top+96,left:area.left+96}
+    // }
+    postJSON("/metering",area,onFocusAreaChanged);
     console.log("start focus");
   }
   // if(startFocusTimer) startFocusTimer=null;
