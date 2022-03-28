@@ -151,8 +151,8 @@ $(function(){
         //   focusArea = [ data ];
         // }
         focusArea = [ {
-          left: data.upLeft.left/16*previewImg.naturalWidth+96,
-          top: data.upLeft.top/9*previewImg.naturalHeight+96,
+          left: data.x1/16*previewImg.naturalWidth,
+          top: data.y1/9*previewImg.naturalHeight,
           width: block_size*3,
           height: block_size*3
         } ]
@@ -179,21 +179,24 @@ $(function(){
       return
     }
     else {
-      fx -= block_size + block_size/2;
+      fx -= block_size + block_size/2;//方框左上角坐标
       if(fx < 0)fx = 0;
       fy -= block_size + block_size/2;
       if(fy < 0)fy = 0;
       if(fx > (previewImg.naturalWidth-block_size*3))fx = previewImg.naturalWidth-block_size*3;//限制对焦框不要越过图片
       if(fy > (previewImg.naturalHeight-block_size*3))fy = previewImg.naturalHeight-block_size*3;
-      fx -= fx%8;//相机只能处理8的倍数值
-      fy -= fy%8;
+      // fx -= fx%8;//相机只能处理8的倍数值
+      // fy -= fy%8;
       area = {left:fx, top:fy, width: block_size*3, height: block_size*3, level:0.5};  
   console.log(area);
       focusArea = [ area ];
     }
     var sendData = {
-      upLeft:{top:(area.top-96)/previewImg.naturalHeight*9,left:(area.left-96)/previewImg.naturalHeight*16},
-      lowRight:{top:(area.top+96)/previewImg.naturalHeight*9,left:(area.left+96)/previewImg.naturalHeight*16}
+      x1:area.left/previewImg.naturalWidth*16,
+      y1:area.top/previewImg.naturalHeight*9,
+      x2:(area.left+192)/previewImg.naturalWidth*16,
+      y2:(area.top+192)/previewImg.naturalHeight*9
+      
     }
     drawFocusArea(focusArea);
     // initFocusEventSource(area);
@@ -221,8 +224,10 @@ $(function(){
   $(".unlocked").on("click",function(){
     // postJSON("/metering",{top:focusArea[0].top,left:focusArea[0].left,width:focusArea[0].width,height:focusArea[0].height,lock:1},function(){
       var postData = {
-        upLeft:{top:(focusArea[0].top-96)/previewImg.naturalHeight*9,left:(focusArea[0].left-96)/previewImg.naturalHeight*16},
-        lowRight:{top:(focusArea[0].top+96)/previewImg.naturalHeight*9,left:(focusArea[0].left+96)/previewImg.naturalHeight*16},
+        x1:focusArea[0].left/previewImg.naturalWidth*16,
+        y1:focusArea[0].top/previewImg.naturalHeight*9,
+        x2:(focusArea[0].left+192)/previewImg.naturalWidth*16,
+        y2:(focusArea[0].top+192)/previewImg.naturalHeight*9,
         lock:1
       }
     postJSON("/metering",postData,function(){
@@ -256,10 +261,10 @@ $(function(){
     })
     if(enableFocus!=1) return;
     // focusArea = JSON.parse(e.data);
-    var data = e.data.upLeft;
+    // var data = e.data.upLeft;
     focusArea = [ {
-      left: data.left/16*previewImg.naturalWidth+96,
-      top: data.top/9*previewImg.naturalHeight+96,
+      left: e.x1/16*previewImg.naturalWidth,
+      top: e.y1/9*previewImg.naturalHeight,
       width: block_size*3,
       height: block_size*3
     } ]
