@@ -1121,7 +1121,8 @@ $(function(){
 	var imgArchive = null;
 	var pauseStatus = localControl.getValue("pauseStatus",0);
 	var livePreviewUrl = null;
-	var rotate180 = false;
+	// var rotate180 = false;
+	var imgRotate = 0;
 	var cronFlag = getParameterByName("cron");
 	var cronInterval = localControl.getValue("cronInterval");
 	var changeFlag = true;//根据status数据设置方向只在第一次load网页的时候这么做，后面根据用户设置实时改变
@@ -1725,9 +1726,12 @@ $(function(){
 		getJSON("/status",function(data){
 			imgArchive = data.imgArchive;
 			localControl.notify(imgArchive);
+			// if("imgRotate" in data){
+			// 	rotate180 = true
+			// }else{rotate180 = false}
 			if("imgRotate" in data){
-				rotate180 = true
-			}else{rotate180 = false}
+				imgRotate = data.imgRotate;
+			}
 			$(".more").removeClass("shooting-now");
 		})
 	}
@@ -1742,61 +1746,65 @@ $(function(){
 			localControl.orientation(appNotice);
 			$(".gridline").holdHide();
 			if(index == 0){
-				if(imgArchive != "horizontal" && rotate180){
-					imgCtlData.imgArchive = "horizontal";
-					imgCtlData.imgRotate = "180";
-					// postJSON("/imgCtl",{imgArchive:"horizontal",imgRotate:"180"},moreRestore);
-				}else if(imgArchive != "horizontal" && !rotate180){
-					imgCtlData.imgArchive = "horizontal";
-					// postJSON("/imgCtl",{imgArchive:"horizontal"},moreRestore);
-				}else if(imgArchive == "horizontal" && rotate180){
-					imgCtlData.imgRotate = "180";
-					// postJSON("/imgCtl",{imgRotate:"180"},moreRestore);
-				}
+				// if(imgArchive != "horizontal" && rotate180){
+				// 	imgCtlData.imgArchive = "horizontal";
+				// 	imgCtlData.imgRotate = "180";
+					
+				// }else if(imgArchive != "horizontal" && !rotate180){
+				// 	imgCtlData.imgArchive = "horizontal";
+					
+				// }else if(imgArchive == "horizontal" && rotate180){
+				// 	imgCtlData.imgRotate = "180";
+					
+				// }
+				imgCtlData.imgRotate = 0;
 				imgOrientation = "horizontal";
-				// setOrientation("horizontal",true);
+				
 			}else if(index == 1){
-				if(imgArchive != "vertical" && rotate180){
-					imgCtlData.imgArchive = "vertical";
-					imgCtlData.imgRotate = "180";
-					// postJSON("/imgCtl",{imgArchive:"vertical",imgRotate:"180"},moreRestore);
-				}else if(imgArchive != "vertical" && !rotate180){
-					imgCtlData.imgArchive = "vertical";
-					// postJSON("/imgCtl",{imgArchive:"vertical"},moreRestore);
-				}else if(imgArchive == "vertical" && rotate180){
-					imgCtlData.imgRotate = "180";
-					// postJSON("/imgCtl",{imgRotate:"180"},moreRestore);
-				}
+				// if(imgArchive != "vertical" && rotate180){
+				// 	imgCtlData.imgArchive = "vertical";
+				// 	imgCtlData.imgRotate = "180";
+					
+				// }else if(imgArchive != "vertical" && !rotate180){
+				// 	imgCtlData.imgArchive = "vertical";
+					
+				// }else if(imgArchive == "vertical" && rotate180){
+				// 	imgCtlData.imgRotate = "180";
+					
+				// }
+				imgCtlData.imgRotate = 90;
 				imgOrientation = "vertical";
-				// setOrientation("vertical",true);
+				
 			}else if(index == 2){
-				if(imgArchive == "vertical" && !rotate180){
-					imgCtlData.imgArchive = "horizontal";
-					imgCtlData.imgRotate = "180";
-					// postJSON("/imgCtl",{imgArchive:"horizontal",imgRotate:"180"},moreRestore);
-				}else if(imgArchive != "vertical" && !rotate180){
-					imgCtlData.imgRotate = "180";
-					// postJSON("/imgCtl",{imgRotate:"180"},moreRestore);
-				}else if(imgArchive == "vertical" && rotate180){
-					imgCtlData.imgArchive = "horizontal";
-					// postJSON("/imgCtl",{imgArchive:"horizontal"},moreRestore);
-				}
+				// if(imgArchive == "vertical" && !rotate180){
+				// 	imgCtlData.imgArchive = "horizontal";
+				// 	imgCtlData.imgRotate = "180";
+				
+				// }else if(imgArchive != "vertical" && !rotate180){
+				// 	imgCtlData.imgRotate = "180";
+					
+				// }else if(imgArchive == "vertical" && rotate180){
+				// 	imgCtlData.imgArchive = "horizontal";
+					
+				// }
+				imgCtlData.imgRotate = 180;
 				imgOrientation = "horizontal";
-				// setOrientation("horizontal",true);
+				
 			}else if(index == 3){
-				if(imgArchive == "horizontal" && !rotate180){
-					imgCtlData.imgArchive = "vertical";
-					imgCtlData.imgRotate = "180";
-					// postJSON("/imgCtl",{imgArchive:"vertical",imgRotate:"180"},moreRestore);
-				}else if(imgArchive != "horizontal" && !rotate180){
-					imgCtlData.imgRotate = "180";
-					// postJSON("/imgCtl",{imgRotate:"180"},moreRestore);
-				}else if(imgArchive == "horizontal" && rotate180){
-					imgCtlData.imgArchive = "vertical";
-					// postJSON("/imgCtl",{imgArchive:"vertical"},moreRestore);
-				}
+				// if(imgArchive == "horizontal" && !rotate180){
+				// 	imgCtlData.imgArchive = "vertical";
+				// 	imgCtlData.imgRotate = "180";
+					
+				// }else if(imgArchive != "horizontal" && !rotate180){
+				// 	imgCtlData.imgRotate = "180";
+					
+				// }else if(imgArchive == "horizontal" && rotate180){
+				// 	imgCtlData.imgArchive = "vertical";
+					
+				// }
+				imgCtlData.imgRotate = 270;
 				imgOrientation = "vertical";
-				// setOrientation("vertical",true);
+				
 			}
 			postJSON("/imgCtl",imgCtlData,function(){
 				moreRestore(imgOrientation);
@@ -1908,13 +1916,18 @@ $(function(){
 			else if(index==2){
 				switchVideo = true;
 				sType="video";
-				if(rotate180){
-					postJSON("/imgCtl",{imgRotate:"180"});
-				}
-				if(imgArchive=="vertical"){
-					postJSON("/imgCtl",{imgArchive:"horizontal"},function(){
+				// if(rotate180){
+				// 	postJSON("/imgCtl",{imgRotate:"180"});
+				// }
+				// if(imgArchive=="vertical"){
+				// 	postJSON("/imgCtl",{imgArchive:"horizontal"},function(){
+				// 		moreRestore("horizontal");
+				// 	});
+				// }
+				if(imgRotate!=0){
+					postJSON("/imgCtl",{imgRotate:0},function(){
 						moreRestore("horizontal");
-					});
+					})
 				}
 				$("#modeList li").eq(0).click();
 			}
@@ -4668,19 +4681,66 @@ $(function(){
 			}
 			//定时任务会有limitRecordTime参数
 			if("limitRecordTime" in e && e.limitRecordTime==1){limit_time = 1;}
-			//图像旋转180°时旋转图标高亮
-			if("imgRotate" in e){rotate180 = true;
-			}else{rotate180 = false;}
+			
 			
 			// if(e.recordinfo.status!="idle"){//非空闲状态不给设置横竖屏和旋转180°
 			// 	$(".more").addClass("shooting-now greyColor");
 			// }else{
 			// 	$(".more").removeClass("shooting-now greyColor");
 			// }
-			
+			//图像旋转180°时旋转图标高亮
+			// if("imgRotate" in e){rotate180 = true;
+			// }else{rotate180 = false;}
+			if("imgRotate" in e){
+				imgRotate = e.imgRotate;
+				switch(imgRotate){
+					case 0:
+						$(".imgCtl li").eq(0).addClass("on").siblings().removeClass("on");
+						$(".more").attr("data-mode",$(".imgCtl li").eq(0).find("i").text());
+						if(orientationFlag==true && !hideCTL){
+							localControl.orientation(1);
+							orientationFlag=false;
+							console.log("----------------orientation1------------------");
+						}
+						imgArchive = "horizontal";
+						break;
+					case 90:
+						$(".imgCtl li").eq(1).addClass("on").siblings().removeClass("on");
+						$(".more").attr("data-mode",$(".imgCtl li").eq(1).find("i").text());
+						if(orientationFlag==true && !hideCTL){
+							localControl.orientation(2);
+							orientationFlag=false;
+							console.log("----------------orientation2------------------");
+						}
+						imgArchive = "vertical";
+						break;
+					case 180:
+						$(".imgCtl li").eq(2).addClass("on").siblings().removeClass("on");
+						$(".more").attr("data-mode",$(".imgCtl li").eq(2).find("i").text());
+						if(orientationFlag==true && !hideCTL){
+							localControl.orientation(3);
+							orientationFlag=false;
+							console.log("----------------orientation3------------------");
+						}
+						imgArchive = "horizontal";
+						break;
+					case 270:
+						$(".imgCtl li").eq(3).addClass("on").siblings().removeClass("on");
+						$(".more").attr("data-mode",$(".imgCtl li").eq(3).find("i").text());
+						if(orientationFlag==true && !hideCTL){
+							localControl.orientation(4);
+							orientationFlag=false;
+							console.log("----------------orientation4------------------");
+						}
+						imgArchive = "vertical";
+						break;
+				}
+			}
 			//横屏竖屏视频格式
-
-			imgArchive = e.imgArchive;
+			if("imgArchive" in e){
+				imgArchive = e.imgArchive;
+			}
+			
 			
 			if(changeFlag){
 				if(!hideCTL){
@@ -4688,48 +4748,49 @@ $(function(){
 					changeFlag=false;
 				}
 			}
+
 			// setOrientation(imgArchive);
 			// if(firstLoadPage){
-			if(e.imgArchive == "horizontal"){//horizontal为横屏
-				// $(".verticalPrompt").holdHide();
-				if("imgRotate" in e){
-					$(".imgCtl li").eq(2).addClass("on").siblings().removeClass("on");
-					$(".more").attr("data-mode",$(".imgCtl li").eq(2).find("i").text());
-					if(orientationFlag==true && !hideCTL){
-						localControl.orientation(3);
-						orientationFlag=false;
-						console.log("----------------orientation3------------------");
-					}
+			// if(e.imgArchive == "horizontal"){//horizontal为横屏
+			// 	// $(".verticalPrompt").holdHide();
+			// 	if("imgRotate" in e){
+			// 		$(".imgCtl li").eq(2).addClass("on").siblings().removeClass("on");
+			// 		$(".more").attr("data-mode",$(".imgCtl li").eq(2).find("i").text());
+			// 		if(orientationFlag==true && !hideCTL){
+			// 			localControl.orientation(3);
+			// 			orientationFlag=false;
+			// 			console.log("----------------orientation3------------------");
+			// 		}
 					
-				}else{
-					$(".imgCtl li").eq(0).addClass("on").siblings().removeClass("on");
-					$(".more").attr("data-mode",$(".imgCtl li").eq(0).find("i").text());
-					if(orientationFlag==true && !hideCTL){
-						localControl.orientation(1);
-						orientationFlag=false;
-						console.log("----------------orientation1------------------");
-					}
-				}
-			}else if(e.imgArchive == "vertical"){//vertical为竖屏
-				// $(".horizontalPrompt").holdHide();
-				if("imgRotate" in e){
-					$(".imgCtl li").eq(3).addClass("on").siblings().removeClass("on");
-					$(".more").attr("data-mode",$(".imgCtl li").eq(3).find("i").text());
-					if(orientationFlag==true && !hideCTL){
-						localControl.orientation(4);
-						orientationFlag=false;
-						console.log("----------------orientation4------------------");
-					}
-				}else{
-					$(".imgCtl li").eq(1).addClass("on").siblings().removeClass("on");
-					$(".more").attr("data-mode",$(".imgCtl li").eq(1).find("i").text());
-					if(orientationFlag==true && !hideCTL){
-						localControl.orientation(2);
-						orientationFlag=false;
-						console.log("----------------orientation2------------------");
-					}
-				}
-			}
+			// 	}else{
+			// 		$(".imgCtl li").eq(0).addClass("on").siblings().removeClass("on");
+			// 		$(".more").attr("data-mode",$(".imgCtl li").eq(0).find("i").text());
+			// 		if(orientationFlag==true && !hideCTL){
+			// 			localControl.orientation(1);
+			// 			orientationFlag=false;
+			// 			console.log("----------------orientation1------------------");
+			// 		}
+			// 	}
+			// }else if(e.imgArchive == "vertical"){//vertical为竖屏
+			// 	// $(".horizontalPrompt").holdHide();
+			// 	if("imgRotate" in e){
+			// 		$(".imgCtl li").eq(3).addClass("on").siblings().removeClass("on");
+			// 		$(".more").attr("data-mode",$(".imgCtl li").eq(3).find("i").text());
+			// 		if(orientationFlag==true && !hideCTL){
+			// 			localControl.orientation(4);
+			// 			orientationFlag=false;
+			// 			console.log("----------------orientation4------------------");
+			// 		}
+			// 	}else{
+			// 		$(".imgCtl li").eq(1).addClass("on").siblings().removeClass("on");
+			// 		$(".more").attr("data-mode",$(".imgCtl li").eq(1).find("i").text());
+			// 		if(orientationFlag==true && !hideCTL){
+			// 			localControl.orientation(2);
+			// 			orientationFlag=false;
+			// 			console.log("----------------orientation2------------------");
+			// 		}
+			// 	}
+			// }
 				// 	firstLoadPage = false;
 				// }
 				
@@ -6055,11 +6116,13 @@ $(function(){
 			}
 		})
 	}
+	var imgMapArray = {"0":"horizontal","180":"horizontal","90":"vertical","270":"vertical"};
 	function doInit(status, s, xhr) {
-		setOrientation(status.imgArchive,true);
-		localControl.notify(status.imgArchive);
+		imgArchive = status.imgArchive?status.imgArchive:imgMapArray[status.imgRotate];
+		setOrientation(imgArchive,true);
+		localControl.notify(imgArchive);
 		if(firstLoadPage){
-			if(status.imgArchive === "horizontal"){
+			if(imgArchive === "horizontal"){
 				$("#preview").attr("src","images/preload_1.jpg");
 			}else{
 				$("#preview").attr("src","images/preload_2.jpg");
