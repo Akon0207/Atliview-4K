@@ -1275,27 +1275,6 @@ $(function(){
 */
 	//实时监听横竖屏状态
 	window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function() {
-	    // if (window.orientation === 180 || window.orientation === 0) {//竖屏状态
-	    //     // alert('竖屏状态！');
-	    //     console.log("实时监听竖屏||||||");
-	    //     $(".verticalPrompt").holdHide();
-	    //     if(imgArchive == "horizontal"){
-	    //     	$(".horizontalPrompt").holdShow();
-	    //     }else if(imgArchive == "vertical"){
-	    //     	$(".horizontalPrompt").holdHide();
-	    //     }
-	    // }
-	    // if (window.orientation === 90 || window.orientation === -90 ){//横屏状态
-	    //     // alert('横屏状态！');
-	    //     console.log("实时监听横屏||||||");
-	    //     $(".horizontalPrompt").holdHide();
-	    //     if(imgArchive == "horizontal"){
-     //    	 	$(".verticalPrompt").holdHide();
-	    //     }else if(imgArchive == "vertical"){
-     //    	 	$(".verticalPrompt").holdShow();
-	    //     }
-	    // } 
-	    // setOrientation(imgArchive,true);
 	    hideAmplifier();
 	    $(".moreFun").hide();
 	    if($(".focus-area").css("display")=="block"){
@@ -1696,6 +1675,7 @@ $(function(){
 				"-webkit-transform": "rotate(90deg)"
 			})
 		}
+		console.log("have done rotate the img+++++++++++++++++++");
 		if($(".focus-area").css("display")=="block"){
 	    	$(".focus-area,.sun-container,.exposureBiasShow").hide();
 	    }
@@ -1746,62 +1726,18 @@ $(function(){
 			localControl.orientation(appNotice);
 			$(".gridline").holdHide();
 			if(index == 0){
-				// if(imgArchive != "horizontal" && rotate180){
-				// 	imgCtlData.imgArchive = "horizontal";
-				// 	imgCtlData.imgRotate = "180";
-					
-				// }else if(imgArchive != "horizontal" && !rotate180){
-				// 	imgCtlData.imgArchive = "horizontal";
-					
-				// }else if(imgArchive == "horizontal" && rotate180){
-				// 	imgCtlData.imgRotate = "180";
-					
-				// }
 				imgCtlData.imgRotate = 0;
 				imgOrientation = "horizontal";
 				
 			}else if(index == 1){
-				// if(imgArchive != "vertical" && rotate180){
-				// 	imgCtlData.imgArchive = "vertical";
-				// 	imgCtlData.imgRotate = "180";
-					
-				// }else if(imgArchive != "vertical" && !rotate180){
-				// 	imgCtlData.imgArchive = "vertical";
-					
-				// }else if(imgArchive == "vertical" && rotate180){
-				// 	imgCtlData.imgRotate = "180";
-					
-				// }
 				imgCtlData.imgRotate = 90;
 				imgOrientation = "vertical";
 				
 			}else if(index == 2){
-				// if(imgArchive == "vertical" && !rotate180){
-				// 	imgCtlData.imgArchive = "horizontal";
-				// 	imgCtlData.imgRotate = "180";
-				
-				// }else if(imgArchive != "vertical" && !rotate180){
-				// 	imgCtlData.imgRotate = "180";
-					
-				// }else if(imgArchive == "vertical" && rotate180){
-				// 	imgCtlData.imgArchive = "horizontal";
-					
-				// }
 				imgCtlData.imgRotate = 180;
 				imgOrientation = "horizontal";
 				
 			}else if(index == 3){
-				// if(imgArchive == "horizontal" && !rotate180){
-				// 	imgCtlData.imgArchive = "vertical";
-				// 	imgCtlData.imgRotate = "180";
-					
-				// }else if(imgArchive != "horizontal" && !rotate180){
-				// 	imgCtlData.imgRotate = "180";
-					
-				// }else if(imgArchive == "horizontal" && rotate180){
-				// 	imgCtlData.imgArchive = "vertical";
-					
-				// }
 				imgCtlData.imgRotate = 270;
 				imgOrientation = "vertical";
 				
@@ -1908,6 +1844,7 @@ $(function(){
 			$(".shootModeList").toggle();
 			localControl.putValue("shootMode",index);
 			var sType;
+			changeFlag = true;
 			if(index==0){
 				sType="timelapse";
 			}else if(index==1){
@@ -1924,11 +1861,11 @@ $(function(){
 				// 		moreRestore("horizontal");
 				// 	});
 				// }
-				if(imgRotate!=0){
-					postJSON("/imgCtl",{imgRotate:0},function(){
-						moreRestore("horizontal");
-					})
-				}
+				// if(imgRotate!=0){
+				// 	postJSON("/imgCtl",{imgRotate:0},function(){
+				// 		moreRestore("horizontal");
+				// 	})
+				// }
 				$("#modeList li").eq(0).click();
 			}
 			
@@ -5234,10 +5171,10 @@ $(function(){
 
 			if(e.sessionType == "video"){
 				$("#hdr").holdHide();
-				$(".main-pic").removeAttr("style");
+				// $(".main-pic").removeAttr("style");
 				// $(".more").holdHide();
-				$(".moreMask li").eq(1).hide();
-				$(".moreMask li").eq(3).hide();
+				// $(".moreMask li").eq(1).hide();
+				// $(".moreMask li").eq(3).hide();
 				$(".horizontalPrompt").holdHide();
 				$(".verticalPrompt").holdHide();
 				// if(!videoInterval){
@@ -5360,6 +5297,7 @@ $(function(){
 			$("#shoot-circle").removeClass("shoot pause");
 			$("#shoot-circle").children("span").addClass("shoot-percent-inside");
 			var maxInterval=(next>=recordInterval*1000)?(next+1):(recordInterval*1000);
+			console.log("maxInterval-next="+maxInterval+"-"+next+"="+(maxInterval-next));
  			$("#shoot-circle").circleChart({
 				// color: "red",
 				// backgroundColor: "#fff",
@@ -6119,6 +6057,7 @@ $(function(){
 	var imgMapArray = {"0":"horizontal","180":"horizontal","90":"vertical","270":"vertical"};
 	function doInit(status, s, xhr) {
 		imgArchive = status.imgArchive?status.imgArchive:imgMapArray[status.imgRotate];
+		console.log("do init imgArchive is "+imgArchive+"==============");
 		setOrientation(imgArchive,true);
 		localControl.notify(imgArchive);
 		if(firstLoadPage){
