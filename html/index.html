@@ -4631,7 +4631,7 @@ $(function(){
 			if("imgRotate" in e){
 				imgRotate = e.imgRotate;
 				switch(imgRotate){
-					case 0:
+					case "0":
 						$(".imgCtl li").eq(0).addClass("on").siblings().removeClass("on");
 						$(".more").attr("data-mode",$(".imgCtl li").eq(0).find("i").text());
 						if(orientationFlag==true && !hideCTL){
@@ -4641,7 +4641,7 @@ $(function(){
 						}
 						imgArchive = "horizontal";
 						break;
-					case 90:
+					case "90":
 						$(".imgCtl li").eq(1).addClass("on").siblings().removeClass("on");
 						$(".more").attr("data-mode",$(".imgCtl li").eq(1).find("i").text());
 						if(orientationFlag==true && !hideCTL){
@@ -4651,7 +4651,7 @@ $(function(){
 						}
 						imgArchive = "vertical";
 						break;
-					case 180:
+					case "180":
 						$(".imgCtl li").eq(2).addClass("on").siblings().removeClass("on");
 						$(".more").attr("data-mode",$(".imgCtl li").eq(2).find("i").text());
 						if(orientationFlag==true && !hideCTL){
@@ -4661,7 +4661,7 @@ $(function(){
 						}
 						imgArchive = "horizontal";
 						break;
-					case 270:
+					case "270":
 						$(".imgCtl li").eq(3).addClass("on").siblings().removeClass("on");
 						$(".more").attr("data-mode",$(".imgCtl li").eq(3).find("i").text());
 						if(orientationFlag==true && !hideCTL){
