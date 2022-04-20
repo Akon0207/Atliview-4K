@@ -66,8 +66,13 @@
 		<div class="setting-item">
 	        <a href="javascript:;" class="flex flex-middle">
 	            <div class="setting-item-name fx1 autoDormant" lan="powerSav">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-	            <!-- <input type="checkbox" class="switch-box" id="autoDormant"></input> -->
 	            <div class="setting-item-info" id="autoDormant"></div>
+	        </a>
+		</div>
+		<div class="setting-item">
+	        <a href="javascript:;" class="flex flex-middle">
+	            <div class="setting-item-name fx1 autoDormant" lan="previewSize">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	            <div class="setting-item-info" id="previewSize"></div>
 	        </a>
 		</div>
 		<div class="setting-item" style="display: none;">
@@ -123,7 +128,6 @@
 		<div class="setting-item">
 	        <a href="javascript:;" class="flex flex-middle">
 	            <div class="setting-item-name fx1 cutOff" lan="cutOff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-	            <!-- <input type="checkbox" class="switch-box" id="autoDormant"></input> -->
 	            <div class="setting-item-info" id="cutOff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 	        </a>
 		</div>
@@ -138,7 +142,6 @@
 	    <div class="setting-item">
 	    	<a href="javascript:;" class="flex flex-middle" id="frame_rate_a">
 	            <div class="setting-item-name fx1 frame_rate" lan="frame_rate">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-	            <!-- <input type="checkbox" class="switch-box" id="autoDormant"></input> -->
 	            <div class="setting-item-info" id="frame_rate">25 fps</div>
 	        </a>
 	    </div>
@@ -173,6 +176,20 @@
 			</li>
 		</ul>
 		<div class="dorText" ><a href="javascript:;" lan="dorText"></a></div>
+	</div>
+	<div class="selector" id="sizeSelector">
+		<ul>
+			<li class="on">
+				<i>1920x1080</i>
+				
+			</li>
+			<li>
+				<i>1280x720</i>
+			</li>
+			<li>
+				<i>960x540</i>
+			</li>
+		</ul>
 	</div>
 	<div class="outPutMode">
 		<ul>
@@ -480,6 +497,15 @@ $(function(){
 			$(".resolutionMode li").eq(index).addClass("on").siblings().removeClass("on");
 			$("#resolution").text($(".resolutionMode li").eq(index).find("i").text());
 		}
+		//预览分辨率
+		if("previewSize" in e){
+			$("#previewSize").text(e.previewSize);
+			$("#sizeSelector li").each(function(index){
+				if($(this).find("i").text() == e.previewSize){
+					$(this).addClass("on").siblings().removeClass("on");
+				}
+			})
+		}
 		/*网格线*/
 		if("grid" in e){
 			if(e.grid == 0){
@@ -673,6 +699,20 @@ $(function(){
 			$(".dialog-cover").removeClass("tp");
 		})
 	});
+	/*预览分辨率*/
+	$("#previewSize").on("click",function(){
+		$("#sizeSelector,.dialog-cover").show();
+		$(".dialog-cover").addClass("tp");
+	});
+	$("#sizeSelector li").each(function(index){
+		$(this).on("click",function(e){
+			$(this).addClass("on").siblings().removeClass("on");
+			$("#previewSize").text($(this).find("i").text());
+			postJSON("/setting",{previewSize:$(this).find("i").text()});
+			$("#sizeSelector,.dialog-cover").hide();
+			$(".dialog-cover").removeClass("tp");
+		})
+	})
 	/*视频分段*/
 	var timeArray = new Array(0,5,10);
 	$("#cutOff").on("click",function(){
@@ -726,7 +766,7 @@ $(function(){
 	});
 	$("body").on("click", ".dialog-cover", function(e){
 		e.stopPropagation();
-		$(".dormantMode,.dialog-cover,.outPutMode,.cutOffMode,.continueMode,#outPutPro,.resolutionMode").hide();
+		$(".dormantMode,.dialog-cover,.outPutMode,.cutOffMode,.continueMode,#outPutPro,.resolutionMode,#sizeSelector").hide();
 		$(".dialog-cover").removeClass("tp");
 		console.log("this is ..............dialog-cover click");
 	});

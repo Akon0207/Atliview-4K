@@ -12,6 +12,7 @@
   var moveFlag = null;
   var meteringLock = null;
   var previewImg = null;
+  var imgRotate = 0;
   var pointOneX,pointOneY,pointTwoX,pointTwoY,distanceX,distanceY,height1,height2;
   function drawFocusArea(area) {
         // area = [{left:fx, top:fy, width: block_size*3, height: block_size*3, level:0.5}]
@@ -299,13 +300,22 @@ $(function(){
  //    console.log("start focus");
  //  }
 function initFocusEventSource(area){
+  var sendArea = area;
   if(area){
     // var sendData = {left:area.left,top:area.top,width:area.width,height:area.height};
     // var sendData = {
     //   upLeft:{top:area.top-96,left:area.left-96},
     //   lowRight:{top:area.top+96,left:area.left+96}
     // }
-    postJSON("/metering",area,onFocusAreaChanged);
+    if(imgRotate=="180" || imgRotate=="270"){
+      sendArea = {
+        x1: 16-area.x2,
+        y1: 9-area.y2,
+        x2: 16-area.x1,
+        y2: 9-area.y1
+      }
+    }
+    postJSON("/metering",sendArea,onFocusAreaChanged);
     console.log("start focus");
   }
   // if(startFocusTimer) startFocusTimer=null;

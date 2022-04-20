@@ -328,6 +328,7 @@
 	"logBtn":"View Log",
 	"testBtn":"Test",
 	"expMode":"Expo Mode",
-	"resolution":"resolution"
+	"resolution":"resolution",
+	"previewSize":"Preview Size"
 	
 }

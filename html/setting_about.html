@@ -735,7 +735,7 @@ $(function(){
             }else{
                 $("#remoteCtl").prop("checked",false);
             }
-			if(e.timezone_mode == "auto"){
+			if(e.timezone_mode == "auto" || !e.timezone_mode){
                 var newDateMs = new Date().getTime();
                 setcamTime(newDateMs);
             }else{
@@ -744,7 +744,7 @@ $(function(){
                 var camDateMs = new Date(newDateMs+parseInt(e.timezone)*3600000-pcTimezone*3600000);
                 setcamTime(camDateMs);
             }
-            
+
 
             
 		}

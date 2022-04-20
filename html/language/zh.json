@@ -328,5 +328,6 @@
 	"logBtn":"检查日志",
 	"testBtn":"测试",
 	"expMode":"曝光模式",
-	"resolution":"分辨率"
+	"resolution":"分辨率",
+	"previewSize":"预览分辨率"
 }

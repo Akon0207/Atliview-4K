@@ -189,26 +189,7 @@
 			<div class="customMode">
 				<div class="customModeList">
 					<ul>
-						<!-- <li>
-							<i class="iconfont" mode-name="mode1">&#xe769;</i>
-							<p>自定义1</p>
-						</li>
-						<li>
-							<i class="iconfont" mode-name="mode2">&#xe65a;</i>
-							<p>自定义2</p>
-						</li>
-						<li>
-							<i class="iconfont" mode-name="mode2">&#xe65a;</i>
-							<p>自定义2</p>
-						</li>
-						<li>
-							<i class="iconfont" mode-name="mode2">&#xe65a;</i>
-							<p>自定义2</p>
-						</li>
-						<li>
-							<i class="iconfont" mode-name="mode2">&#xe65a;</i>
-							<p>自定义2</p>
-						</li> -->
+						
 					</ul>
 				</div>
 			</div>
@@ -547,68 +528,7 @@
 				<a href="javascript:;" id="confirmIcon" lan="confirm">确认</a>
 			</div>
 		</div>
-		<!-- 自定义预设场景 end -->
-
-		<!-- <div class="dialog-poppup" id="saveMode">
-			<div class="dialog-poppup-tit">保存设置</div>
-			<div class="save-mode">
-				<div class="flex flex-middle">
-					<div class="tit">名称</div>
-					<input type="text fx1" class="name" id="modeName" />
-				</div>
-				<div class="flex flex-middle">
-					<div class="tit">场景</div>
-					<div class="icon fx1" id="selectIcon">请选择图标</div>
-				</div>
-			</div>
-			<div class="save-icons">
-				<div class="swiper-container">
-					<div class="swiper-wrapper">
-						<div class="swiper-slide">
-							<i class="iconfont">&#xe614;</i>
-						</div>
-						<div class="swiper-slide">
-							<i class="iconfont">&#xe615;</i>
-						</div>
-						<div class="swiper-slide">
-							<i class="iconfont">&#xe616;</i>
-						</div>
-						<div class="swiper-slide">
-							<i class="iconfont">&#xe617;</i>
-						</div>
-						<div class="swiper-slide">
-							<i class="iconfont">&#xe618;</i>
-						</div>
-						<div class="swiper-slide">
-							<i class="iconfont">&#xe619;</i>
-						</div>
-						<div class="swiper-slide">
-							<i class="iconfont">&#xe61a;</i>
-						</div>
-						<div class="swiper-slide">
-							<i class="iconfont">&#xe61b;</i>
-						</div>
-						<div class="swiper-slide">
-							<i class="iconfont">&#xe623;</i>
-						</div>
-						<div class="swiper-slide">
-							<i class="iconfont">&#xe624;</i>
-						</div>
-						<div class="swiper-slide">
-							<i class="iconfont">&#xe625;</i>
-						</div>
-						<div class="swiper-slide">
-							<i class="iconfont">&#xe626;</i>
-						</div>
-					</div>
-					<div class="swiper-pagination"></div>
-				</div>
-			</div>
-			<div class="dialog-btns flex">
-				<a href="javascript:;" id="cancelIcon">取消</a>
-				<a href="javascript:;" id="confirmIcon">确定</a>
-			</div>
-		</div> -->
+		
 
 		<!-- 参数设置 start -->
 		<div class="setting-content">
@@ -798,25 +718,7 @@
 					</div>
 				</div>
 				<!-- 效果 -->
-				<!-- 高级 -->
-				<!-- <div class="parameter-infrared">
-					<div class="advance-outer">
-						<div class="infrared-setting">
-							<span class="inner-text" lan="infShoot">红外成像</span><span class="inner-content"><input type="checkbox" class="infrared-box"></span>
-						</div>
-						<div class="imgQuality">
-							<span class="inner-text">预览画质</span>
-							<div class="inner-content">
-								<ul>
-									<li>高清</li>
-									<li class="on">标清</li>
-									<li>普清</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div> -->
-				<!-- 高级 -->
+				
 
 				
 			</div>
@@ -1054,34 +956,6 @@
 	indexPage=true;
 	// showList=$("#mode,.more");
 	showList=$("#mode,.more,.rotate");
-	// $.fn.extend({
-	// 	holdShow: function() {
-	// 		showList=showList.not($(this)).add($(this));
-	// 		//alert(showList);
-	// 		//console.log(showList);
-	// 		if(!hideCTL) $(this).show();
-	// 		else $(this).hide();
-	// 	},
-	// 	holdHide: function() {
-	// 		showList=showList.not($(this));
-	// 		//console.log(showList);
-	// 		$(this).hide();
-	// 	},
-	// 	holdSlideDown: function(speed, easing, fn) {
-	// 		showList=showList.not($(this)).add($(this));
-	// 		if(!hideCTL) $(this).slideDown(speed, easing, fn);
-	// 		else $(this).hide();
-	// 	},
-	// 	holdSlideUp: function(speed, easing, fn) {
-	// 		showList=showList.not($(this));
-	// 		if(!hideCTL) $(this).slideUp(speed, easing, fn);
-	// 		else $(this).hide();
-	// 	},
-	// 	holdToggle: function(speed,easing,fn) {
-	// 		if(!hideCTL) $(this).toggle(speed, easing, fn);
-	// 		else $(this).hide();
-	// 	}
-	// });
 
 
 $(function(){	
@@ -1122,7 +996,7 @@ $(function(){
 	var pauseStatus = localControl.getValue("pauseStatus",0);
 	var livePreviewUrl = null;
 	// var rotate180 = false;
-	var imgRotate = 0;
+	
 	var cronFlag = getParameterByName("cron");
 	var cronInterval = localControl.getValue("cronInterval");
 	var changeFlag = true;//根据status数据设置方向只在第一次load网页的时候这么做，后面根据用户设置实时改变
@@ -5872,7 +5746,9 @@ $(function(){
 		}else {
 			if(newSession === 1) {
 				if(sessionType=="timelapse" || sessionType=="image"){
-					setMode(sceneMode);
+					// console.log("updatestatus before setMode ===========")
+					// setMode(sceneMode);
+					// console.log("updatestatus after setMode ===========")
 				}
 			}
 			newSession = 0;
