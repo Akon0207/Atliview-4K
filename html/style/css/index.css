@@ -46,3 +46,12 @@
     /*animation: fade 1500ms infinite;*/
     /*-webkit-animation: fade 1500ms infinite;*/
 }
+
+#focusSizeSelect {
+    position: absolute;
+    top: 70px;
+    left: 80px;
+    background: #fff;
+    width: 40px;
+    text-align: center;
+}

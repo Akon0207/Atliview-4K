@@ -13,6 +13,7 @@
   var meteringLock = null;
   var previewImg = null;
   var imgRotate = 0;
+  var focusSize = 3;//对焦框大小，调试用
   var pointOneX,pointOneY,pointTwoX,pointTwoY,distanceX,distanceY,height1,height2;
   function drawFocusArea(area) {
         // area = [{left:fx, top:fy, width: block_size*3, height: block_size*3, level:0.5}]
@@ -32,8 +33,9 @@
           $(".focus-area:eq(0)").css({
             top:area[0]=="center"?"50%":Math.floor(area[0].left*vscale) + offsetTop, 
             left:area[0]=="center"?"50%":Math.floor(previewImg.height - area[0].top*hscale - area[0].height*vscale) + offsetLeft,
-            width:area[0]=="center"?Math.floor(block_size * 3 * vscale):Math.floor(area[0].height * vscale),
-            height:area[0]=="center"?Math.floor(block_size * 3 * hscale):Math.floor(area[0].width * hscale)
+            width:area[0]=="center"?Math.floor(block_size * focusSize * vscale):Math.floor(area[0].height * vscale),
+            height:area[0]=="center"?Math.floor(block_size * focusSize * hscale):Math.floor(area[0].width * hscale)
+            
           });
           //console.log(offsetTop+" "+offsetLeft+" "+(Math.floor(area[i].top*hscale) + offsetTop));
            maxLeft = (offsetLeft+imgHeight)-($(".focus-area:eq(0)").width()+$(".sun-container").width()+10);
@@ -41,8 +43,9 @@
           $(".focus-area:eq(0)").css({
             top:area[0]=="center"?"50%":Math.floor(area[0].top*hscale) + offsetTop, 
             left:area[0]=="center"?"50%":Math.floor(offsetLeft+area[0].left)*vscale-offsetLeft*hscale,
-            width:area[0]=="center"?Math.floor(block_size * 3 * hscale):Math.floor(area[0].width * hscale),
-            height:area[0]=="center"?Math.floor(block_size * 3 * vscale):Math.floor(area[0].height * vscale)
+            width:area[0]=="center"?Math.floor(block_size * focusSize * hscale):Math.floor(area[0].width * hscale),
+            height:area[0]=="center"?Math.floor(block_size * focusSize * vscale):Math.floor(area[0].height * vscale)
+            
           });
           //console.log(offsetTop+" "+offsetLeft+" "+Math.floor(offsetLeft+area[i].left)*vscale);
           maxLeft = (offsetLeft+imgWidth)-($(".focus-area:eq(0)").width()+$(".sun-container").width()+10);
@@ -51,8 +54,9 @@
             top:area[0]=="center"?"50%":Math.floor(area[0].left*vscale) + offsetTop, 
             // left:area[0]=="center"?"50%":Math.floor(previewImg.height - area[0].top*hscale - area[0].height*vscale) + offsetLeft - offsetValue,
             left:area[0]=="center"?"50%":Math.floor(previewImg.height - area[0].top*hscale - area[0].height*vscale) + offsetValue,
-            width:area[0]=="center"?Math.floor(block_size * 3 * vscale):Math.floor(area[0].height * vscale),
-            height:area[0]=="center"?Math.floor(block_size * 3 * hscale):Math.floor(area[0].width * hscale)
+            width:area[0]=="center"?Math.floor(block_size * focusSize * vscale):Math.floor(area[0].height * vscale),
+            height:area[0]=="center"?Math.floor(block_size * focusSize * hscale):Math.floor(area[0].width * hscale)
+            
           });
           //console.log(offsetTop+" "+offsetLeft+" "+(Math.floor(area[i].top*hscale) + offsetTop));
            maxLeft = (offsetLeft+imgHeight)-($(".focus-area:eq(0)").width()+$(".sun-container").width()+10);
@@ -154,8 +158,8 @@ $(function(){
         focusArea = [ {
           left: data.x1/16*previewImg.naturalWidth,
           top: data.y1/9*previewImg.naturalHeight,
-          width: block_size*3,
-          height: block_size*3
+          width: block_size*focusSize,
+          height: block_size*focusSize
         } ]
         clearTimeout(clearAreaTimer);
         drawFocusArea(focusArea);
@@ -180,23 +184,23 @@ $(function(){
       return
     }
     else {
-      fx -= block_size + block_size/2;//方框左上角坐标
+      fx -= block_size*focusSize/2;//方框左上角坐标
       if(fx < 0)fx = 0;
-      fy -= block_size + block_size/2;
+      fy -= block_size*focusSize/2;
       if(fy < 0)fy = 0;
-      if(fx > (previewImg.naturalWidth-block_size*3))fx = previewImg.naturalWidth-block_size*3;//限制对焦框不要越过图片
-      if(fy > (previewImg.naturalHeight-block_size*3))fy = previewImg.naturalHeight-block_size*3;
+      if(fx > (previewImg.naturalWidth-block_size*focusSize))fx = previewImg.naturalWidth-block_size*focusSize;//限制对焦框不要越过图片
+      if(fy > (previewImg.naturalHeight-block_size*focusSize))fy = previewImg.naturalHeight-block_size*focusSize;
       // fx -= fx%8;//相机只能处理8的倍数值
       // fy -= fy%8;
-      area = {left:fx, top:fy, width: block_size*3, height: block_size*3, level:0.5};  
+      area = {left:fx, top:fy, width: block_size*focusSize, height: block_size*focusSize, level:0.5}; 
   console.log(area);
       focusArea = [ area ];
     }
     var sendData = {
       x1:area.left/previewImg.naturalWidth*16,
       y1:area.top/previewImg.naturalHeight*9,
-      x2:(area.left+192)/previewImg.naturalWidth*16,
-      y2:(area.top+192)/previewImg.naturalHeight*9
+      x2:(area.left+block_size*focusSize)/previewImg.naturalWidth*16,
+      y2:(area.top+block_size*focusSize)/previewImg.naturalHeight*9
       
     }
     drawFocusArea(focusArea);
@@ -227,8 +231,8 @@ $(function(){
       var postData = {
         x1:focusArea[0].left/previewImg.naturalWidth*16,
         y1:focusArea[0].top/previewImg.naturalHeight*9,
-        x2:(focusArea[0].left+192)/previewImg.naturalWidth*16,
-        y2:(focusArea[0].top+192)/previewImg.naturalHeight*9,
+        x2:(focusArea[0].left+block_size*focusSize)/previewImg.naturalWidth*16,
+        y2:(focusArea[0].top+block_size*focusSize)/previewImg.naturalHeight*9,
         lock:1
       }
     postJSON("/metering",postData,function(){
@@ -266,8 +270,8 @@ $(function(){
     focusArea = [ {
       left: e.x1/16*previewImg.naturalWidth,
       top: e.y1/9*previewImg.naturalHeight,
-      width: block_size*3,
-      height: block_size*3
+      width: block_size*focusSize,
+      height: block_size*focusSize
     } ]
     drawFocusArea(focusArea);
     

@@ -950,6 +950,21 @@
 			</div>
 		</div>
 		<!-- 红外 -->
+		
+		<!-- 调试 -->
+		<div>
+			<select id="focusSizeSelect">
+				<option value="3">192</option>
+				<option value="3.5">224</option>
+				<option value="4">256</option>
+				<option value="4.5">288</option>
+				<option value="5">320</option>
+				<option value="5.5">352</option>
+				<option value="6">384</option>
+			</select>
+		</div>
+
+		<!-- 调试 end -->
 	</section>
 <script type="text/javascript" src="js/language.js"></script>
 <script type="text/javascript">
@@ -1034,6 +1049,7 @@ $(function(){
 	var sn_num = null;
 	var switchVideo = true;
 	var manualFlag = false;
+	var base64 = null;
 	if(getParameterByName("tag")=="autoAuth"){ //是远程管理页面
 		setCookie("autoAuth", "1");
 	}else {
@@ -1686,8 +1702,17 @@ $(function(){
 				localControl.putValue("pauseStatus",0);
 				$(".dialog-cover").hide().removeClass("tp");;
 				$("#shoot-circle").removeClass("pause");
-				// $("#shoot-pause").hide();
-				stopRecording();
+				
+				var src = '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():'');
+				console.log("start getBase64+++++++++++++++++++++++++++++")
+				var img = new Image();
+				img.src = src;
+				img.onload = function(){
+					base64 = getBase64(img);
+					// console.log(base64);
+					$("#preview").prop("src",base64);
+					stopRecording();
+				}
 				$("#start-shooting").show().siblings("#continue-shooting").hide();
 				$(".time-poppup .time-tab-cron").show();
 			}
@@ -1703,6 +1728,7 @@ $(function(){
 	$(".shootMode .modeNow").on("click",function(e){
 		e.stopPropagation();
 		hideAmplifier();
+		// saveImg();
 		$(".shootModeList").toggle();
 		localControl.focus("disabled");
 		clearTimeout(clearAreaTimer);
@@ -1742,12 +1768,21 @@ $(function(){
 				// }
 				$("#modeList li").eq(0).click();
 			}
-			
-			postJSON("/switch_session", { type:sType }, function(e, status){
-				console.log("switch_session "+sType+" ok");
-			}, function () {
-				console.log("switch_session "+sType+" error");
-			}, "text");
+			var src = '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():'');
+			console.log("start getBase64+++++++++++++++++++++++++++++")
+			var img = new Image();
+			img.src = src;
+			img.onload = function(){
+				base64 = getBase64(img);
+				// console.log(base64);
+				$("#preview").prop("src",base64);
+				postJSON("/switch_session", { type:sType }, function(e, status){
+					console.log("switch_session "+sType+" ok");
+				}, function () {
+					console.log("switch_session "+sType+" error");
+					// $("#preview").prop("src",base64);
+				}, "text");
+			}
 
 			console.log("change to"+index+" "+sType);
 		})
@@ -1767,6 +1802,7 @@ $(function(){
 			// 	$("#firstShootTip,.dialog-cover").show();
 			// }else{
 				shootStart(sessionType);
+				// saveImg();
 			// }
 			
 		});
@@ -1781,6 +1817,7 @@ $(function(){
 			// 	$("#firstShootTip,.dialog-cover").show();
 			// }else{
 				shootStart(sessionType);
+				// saveImg();
 			// }
 		});
 	}
@@ -1835,7 +1872,8 @@ $(function(){
 		}
 	} 
 	/*录像 --start*/
-	$(".shootV").on("click",function(){
+	$("#shoot-video").on("click",function(){
+		// saveImg();
 		if($(this).hasClass("shootV-running")){
 			$("#turnoffVideo").show();
 			if(language && language=="en"){
@@ -1865,14 +1903,22 @@ $(function(){
 	});
 	$("#turnoffVideoYes").on("click",function(){
 		$("#turnoffVideo").hide();
-		// postJSON("/setting",{videoCronSwitch: 0})
-		putJSON("/video", { sessionId: sessionId }, function(e, status){
-			console.log("stop video ok");
-			videoCronSwitch = 0;
-			setVideoStatus("idle");
-		}, function () {
-			console.log("stop video error");
-		}, "text");
+		var src = '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():'');
+		console.log("start getBase64+++++++++++++++++++++++++++++")
+		var img = new Image();
+		img.src = src;
+		img.onload = function(){
+			base64 = getBase64(img);
+			// console.log(base64);
+			$("#preview").prop("src",base64);
+			putJSON("/video", { sessionId: sessionId }, function(e, status){
+				console.log("stop video ok");
+				videoCronSwitch = 0;
+				setVideoStatus("idle");
+			}, function () {
+				console.log("stop video error");
+			}, "text");
+		}
 	});
 	/*录像 --end*/
 
@@ -2454,6 +2500,7 @@ $(function(){
 		focusCMD=null;
 		focusTimeout();
 		hideAmplifier();
+		// saveImg();
 		if($("#shoot-circle").attr("state")=="recording"){
 			// limit_time = localControl.getValue("limit_time",0);
 			if(limit_time!="1"){//非定时任务点击拍摄按钮弹出暂停和停止选择框
@@ -5507,6 +5554,7 @@ $(function(){
 			setRecording("idle");
 		}, function () {
 			console.log("stop video error");
+			$("#preview").prop("src",base64);
 		}, "text");
 	}
 	$('#turnoffCronYes').on('click', stopRecording);
@@ -5621,13 +5669,37 @@ $(function(){
 			onPageHide();
 		}
 	});
-
-
+	function saveImg(){
+		var src = '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():'');
+		console.log("start getBase64+++++++++++++++++++++++++++++")
+		var img = new Image();
+		img.src = src;
+		var image = document.createElement("img");
+		image.style.display = "none";
+		img.onload = function(){
+			base64 = getBase64(img);
+			// $("#preview").prop("src",base64);
+			
+		}
+	}
+	
+	function getBase64(img) {  
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+     	var ctx = canvas.getContext("2d");
+     	ctx.drawImage(img, 0, 0, img.width, img.height);
+     	// var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
+     	// var dataURL = canvas.toDataURL("image/"+ext);
+     	var dataURL = canvas.toDataURL();
+     	// console.log("dataURL>>>",dataURL);
+     	return dataURL;
+	}  
 	var imgSrc=null;
 	var recordPreImg = new Image();
 	var idlePreimg = new Image();
-	function setPerview(PreviewState, index, status){
-		console.log( "setPerview:"+PreviewState+" visibilityState:"+document.visibilityState );
+	function setPreview(PreviewState, index, status){
+		console.log( "setPreview:"+PreviewState+" visibilityState:"+document.visibilityState );
 		if(document.visibilityState!="visible") {
 			//setPageWhenHide();
 			return;
@@ -5736,7 +5808,7 @@ $(function(){
 			newSession=1;
 			//console.log('setPreview: /' + sessionType + '?sessionId=' + sessionId);
 			//console.log($('#preview'));
-			//setPerview('newSessionId');
+			//setPreview('newSessionId');
 			//$('#preview').attr('src', '/' + sessionType + '?sessionId=' + sessionId +'&t='+ t  + (getAccessToken()?'&access_token='+getAccessToken():''));
 			// controlGetJSON("/control", updateControls);
 			controlGetJSON("/control",updateControls);
@@ -5767,14 +5839,14 @@ $(function(){
 */
 		}
 		if(sessionType=="timelapse" && ("recordinfo" in status) && (status.recordinfo.status=="recording" || status.recordinfo.status=="cronRunning")){ //拍摄中设置静态页面
-			setPerview('recording', status.frameIndex, status);
+			setPreview('recording', status.frameIndex, status);
 		}else if((("recordinfo" in status) && status.recordinfo.status=="idle") && $("#shoot-circle").attr("state") && $("#shoot-circle").attr("state")!="idle"){
-			setPerview('changedToIdle');
+			setPreview('changedToIdle');
 		}else if(newSession==1){
-			setPerview('newSessionId');
+			setPreview('newSessionId');
 		}else if(gotoVisable){
 			gotoVisable = false;
-			setPerview('newSessionId');
+			setPreview('newSessionId');
 		}
 
 		// hideFocus=false;
@@ -5906,6 +5978,7 @@ $(function(){
 			statusEventSourceOnerror();
 			sessionId=null;
 			netDisconnected();
+			$("#preview").prop("src",base64);
 		}
 	}
 	$("#syn-cancel").on("click",function () {
@@ -5930,6 +6003,14 @@ $(function(){
 			}
 		})
 	}
+
+	// 对焦调试用
+	$("#focusSizeSelect").change(function(){
+		focusSize = parseFloat($(this).val());
+		console.log("focusSize is "+focusSize+"===============")
+	})
+
+
 	var imgMapArray = {"0":"horizontal","180":"horizontal","90":"vertical","270":"vertical"};
 	function doInit(status, s, xhr) {
 		imgArchive = status.imgArchive?status.imgArchive:imgMapArray[status.imgRotate];
