@@ -82,7 +82,8 @@
 			<!-- <i class="battery" style="display: none;"><div id="battery"><span></span><div class="battery-per"></div></div></i>  -->  <!-- 充电中 -->
 			<!-- <i class="battery" style="display: none;"><div id="battery"><span></span></div></i> -->
 			<!-- <i class="battery" style="display: block;"><img src="images/battery/battery101.png"><div id="battery"><span></span></div></i>  -->
-			<i class="battery" style="display: none;"><div id="battery"><span></span></div><div class="battery_png"><img src=""></div></i> 
+			<i class="battery" style="display: none;"><div id="battery"><span></span></div><div class="battery_png"><img src=""></div></i>
+			<i class="cpuTemp">Temp:<span id="cpuTemp">50</span></i>
 			<i class="iconfont no-battery" style="display: none;">&#xe649;</i> <!-- 未连接电池 -->
 			<i class="iconfont cutAudio" style="display: none;">&#xe611;</i>
 <!-- 			<i class="freeMemory">5 G/10 G</i> -->
@@ -108,6 +109,8 @@
 			<div><span lan="ISO">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="gain-now">0</span></div>
 			<div><span lan="whiteBal">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="whiteBalance-now">0</span></div>
 			<div><span lan="shutter">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="shutter-now">0</span></div>
+			<div><span>lum_idx</span>:<span id="lum-idx">0</span></div>
+			<div><span>target</span>:<span id="target">0</span></div>
 		</div>
 		<div class="iconfont infrared-up">&#xe60a;</div>
 		<!-- <div class="iconfont rotate">&#xe64f;</div> -->
@@ -1219,9 +1222,7 @@ $(function(){
 
 	//1秒获取一次快门时长
 	function getExposure(){
-		getJSON("/control",function(data){
-			currentExposure = data.exposure;
-		})
+		getJSON("/control",updateControls)
 		if($(".time-poppup").css("display")=="block"){
 			autoGetExposure = setTimeout(getExposure,1000);
 		}else{
@@ -2974,11 +2975,11 @@ $(function(){
 		console.log("setMode: " + mode);
 		currentMode = mode;
 		var obj = {scene:mode}
-		if (mode in modeSettings) {
-			for(var attr in modeSettings[mode]){
-				obj[attr] = modeSettings[mode][attr];
-			}
-		}
+		// if (mode in modeSettings) {
+		// 	for(var attr in modeSettings[mode]){
+		// 		obj[attr] = modeSettings[mode][attr];
+		// 	}
+		// }
 		controlPostJSON("/control", obj, updateControls);
 		sceneMode = mode;
 	}
@@ -3153,7 +3154,7 @@ $(function(){
 		var m = $(".parameter-exprosure .swiper-slide.on").index();
 		exprosureSwiper.slideTo(m);
 		currentSwiper.update();
-		controlGetJSON("/control",updateControls);
+		// controlGetJSON("/control",updateControls);
     });
 	//空白处点击事件
 	$(".main").on("click",function(e){
@@ -4130,11 +4131,12 @@ $(function(){
 
 	function updateEffectNow(e, v) {
 		e.text(v);
-		if(v==0) e.parent().hide(); 
-		else if($("#modeList li").eq(7).hasClass("on")){e.parent().show();} 
-		if(autoExposure==0 && autoGain==0){
-			$("#exposureBias-now").parent().hide();
-		}
+		e.parent().show();
+		// if(v==0) e.parent().hide(); 
+		// else if($("#modeList li").eq(7).hasClass("on")){e.parent().show();} 
+		// if(autoExposure==0 && autoGain==0){
+		// 	$("#exposureBias-now").parent().hide();
+		// }
 	}
 
 
@@ -4152,7 +4154,8 @@ $(function(){
 		if(--controlConnCount<=0) {
 			controlConnCount=0;
 			clearTimeout(autoGetControlsTimeout);
-			autoGetControlsTimeout = setTimeout(autoGetControls,2000);
+			// autoGetControlsTimeout = setTimeout(autoGetControls,2000);
+			autoGetControlsTimeout = setTimeout(autoGetControls,1000);
 		}else {
 			clearTimeout(controlConnCountTimer);
 			controlConnCountTimer=setTimeout(resetControlConnCount, 30000);
@@ -4169,27 +4172,28 @@ $(function(){
 		getJSON(url, successCallback, errorCallback, dataType?dataType:'json', controlComplete) 
 	}
 	function autoGetControls(){
-		if(($("#mode").attr("data-mode")!="\ue614") && ($(".ctrl-icon").get(0).style.display == "none")){
+		// if(($("#mode").attr("data-mode")!="\ue614") && ($(".ctrl-icon").get(0).style.display == "none")){
 			controlGetJSON("/control",updateControls);
-		}else{
-			clearTimeout(autoGetControlsTimeout);
-		}
+		// }else{
+		// 	clearTimeout(autoGetControlsTimeout);
+		// }
 	}
 	function updateControls(e,status) {
 			console.log(e);
+			currentExposure = e.exposure;
 			if(controlConnCount > 1){ //还存在其他的control连接没返回
 				console.log("controlConnCount:"+controlConnCount);
 				return;
 			}
 			/*非手动模式下需要设置亮度*/
-			var v=e.brightness;
-			$("#s6").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v});
-			$("#s6").slider('setValue', v);
-			if(v>0) v="+"+v;
-			//$("#brightness-now").text(v);
-			updateEffectNow($("#brightness-now"),  v);
-			$("span[data-current-name='s6']").text(v);
-			$("#s6").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v);
+			// var v=e.brightness;
+			// $("#s6").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v});
+			// $("#s6").slider('setValue', v);
+			// if(v>0) v="+"+v;
+			// //$("#brightness-now").text(v);
+			// updateEffectNow($("#brightness-now"),  v);
+			// $("span[data-current-name='s6']").text(v);
+			// $("#s6").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v);
 
 			/*设置场景*/
 			// if("recordMode" in e){
@@ -4325,11 +4329,12 @@ $(function(){
 					manualFlag = false
 				}	
 			// }
-			if(e.autoExposure == 0){//快门为手动时显示快门时间在界面上
+			// if(e.autoExposure == 0){//快门为手动时显示快门时间在界面上
 				// $("#shutter-now").text($(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text());
 				// $("#shutter-now").parent().show();
-				updateEffectNow($("#shutter-now"),$(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text())
-			}else{$("#shutter-now").parent().hide();}
+				// updateEffectNow($("#shutter-now"),$(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text())
+				updateEffectNow($("#shutter-now"),e.exposure/1000000)
+			// }else{$("#shutter-now").parent().hide();}
 			/*设置感光度 autoGain gain*/
 			// if(e.gain==255)e.gain+=1;
 			// v=(e.gain/16)*100;
@@ -4340,21 +4345,21 @@ $(function(){
 			// if(v>0) v="+"+v;
 			$("#s0").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v);
 			
-			if(e.autoGain==1){
-				$(".slider-auto").addClass("on").siblings(".slider-manual").removeClass("on");
-				$(".slider-auto").siblings(".slider-plus,.slider-minus").addClass("disabled");
-				$("#s0").slider("disable");
-				if(language && language=="en"){$("#gian").text("Auto");}else{$("#gian").text("自动");}
-				$("#gain-now").parent().hide();
-			}else {
-				$(".slider-auto").removeClass("on").siblings(".slider-manual").addClass("on");
-				$(".slider-auto").siblings(".slider-plus,.slider-minus").removeClass("disabled");
+			// if(e.autoGain==1){
+				// $(".slider-auto").addClass("on").siblings(".slider-manual").removeClass("on");
+				// $(".slider-auto").siblings(".slider-plus,.slider-minus").addClass("disabled");
+				// $("#s0").slider("disable");
+				// if(language && language=="en"){$("#gian").text("Auto");}else{$("#gian").text("自动");}
+				// $("#gain-now").parent().hide();
+			// }else {
+				// $(".slider-auto").removeClass("on").siblings(".slider-manual").addClass("on");
+				// $(".slider-auto").siblings(".slider-plus,.slider-minus").removeClass("disabled");
 				$("#s0").slider("enable");
 				$("#gian").text(v);
 				// $("#gain-now").text(v);
 				// $("#gain-now").parent().show();
 				updateEffectNow($("#gain-now"),v);
-			}
+			// }
 			/*当感光度和快门为自动时曝光补偿不可点击*/
 			if(e.autoGain==0&&e.autoExposure==0){
 				$(".swiper-slide[setting-type=exposureBias]").addClass("infrared-disabled");
@@ -4366,13 +4371,13 @@ $(function(){
 			/*设置白平衡 autoWhiteBalance whitebalance*/
 			
 			
-			if(e.autoWhiteBalance==1){
-				$(".parameter-whiteBalance .swiper-slide:eq(0)").addClass("on").siblings().removeClass("on");
-				if(language && language=="en"){$("#whiteBalance").text("Auto");}else{$("#whiteBalance").text("自动");}
-				$("#whiteBalance-now").parent().hide();
-			}else {
+			// if(e.autoWhiteBalance==1){
+			// 	$(".parameter-whiteBalance .swiper-slide:eq(0)").addClass("on").siblings().removeClass("on");
+			// 	if(language && language=="en"){$("#whiteBalance").text("Auto");}else{$("#whiteBalance").text("自动");}
+			// 	$("#whiteBalance-now").parent().hide();
+			// }else {
 				v = e.whiteBalance;
-				// $("#whiteBalance-now").text(v);
+				$("#whiteBalance-now").text(v);
 				$("#whiteBalance-now").parent().show();
 				// if($("#whiteBalance").text()=="自动" || $("#whiteBalance").text()=="Auto"){
 					$(".parameter-whiteBalance .swiper-slide").last().addClass("on").siblings().removeClass("on");
@@ -4380,26 +4385,26 @@ $(function(){
 					$("#s5").slider('setValue', v);
 					if(v>0) v="+"+v;
 					$("#s5").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v);
-					if("whiteBalanceMode" in e){
-						$(".parameter-whiteBalance .swiper-slide").eq(whiteBalModeIndex[e.whiteBalanceMode]).addClass("on").siblings().removeClass("on");
-						$("#whiteBalance").text(whiteBalMode[e.whiteBalanceMode]);
-						$("#whiteBalance-now").text(whiteBalMode[e.whiteBalanceMode]);
-					}else{
-						$("#whiteBalance").text(v);
-						$("#whiteBalance-now").text(v);
-					}
+					// if("whiteBalanceMode" in e){
+					// 	$(".parameter-whiteBalance .swiper-slide").eq(whiteBalModeIndex[e.whiteBalanceMode]).addClass("on").siblings().removeClass("on");
+					// 	$("#whiteBalance").text(whiteBalMode[e.whiteBalanceMode]);
+					// 	$("#whiteBalance-now").text(whiteBalMode[e.whiteBalanceMode]);
+					// }else{
+					// 	$("#whiteBalance").text(v);
+					// 	$("#whiteBalance-now").text(v);
+					// }
 				// }
-			}
+			// }
 
 			/*设置饱和度 saturation*/
-			v=e.saturation;
-			$("input[data-slider-id='constrastSlider']").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v});
-			$("#s2").slider('setValue', v);
-			if(v>0) v="+"+v;
-			//$("#saturation-now").text(v);
-			updateEffectNow($("#saturation-now"), v);
-			$("span[data-current-name='s2']").text(v);
-			$("#s2").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v);
+			// v=e.saturation;
+			// $("input[data-slider-id='constrastSlider']").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v});
+			// $("#s2").slider('setValue', v);
+			// if(v>0) v="+"+v;
+			// //$("#saturation-now").text(v);
+			// updateEffectNow($("#saturation-now"), v);
+			// $("span[data-current-name='s2']").text(v);
+			// $("#s2").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v);
 
 			/*设置曝光补偿 exposureBias*/
 			v = e.exposureBias;
@@ -4426,34 +4431,39 @@ $(function(){
 			updateEffectNow($("#exposureBias-now"), vShow);
 
 			/*设置对比度 contrast*/
-			$("input[data-slider-id='constrastSlider']").attr({"data-slider-value":e.contrast, "data-slider-default":e.contrast, "data-value":e.contrast, "value":e.contrast});
-			$("#s1").slider('setValue', e.contrast);
-			if(e.contrast>0) e.contrast="+"+e.contrast;
-			//$("#contrast-now").text(e.contrast);
-			updateEffectNow($("#contrast-now"), e.contrast);
-			$("span[data-current-name='s1']").text(e.contrast);
-			$("#s1").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(e.contrast);
+			// $("input[data-slider-id='constrastSlider']").attr({"data-slider-value":e.contrast, "data-slider-default":e.contrast, "data-value":e.contrast, "value":e.contrast});
+			// $("#s1").slider('setValue', e.contrast);
+			// if(e.contrast>0) e.contrast="+"+e.contrast;
+			// //$("#contrast-now").text(e.contrast);
+			// updateEffectNow($("#contrast-now"), e.contrast);
+			// $("span[data-current-name='s1']").text(e.contrast);
+			// $("#s1").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(e.contrast);
 
 			/*设置锐度 sharpness*/
-			$("input[data-slider-id='acutanceSlider']").attr({"data-slider-value":e.sharpness, "data-slider-default":e.sharpness, "data-value":e.sharpness, "value":e.sharpness});
-			$("#s3").slider('setValue', e.sharpness);
-			if(e.sharpness>0) e.sharpness="+"+e.sharpness;
-			//$("#sharpness-now").text(e.sharpness);
-			updateEffectNow($("#sharpness-now"), e.sharpness);
-			$("span[data-current-name='s3']").text(e.sharpness);
-			$("#s3").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(e.sharpness);
+			// $("input[data-slider-id='acutanceSlider']").attr({"data-slider-value":e.sharpness, "data-slider-default":e.sharpness, "data-value":e.sharpness, "value":e.sharpness});
+			// $("#s3").slider('setValue', e.sharpness);
+			// if(e.sharpness>0) e.sharpness="+"+e.sharpness;
+			// //$("#sharpness-now").text(e.sharpness);
+			// updateEffectNow($("#sharpness-now"), e.sharpness);
+			// $("span[data-current-name='s3']").text(e.sharpness);
+			// $("#s3").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(e.sharpness);
 
 			/*设置色相 hue*/
-			$("input[data-slider-id='hueSlider']").attr({"data-slider-value":e.hue, "data-slider-default":e.hue, "data-value":e.hue, "value":e.hue});
-			$("#s4").slider('setValue', e.hue);
-			if(e.hue>0) e.hue="+"+e.hue;
-			//$("#hue-now").text(e.hue);
-			updateEffectNow($("#hue-now"), e.hue);
-			$("span[data-current-name='s4']").text(e.hue);
-			$("#s4").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(e.hue);
-			//alert("slider"+$("#s4").slider('getValue'));
-
-			
+			// $("input[data-slider-id='hueSlider']").attr({"data-slider-value":e.hue, "data-slider-default":e.hue, "data-value":e.hue, "value":e.hue});
+			// $("#s4").slider('setValue', e.hue);
+			// if(e.hue>0) e.hue="+"+e.hue;
+			// //$("#hue-now").text(e.hue);
+			// updateEffectNow($("#hue-now"), e.hue);
+			// $("span[data-current-name='s4']").text(e.hue);
+			// $("#s4").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(e.hue);
+			// //alert("slider"+$("#s4").slider('getValue'));
+			/*设置lum_idx和target*/
+			// if(e.isp_debug_info.iso_result.lum_idx){
+				updateEffectNow($("#lum-idx"),e.isp_debug_info.iso_result.lum_idx);
+			// }
+			// if(e.isp_debug_info.ae_result.target){
+				updateEffectNow($("#target"),e.isp_debug_info.ae_result.target);
+			// }
 			
 			/*设置拍摄间隔*/
 			// alert($(".mode-list li.on").index());
@@ -4519,6 +4529,9 @@ $(function(){
 			// 	$(".iconfont.hotspot").show();
 			// }else $(".iconfont.hotspot").hide();
 			//wifi
+			if("CPUTemp" in e){
+				$("#cpuTemp").text(e.CPUTemp);
+			}
 			recordStatus = e.recordinfo.status;
 			if((window.webkit && window.webkit.messageHandlers) || window.atliviewControl){
 				$(".forback").holdShow();

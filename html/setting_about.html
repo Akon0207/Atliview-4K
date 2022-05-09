@@ -297,7 +297,7 @@
                 <span class="test-button" id="downloadLogs" lan="downloadLogs"></span>
             </div>
             <div class="tool-item">
-                <span class="test-button" id="cronReboot">定时重启：</span><input type="text" name="" placeholder="HH:MM"><span class="test-button" id="rebootNow">立即重启</span>
+                <span class="test-button" id="cronReboot">定时重启：</span><input type="text" name="" id="rebootTime" placeholder="HH:MM"><span class="test-button" id="rebootNow">立即重启</span>
             </div>
             <div class="tool-item">
                 <span class="test-button long">关闭App升级通道</span><input type="checkbox" class="switch-box" id="SDUpgradeDialog">
@@ -944,6 +944,18 @@ $(function(){
         else{$("#uploading .updateText").text("正在校验...")}
         $(".updatePrompt").show();
     }
+    function decompressing(){
+        $("#uploading").show().siblings().hide();
+        if(language=="en"){$("#uploading .updateText").text("Decompressing...")}
+        else{$("#uploading .updateText").text("正在解压...")}
+        $(".updatePrompt").show();
+    }
+    function copying(){
+        $("#uploading").show().siblings().hide();
+        if(language=="en"){$("#uploading .updateText").text("Copying files...")}
+        else{$("#uploading .updateText").text("正在复制文件...")}
+        $(".updatePrompt").show();
+    }
     function fixing(){
         $("#uploading").show().siblings().hide();
         if(language=="en"){$("#uploading .updateText").text("Error detected.Restoring...")}
@@ -1135,12 +1147,12 @@ $(function(){
 			else if(e.status=="rebooting") {return reboot();}
 			else if(e.status=="downloading") {downloading(e.percentage);}
             else if(e.status=="checking") {downloading(0)}
-			else if(e.status=="writing") {
-				writing(e.percentage);
-
-			}else if(e.status=="verifying"){verifying();
-            }else if(e.status=="fixing"){fixing();
-            }else if("currentVersion" in e){
+			else if(e.status=="writing") {writing(e.percentage);}
+            else if(e.status=="verifying"){verifying();}
+            else if(e.status == "decompressing"){decompressing();}
+            else if(e.status == "copying"){copying();}
+            else if(e.status=="fixing"){fixing();}
+            else if("currentVersion" in e){
                 if(new Date().getTime()-upgradeStartTime>10000){
                     return done();
                 }

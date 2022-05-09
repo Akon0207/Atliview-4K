@@ -356,6 +356,22 @@
             else{$("#uploading .updateText").text("正在校验...")}
             $(".updatePrompt").show();
         }
+        function decompressing(){
+            $("#uploading .update-progress-ui").hide();
+            $("#uploading .loading").show();
+            $("#uploading").show().siblings().hide();
+            if(language=="en"){$("#uploading .updateText").text("Decompressing...")}
+            else{$("#uploading .updateText").text("正在解压...")}
+            $(".updatePrompt").show();
+        }
+        function copying(){
+            $("#uploading .update-progress-ui").hide();
+            $("#uploading .loading").show();
+            $("#uploading").show().siblings().hide();
+            if(language=="en"){$("#uploading .updateText").text("Copying files...")}
+            else{$("#uploading .updateText").text("正在复制文件...")}
+            $(".updatePrompt").show();
+        }
         function fixing(){
             $("#uploading .update-progress-ui").hide();
             $("#uploading .loading").show();
@@ -461,6 +477,8 @@
                 else if(e.status=="rebooting") return reboot();
                 else if(e.status=="verifying"){verifying();}
                 else if(e.status=="fixing"){fixing();}
+                else if(e.status == "decompressing"){decompressing();}
+                else if(e.status == "copying"){copying();}
                 else if(e.status=="writing") writing(e.percentage);
                 else if(e.status=="checking") writing(0);
                 if("currentVersion" in e && updateStatus!="uploading"){
