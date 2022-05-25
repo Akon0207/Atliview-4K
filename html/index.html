@@ -105,12 +105,17 @@
 			<div><span lan="contrast">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="contrast-now">0</span></div>
 			<div><span lan="sharpness">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="sharpness-now">0</span></div>
 			<div><span lan="hue">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="hue-now">0</span></div>
-			<div><span lan="expCom">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="exposureBias-now">0</span></div>
+			<div><span lan="shutter">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="shutter-now">0</span></div>
 			<div><span lan="ISO">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="gain-now">0</span></div>
 			<div><span lan="whiteBal">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="whiteBalance-now">0</span></div>
-			<div><span lan="shutter">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="shutter-now">0</span></div>
-			<div><span>lum_idx</span>:<span id="lum-idx">0</span></div>
+			<div><span lan="expCom">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="exposureBias-now">0</span></div>
+			<br>
+			<div><span>lum_idx</span>:<span id="lum_idx">0</span></div>
 			<div><span>target</span>:<span id="target">0</span></div>
+			<div><span>b_gain</span>:<span id="b_gain">0</span></div>
+			<div><span>gb_gain</span>:<span id="gb_gain">0</span></div>
+			<div><span>gr_gain</span>:<span id="gr_gain">0</span></div>
+			<div><span>r_gain</span>:<span id="r_gain">0</span></div>
 		</div>
 		<div class="iconfont infrared-up">&#xe60a;</div>
 		<!-- <div class="iconfont rotate">&#xe64f;</div> -->
@@ -955,7 +960,7 @@
 		<!-- 红外 -->
 		
 		<!-- 调试 -->
-		<div>
+		<div class="focusSizeSelectDiv">
 			<select id="focusSizeSelect">
 				<option value="3">192</option>
 				<option value="3.5">224</option>
@@ -2974,12 +2979,13 @@ $(function(){
 	function setMode(mode) {
 		console.log("setMode: " + mode);
 		currentMode = mode;
-		var obj = {scene:mode}
-		// if (mode in modeSettings) {
-		// 	for(var attr in modeSettings[mode]){
-		// 		obj[attr] = modeSettings[mode][attr];
-		// 	}
-		// }
+		// var obj = {scene:mode}
+		var obj = {recordMode:mode}
+		if (mode in modeSettings) {
+			for(var attr in modeSettings[mode]){
+				obj[attr] = modeSettings[mode][attr];
+			}
+		}
 		controlPostJSON("/control", obj, updateControls);
 		sceneMode = mode;
 	}
@@ -3473,6 +3479,9 @@ $(function(){
 		}
 		ctrldata = {};
 		ctrldata[type] = v;
+		if(type=="gain"){
+			ctrldata["autoGain"] = 0;
+		}
 		if(delay=="delay") delayMS=300;
 		if(sendControlTimer==null) controlConnCount++; 
 		console.log("delayMS:"+delayMS+" controlConnCount:"+controlConnCount+" v:"+v);
@@ -4319,13 +4328,15 @@ $(function(){
 						return false
 					}
 				});
+				console.log("the exposureIndex is "+exposureIndex+"==========")
 			// }
 			// if(exposureIndex>=0) {
 				$(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").addClass("on").siblings().removeClass("on");
 				$("#exprosure").text($(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text());
 				console.log("manualFlag========================"+manualFlag);
 				if(manualFlag){
-					controlPostJSON("/control", {autoExposure: 0,exposure: exposureArray[exposureIndex]});//当切换到手动场景模式时，把获取到的快门值重新发送给相机
+					// controlPostJSON("/control", {autoExposure: 0,exposure: exposureArray[exposureIndex]});//当切换到手动场景模式时，把获取到的快门值重新发送给相机
+					controlPostJSON("/control", {exposure: exposureArray[exposureIndex]});//当切换到手动场景模式时，把获取到的快门值重新发送给相机
 					manualFlag = false
 				}	
 			// }
@@ -4370,31 +4381,31 @@ $(function(){
 			}
 			/*设置白平衡 autoWhiteBalance whitebalance*/
 			
-			
-			// if(e.autoWhiteBalance==1){
-			// 	$(".parameter-whiteBalance .swiper-slide:eq(0)").addClass("on").siblings().removeClass("on");
-			// 	if(language && language=="en"){$("#whiteBalance").text("Auto");}else{$("#whiteBalance").text("自动");}
-			// 	$("#whiteBalance-now").parent().hide();
-			// }else {
+			updateEffectNow($("#whiteBalance-now"),e.whiteBalance);
+			if(e.autoWhiteBalance==1){
+				$(".parameter-whiteBalance .swiper-slide:eq(0)").addClass("on").siblings().removeClass("on");
+				if(language && language=="en"){$("#whiteBalance").text("Auto");}else{$("#whiteBalance").text("自动");}
+				// $("#whiteBalance-now").parent().hide();
+			}else {
 				v = e.whiteBalance;
-				$("#whiteBalance-now").text(v);
-				$("#whiteBalance-now").parent().show();
-				// if($("#whiteBalance").text()=="自动" || $("#whiteBalance").text()=="Auto"){
+				// $("#whiteBalance-now").text(v);
+				// $("#whiteBalance-now").parent().show();
+				if($("#whiteBalance").text()=="自动" || $("#whiteBalance").text()=="Auto"){
 					$(".parameter-whiteBalance .swiper-slide").last().addClass("on").siblings().removeClass("on");
 					$("#s5").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v});
 					$("#s5").slider('setValue', v);
 					if(v>0) v="+"+v;
 					$("#s5").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v);
-					// if("whiteBalanceMode" in e){
-					// 	$(".parameter-whiteBalance .swiper-slide").eq(whiteBalModeIndex[e.whiteBalanceMode]).addClass("on").siblings().removeClass("on");
-					// 	$("#whiteBalance").text(whiteBalMode[e.whiteBalanceMode]);
-					// 	$("#whiteBalance-now").text(whiteBalMode[e.whiteBalanceMode]);
-					// }else{
-					// 	$("#whiteBalance").text(v);
-					// 	$("#whiteBalance-now").text(v);
-					// }
-				// }
-			// }
+					if("whiteBalanceMode" in e){
+						$(".parameter-whiteBalance .swiper-slide").eq(whiteBalModeIndex[e.whiteBalanceMode]).addClass("on").siblings().removeClass("on");
+						$("#whiteBalance").text(whiteBalMode[e.whiteBalanceMode]);
+						$("#whiteBalance-now").text(whiteBalMode[e.whiteBalanceMode]);
+					}else{
+						$("#whiteBalance").text(v);
+						$("#whiteBalance-now").text(v);
+					}
+				}
+			}
 
 			/*设置饱和度 saturation*/
 			// v=e.saturation;
@@ -4458,13 +4469,15 @@ $(function(){
 			// $("#s4").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(e.hue);
 			// //alert("slider"+$("#s4").slider('getValue'));
 			/*设置lum_idx和target*/
-			// if(e.isp_debug_info.iso_result.lum_idx){
-				updateEffectNow($("#lum-idx"),e.isp_debug_info.iso_result.lum_idx);
-			// }
-			// if(e.isp_debug_info.ae_result.target){
+			if(e.isp_debug_info){
+				updateEffectNow($("#lum_idx"),e.isp_debug_info.iso_result.lum_idx);
 				updateEffectNow($("#target"),e.isp_debug_info.ae_result.target);
-			// }
-			
+				updateEffectNow($("#b_gain"),e.isp_debug_info.awb_result.wb_gain_output.b_gain);
+				updateEffectNow($("#gb_gain"),e.isp_debug_info.awb_result.wb_gain_output.gb_gain);
+				updateEffectNow($("#gr_gain"),e.isp_debug_info.awb_result.wb_gain_output.gr_gain);
+				updateEffectNow($("#r_gain"),e.isp_debug_info.awb_result.wb_gain_output.r_gain);
+			}
+				
 			/*设置拍摄间隔*/
 			// alert($(".mode-list li.on").index());
 			if(language && language=="en"){
@@ -6108,27 +6121,28 @@ $(function(){
 				// var currentFirmware = localControl.getValue("CurrentFirmware", null);
 				var SDUpgradeDialog = localControl.getValue("SDUpgradeDialog",0);//app升级通道是否关闭，若关闭，不提示升级
 				console.log("lastest:"+lastestfirmware+"\ncurrent:"+currentFirmware+"\nSDupgrade:"+SDUpgradeDialog);
-				if(isNewVersion(currentFirmware, lastestfirmware) && app_type){
-					if(/^P/.test(sn_num) && !/(\.f1)$/.test(lastestfirmware)){
-						return
-					}
-					$(".update-icon").holdShow();
-					console.log("firmware");
-					if(!updateCancelTime) updateCancelTime=localControl.getValue("notupdate", 0);
-					console.log(updateCancelTime+" "+(!updateCancelTime)+" "+ (new Date().getTime())+" " );
-					if($("#shoot-circle").attr("state")==null || $("#shoot-circle").attr("state")=="idle"){ //空闲状态才会有红点提示
-						if((updateCancelTime==0 ||(((new Date().getTime()) - updateCancelTime) > 24*3600*1000)) && SDUpgradeDialog == 0 && (SDavailable > 100*1024) && (skip_bat_chk==1 || (batteryStatus!="no_battery" && !(batteryNow<20 && batteryStatus == "discharging")))){//1天
-							$("#updateConfirm").attr("href", "update.html?uploadFlag=1");
-							if(language=="en"){
-								$("#update .dialog-poppup-content").text("New firmware "+lastestfirmware+" available, upgrade now?")
-							}else{
-								$("#update .dialog-poppup-content").text("发现新固件版本 "+lastestfirmware+" ，是否现在升级？")
-							}
+				// if(isNewVersion(currentFirmware, lastestfirmware) && app_type){
+				// 	if(/^P/.test(sn_num) && !/(\.f1)$/.test(lastestfirmware)){
+				// 		return
+				// 	}
+				// 	$(".update-icon").holdShow();
+				// 	console.log("firmware");
+				// 	if(!updateCancelTime) updateCancelTime=localControl.getValue("notupdate", 0);
+				// 	console.log(updateCancelTime+" "+(!updateCancelTime)+" "+ (new Date().getTime())+" " );
+				// 	if($("#shoot-circle").attr("state")==null || $("#shoot-circle").attr("state")=="idle"){ //空闲状态才会有红点提示
+				// 		if((updateCancelTime==0 ||(((new Date().getTime()) - updateCancelTime) > 24*3600*1000)) && SDUpgradeDialog == 0 && (SDavailable > 100*1024) && (skip_bat_chk==1 || (batteryStatus!="no_battery" && !(batteryNow<20 && batteryStatus == "discharging")))){//1天
+				// 			$("#updateConfirm").attr("href", "update.html?uploadFlag=1");
+				// 			if(language=="en"){
+				// 				$("#update .dialog-poppup-content").text("New firmware "+lastestfirmware+" available, upgrade now?")
+				// 			}else{
+				// 				$("#update .dialog-poppup-content").text("发现新固件版本 "+lastestfirmware+" ，是否现在升级？")
+				// 			}
 							
-							$("#update,.dialog-cover").holdShow();
-						}
-					}
-				}else if(isNewVersion(currentFirmware,latest_fw_name) && !app_type){
+				// 			$("#update,.dialog-cover").holdShow();
+				// 		}
+				// 	}
+				// }else if(isNewVersion(currentFirmware,latest_fw_name) && !app_type){
+				if(isNewVersion(currentFirmware,latest_fw_name)){
 					$(".update-icon").holdShow();
 					console.log("firmware");
 					if(!updateCancelTime) updateCancelTime=localControl.getValue("notupdate", 0);

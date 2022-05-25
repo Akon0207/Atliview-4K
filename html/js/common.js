@@ -727,14 +727,14 @@ function isNewVersion(oldV, newV){
 	old1=parseInt(oldV);
 	oldV=oldV.slice(oldV.indexOf(".")+1);
 	old2=parseInt(oldV);
-	oldV=oldV.slice(oldV.indexOf(".")+1);
+	oldV=oldV.slice(oldV.indexOf("-")+1);
 	old3=parseInt(oldV);
 
 	newV=newV.slice(newV.indexOf("-")+1);
 	new1=parseInt(newV);
 	newV=newV.slice(newV.indexOf(".")+1);
 	new2=parseInt(newV);
-	newV=newV.slice(newV.indexOf(".")+1);
+	newV=newV.slice(newV.indexOf("-")+1);
 	new3=parseInt(newV);
 	console.log("oldVersion:"+old1+"."+old2+"."+old3+", newVersion:"+new1+"."+new2+"."+new3);
 	if(old1==1 && old2==1 && new1==0) return true;

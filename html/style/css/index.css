@@ -48,14 +48,19 @@
 }
 
 #focusSizeSelect {
+    width: 40px;
+    text-align: center;
+}
+.focusSizeSelectDiv {
     position: absolute;
     top: 70px;
     left: 80px;
     background: #fff;
-    width: 40px;
-    text-align: center;
 }
 .cpuTemp {
     color: #fff;
     font-style: inherit;
+}
+.blue {
+    color: #00d2ff;
 }
