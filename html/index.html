@@ -6142,7 +6142,8 @@ $(function(){
 				// 		}
 				// 	}
 				// }else if(isNewVersion(currentFirmware,latest_fw_name) && !app_type){
-				if(isNewVersion(currentFirmware,latest_fw_name)){
+				// if(isNewVersion(currentFirmware,latest_fw_name)){
+				if(latest_fw_name && currentFirmware!=latest_fw_name){
 					$(".update-icon").holdShow();
 					console.log("firmware");
 					if(!updateCancelTime) updateCancelTime=localControl.getValue("notupdate", 0);
