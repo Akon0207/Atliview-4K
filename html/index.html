@@ -111,7 +111,10 @@
 			<div><span lan="expCom">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="exposureBias-now">0</span></div>
 			<br>
 			<div><span>lum_idx</span>:<span id="lum_idx">0</span></div>
+			<div><span>gain_idx</span>:<span id="gain_idx">0</span></div>
 			<div><span>target</span>:<span id="target">0</span></div>
+			<div><span>ae_avg_lum</span>:<span id="ae_avg_lum">0</span></div>
+			<div><span>ae_weight_lum</span>:<span id="ae_weight_lum">0</span></div>
 			<div><span>b_gain</span>:<span id="b_gain">0</span></div>
 			<div><span>gb_gain</span>:<span id="gb_gain">0</span></div>
 			<div><span>gr_gain</span>:<span id="gr_gain">0</span></div>
@@ -3117,6 +3120,8 @@ $(function(){
 					$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px").holdShow();
 				},200);
 				currentSwiper.update();
+				$(".setting-current .swiper-slide").eq(0).show();
+				$(".setting-current .swiper-slide").eq(1).show();
 				$(".setting-current .swiper-slide").eq(0).click();
 				$(".setting-bar>div").hide();
 				$(".setting-bar>div").eq(0).show(); 
@@ -3128,6 +3133,20 @@ $(function(){
 				// controlPostJSON("/control",{infrared:0},updateControls);
 				// $(".ctrl-icon").holdSlideDown(800);
 				$(".customModeBtn").holdHide();
+			}
+			if(e!=7){//调试用
+				$(".setting-content").holdShow();
+				$(".ctrl-icon").holdHide();
+				currentSwiper.update();
+				$(".setting-current .swiper-slide").eq(0).hide();
+				$(".setting-current .swiper-slide").eq(1).hide();
+				$(".setting-current .swiper-slide").eq(3).click();
+				$(".setting-bar>div").hide();
+				$(".setting-bar>div").eq(3).show(); 
+				exprosureSwiper.update();
+				var m = $(".parameter-exprosure .swiper-slide.on").index();
+				exprosureSwiper.slideTo(m);
+				manualFlag = true;//当切换到手动场景模式时，把获取到的快门值重新发送给相机
 			}
 		})
 	})
@@ -3175,17 +3194,17 @@ $(function(){
         }
 		$(".mode-list li").each(function (index) {
 			if($(this).hasClass("on")){
-			    if(index==0){
-                    if(target.closest(tag1).length==0 && flag==true){
-//				$("#brightness").show();
-						// $(".ctrl-icon").hide();
-                        flag = false;
-                	}else if(target.closest(tag1).length>0){
-                    }else{
-//				$("#brightness").hide();
-                        flag = true;
-                    }
-				}else{
+// 			    if(index==0){
+//                     if(target.closest(tag1).length==0 && flag==true){
+// //				$("#brightness").show();
+// 						// $(".ctrl-icon").hide();
+//                         flag = false;
+//                 	}else if(target.closest(tag1).length>0){
+//                     }else{
+// //				$("#brightness").hide();
+//                         flag = true;
+//                     }
+// 				}else{
                     if(target.closest(tag1).length==0 && flag==true){
                     	$(".shootModeList").holdHide();
                         $(".setting-content").holdSlideUp("1000");
@@ -3200,7 +3219,7 @@ $(function(){
 //				$(".setting-content").show();
                         flag = true;
                     }
-				}
+				// }
 			}
         });
         if(target.closest(tag6).length == 0){
@@ -4288,11 +4307,20 @@ $(function(){
 			}
 			// if(e.recordMode == "auto") {
 			if($(".mode-list li").eq(0).hasClass("on")){
-				$(".ctrl-icon").holdHide(); //隐藏上拉图标
+				// $(".ctrl-icon").holdHide(); //隐藏上拉图标
 				$(".customModeBtn").holdHide();//隐藏新建场景外拉图标
 				$(".shooting-tips").holdHide();
 				// return; //自动模式下不需要设置下列参数
 			}
+			//以下为调试用
+			if($(".mode-list li").eq(7).hasClass("on")){
+				$(".setting-current .swiper-slide").eq(0).show();
+				$(".setting-current .swiper-slide").eq(1).show();
+			}else{
+				$(".setting-current .swiper-slide").eq(0).hide();
+				$(".setting-current .swiper-slide").eq(1).hide();
+			}
+			
 			if(e.scene){
 				if($(".setting-content").css("display")=="none"  && sessionType != "video" && e.scene == "manual") {
 					$(".ctrl-icon").holdSlideDown(800); //显示上拉图标
@@ -4471,11 +4499,14 @@ $(function(){
 			/*设置lum_idx和target*/
 			if(e.isp_debug_info){
 				updateEffectNow($("#lum_idx"),e.isp_debug_info.iso_result.lum_idx);
+				updateEffectNow($("#gain_idx"),e.isp_debug_info.iso_result.gain_idx);
 				updateEffectNow($("#target"),e.isp_debug_info.ae_result.target);
 				updateEffectNow($("#b_gain"),e.isp_debug_info.awb_result.wb_gain_output.b_gain);
 				updateEffectNow($("#gb_gain"),e.isp_debug_info.awb_result.wb_gain_output.gb_gain);
 				updateEffectNow($("#gr_gain"),e.isp_debug_info.awb_result.wb_gain_output.gr_gain);
 				updateEffectNow($("#r_gain"),e.isp_debug_info.awb_result.wb_gain_output.r_gain);
+				updateEffectNow($("#ae_avg_lum"),e.isp_debug_info.ae_result.ae_avg_lum);
+				updateEffectNow($("#ae_weight_lum"),e.isp_debug_info.ae_result.ae_weight_lum);
 			}
 				
 			/*设置拍摄间隔*/
@@ -4848,7 +4879,8 @@ $(function(){
 					// }
 					var videoStartAt = Date.parse(e.recordinfo.currentVideo.startAt)/1000;
 					// var currentTime = Date.parse(new Date())/1000;
-					var currentTime = Date.parse(e.devTime)/1000;
+					// var currentTime = Date.parse(e.devTime)/1000;
+					var currentTime = Date.parse(e.rtcTime)/1000;
 					var timeArrayVideo = formatTime(currentTime-videoStartAt);
 					$(".durationForVideo").text(timeArrayVideo[0]+":"+timeArrayVideo[1]+":"+timeArrayVideo[2]);
 					$(".videoSign").holdShow();
@@ -5303,7 +5335,7 @@ $(function(){
 			if(e.recordinfo.currentVideo && e.recordinfo.currentVideo.next) {
 				var d = new Date(e.recordinfo.currentVideo.next);
 				// d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
-				nextRecordMS=new Date(e.devTime).getTime();
+				nextRecordMS=new Date(e.rtcTime).getTime();
 				next=d.getTime()-nextRecordMS;
 				console.log("next:"+next+"ms");
 			}
@@ -5456,38 +5488,40 @@ $(function(){
 		$("#shoot-circle").css("pointer-events","none");
 		recordInterval=interval;
                 console.log(recCtrl);
-		postJSON("/" + sessionType, recCtrl, function (data) {
-			setRecording(true, interval);
-			
-			$(".circleChart_canvas").remove();//先取消之前的绘制
-			$("#shoot-circle").addClass("shoot-percent circleChart");
-			$("#shoot-circle").removeClass("shoot");
-			$("#shoot-circle").children("span").addClass("shoot-percent-inside");
- 			$("#shoot-circle").circleChart({
-				color: "red",
-				backgroundColor: "#fff",
-				size: 45,
-				widthRatio: 0.1,
-				startAngle: 75,
-				lineCap: 'butt',
-				value: 0.01, //百分比
-				animation: 'linearTween',
-				redraw: true,
-				speed: 0,
-			});
-			console.log("start recording OK");
-			// setTimeout(function(){
-			// 	$("#shoot-circle").css("pointer-events","auto");
-			// },2000);
-			getJSON("/status",function(data){
-				$("#shoot-circle").attr("state",data.recordinfo.status);
+		setTimeout(function(){
+			postJSON("/" + sessionType, recCtrl, function (data) {
+				setRecording(true, interval);
+				
+				$(".circleChart_canvas").remove();//先取消之前的绘制
+				$("#shoot-circle").addClass("shoot-percent circleChart");
+				$("#shoot-circle").removeClass("shoot");
+				$("#shoot-circle").children("span").addClass("shoot-percent-inside");
+	 			$("#shoot-circle").circleChart({
+					color: "red",
+					backgroundColor: "#fff",
+					size: 45,
+					widthRatio: 0.1,
+					startAngle: 75,
+					lineCap: 'butt',
+					value: 0.01, //百分比
+					animation: 'linearTween',
+					redraw: true,
+					speed: 0,
+				});
+				console.log("start recording OK");
+				// setTimeout(function(){
+				// 	$("#shoot-circle").css("pointer-events","auto");
+				// },2000);
+				getJSON("/status",function(data){
+					$("#shoot-circle").attr("state",data.recordinfo.status);
+					$("#shoot-circle").css("pointer-events","auto");
+				})
+			}, function (e, status) {
+				setRecording(false);
+				console.log("start recording error " + status);
 				$("#shoot-circle").css("pointer-events","auto");
-			})
-		}, function (e, status) {
-			setRecording(false);
-			console.log("start recording error " + status);
-			$("#shoot-circle").css("pointer-events","auto");
-		}, "text");
+			}, "text");
+		},100);
 	}
 	$('#start-shooting').on('click', startRecording);
 
@@ -5553,9 +5587,13 @@ $(function(){
 			$("#shoot-circle").css("pointer-events","auto");
 			console.log("stop recording ok");
 			setRecording("idle");
-		}, function () {
+		}, function (xhr,errText,errThrow) {
 			console.log("stop recording error");
 			$("#shoot-circle").css("pointer-events","auto");
+			if(xhr.status==500){
+				setTimeout(stopRecording,100);
+			}
+			
 		}, "text");
 		$(".dialog-cover,#turnoffCron").holdHide();
 		// getJSON("/status",doInit);
@@ -5578,9 +5616,13 @@ $(function(){
 		putJSON("/video", { sessionId: sessionId }, function(e, status){
 			console.log("stop video ok");
 			setRecording("idle");
-		}, function () {
+		}, function (xhr,errText,errThrow) {
 			console.log("stop video error");
 			$("#preview").prop("src",base64);
+			if(xhr.status==500){
+				setTimeout(stopVideo,100);
+			}
+			
 		}, "text");
 	}
 	$('#turnoffCronYes').on('click', stopRecording);
