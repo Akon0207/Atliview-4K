@@ -115,6 +115,9 @@
 			<div><span>target</span>:<span id="target">0</span></div>
 			<div><span>ae_avg_lum</span>:<span id="ae_avg_lum">0</span></div>
 			<div><span>ae_weight_lum</span>:<span id="ae_weight_lum">0</span></div>
+			<div><span>ev_analog_gain</span>:<span id="ev_analog_gain">0</span></div>
+			<div><span>ev_digital_gain</span>:<span id="ev_digital_gain">0</span></div>
+			<div><span>ev_lv</span>:<span id="ev_lv">0</span></div>
 			<div><span>b_gain</span>:<span id="b_gain">0</span></div>
 			<div><span>gb_gain</span>:<span id="gb_gain">0</span></div>
 			<div><span>gr_gain</span>:<span id="gr_gain">0</span></div>
@@ -4507,6 +4510,9 @@ $(function(){
 				updateEffectNow($("#r_gain"),e.isp_debug_info.awb_result.wb_gain_output.r_gain);
 				updateEffectNow($("#ae_avg_lum"),e.isp_debug_info.ae_result.ae_avg_lum);
 				updateEffectNow($("#ae_weight_lum"),e.isp_debug_info.ae_result.ae_weight_lum);
+				updateEffectNow($("#ev_analog_gain"),e.isp_debug_info.ae_result.ev_set_curr.ev_analog_gain);
+				updateEffectNow($("#ev_digital_gain"),e.isp_debug_info.ae_result.ev_set_curr.ev_digital_gain);
+				updateEffectNow($("#ev_lv"),e.isp_debug_info.ae_result.ev_set_curr.ev_lv);
 			}
 				
 			/*设置拍摄间隔*/
